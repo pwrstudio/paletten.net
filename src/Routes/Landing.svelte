@@ -78,7 +78,16 @@
   {#await posts then posts}
     {#each posts as p}
       <div>
-        <a href={'/artikel/' + p.slug.current}>{p.title}</a>
+        <a href={'/artikel/' + p.slug.current}>
+          <img
+            alt={p.title}
+            src={urlFor(p.mainImage.asset)
+              .width(600)
+              .quality(100)
+              .auto('format')
+              .url()} />
+          <div>{p.title}</div>
+        </a>
       </div>
     {/each}
   {/await}
