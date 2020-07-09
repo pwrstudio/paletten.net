@@ -184,30 +184,6 @@ https://flickity.metafizzy.co
     opacity: 1;
   }
 
-  footer {
-    font-size: $large;
-    height: 50vh;
-    width: 100vw;
-    z-index: 1000;
-    background: $secondColor;
-    font-family: "Janson Text LT Std";
-    font-size: $large;
-    font-weight: 600;
-    line-height: 0.95em;
-    overflow: hidden;
-    user-select: none;
-
-    @include screen-size("small") {
-      font-size: $mobile_large;
-      line-height: 1.5em;
-    }
-
-    .title {
-      white-space: nowrap;
-      padding-left: 10px;
-    }
-  }
-
   .meta {
     p {
       display: inline;
@@ -250,5 +226,3 @@ https://flickity.metafizzy.co
   <Route path="/artikel/:slug" component={Single} title="single" />
   <Route component={Error404} title="404" />
 </Router>
-
-<Footer />

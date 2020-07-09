@@ -1,3 +1,25 @@
+<style lang="scss">
+  @import "../variables.scss";
+
+  svg {
+    &:hover {
+      rect {
+        fill: $half-grey;
+      }
+      @include screen-size("small") {
+        rect {
+          fill: black;
+        }
+      }
+    }
+    &:active {
+      rect {
+        fill: $full-grey;
+      }
+    }
+  }
+</style>
+
 <svg
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +30,6 @@
   viewBox="0 0 34 34"
   style="overflow:visible;enable-background:new 0 0 34 34;"
   xml:space="preserve">
-  <defs />
   <rect
     x="-3.1"
     y="13"

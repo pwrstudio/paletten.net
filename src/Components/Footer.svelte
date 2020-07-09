@@ -25,15 +25,14 @@
   @import "../variables.scss";
 
   footer {
-    height: 300px;
     width: 100vw;
     background: white;
-    font-family: "Janson Text LT Std";
+    font-family: $serif-stack;
     line-height: 1.4em;
     overflow: hidden;
     user-select: none;
     padding: 20px;
-    margin-top: 80px;
+    padding-bottom: 20px;
     font-weight: normal;
 
     @include screen-size("small") {
@@ -66,18 +65,39 @@
 
     @include screen-size("small") {
       width: 100%;
+      margin-bottom: 10px;
     }
 
+    // &.first {
+    //   width: 50%;
+    // }
+
+    // &.second {
+    //   width: 25%;
+    // }
     &.last {
-      text-align: right;
+      // width: 25%;
+
+      // text-align: right;
+    }
+    p {
+      max-width: 40ch;
     }
   }
 </style>
 
 <footer>
-  <div class="column">
+  <div class="column first">
+    <p>
+      <strong>Paletten</strong>
+      är idag en av samtidskonstens viktigaste tidskrifter. Ambition är att
+      kritiskt diskutera och presentera konsten och dess förutsättningar i vår
+      tid. Paletten fokuserar på konsten politiska villkor och funktioner i
+      dagens samhälle.
+    </p>
+  </div>
+  <div class="column second">
     Paletten
-    <br />
     <br />
     Östra Sänkverksgatan 2
     <br />
@@ -86,7 +106,6 @@
     <br />
     © Paletten 2017
   </div>
-  <div class="column">Paletten lorem ipsum</div>
   <div class="column last">
     <div class="menu-item">Artiklar</div>
     <div class="menu-item">Projekt</div>

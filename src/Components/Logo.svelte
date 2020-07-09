@@ -1,3 +1,25 @@
+<style lang="scss">
+  @import "../variables.scss";
+
+  svg {
+    &:hover {
+      path {
+        fill: $half-grey;
+      }
+      @include screen-size("small") {
+        path {
+          fill: black;
+        }
+      }
+    }
+    &:active {
+      path {
+        fill: $full-grey;
+      }
+    }
+  }
+</style>
+
 <svg
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"

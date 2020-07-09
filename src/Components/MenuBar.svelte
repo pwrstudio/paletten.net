@@ -193,7 +193,7 @@
   .search {
     input {
       height: 0.85em;
-      font-family: "Janson Text LT Std";
+      font-family: $serif-stack;
       font-size: $large;
       font-weight: 600;
       line-height: 0.95em;
@@ -220,9 +220,10 @@
   .hamburger {
     cursor: pointer;
     float: right;
-    height: calc(#{$menu_bar_height} - 24px);
+    height: calc(#{$menu_bar_height} - 20px);
+    // height: $menu_bar_height;
     margin-right: 20px;
-    margin-top: 12px;
+    margin-top: 10px;
 
     @include screen-size("small") {
       margin-right: 10px;
@@ -248,9 +249,20 @@
       font-weight: bold;
       text-align: right;
       padding-right: 15px;
+      color: black;
+      text-decoration: none;
+      display: block;
 
       &:hover {
-        color: blue;
+        color: $half-grey;
+      }
+
+      &:active {
+        color: $full-grey;
+      }
+
+      @include screen-size("small") {
+        font-size: $font_size_large_phone;
       }
     }
   }
@@ -277,13 +289,13 @@
 </div>
 
 {#if menuOpen}
-  <div class="menu">
-    <div class="menu-item">Artiklar</div>
-    <div class="menu-item">Projekt</div>
-    <div class="menu-item">Tidskrift</div>
-    <div class="menu-item">Om Paletten</div>
-    <div class="menu-item">Prenumeration</div>
-    <div class="menu-item">Kontakt</div>
-    <div class="menu-item">Sök</div>
+  <div class="menu" use:links>
+    <a href="/artikel/xxx" class="menu-item">Artiklar</a>
+    <a href="/artikel/xxx" class="menu-item">Projekt</a>
+    <a href="/artikel/xxx" class="menu-item">Tidskrift</a>
+    <a href="/artikel/xxx" class="menu-item">Om Paletten</a>
+    <a href="/artikel/xxx" class="menu-item">Prenumeration</a>
+    <a href="/artikel/xxx" class="menu-item">Kontakt</a>
+    <a href="/artikel/xxx" class="menu-item">Sök</a>
   </div>
 {/if}

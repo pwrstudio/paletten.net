@@ -1,6 +1,8 @@
 // $sans-stack: "Haas Grot Disp 45", Helvetica, Arial, sans-serif;
 // $sans-stack: Helvetica, Arial, sans-serif;
-$sans-stack: "Janson Text LT Std", "haas", Helvetica, Arial, sans-serif;
+$sans-stack: "Janson Text LT Std", times, serif;
+$serif-stack: "Janson Text LT Std", times, serif;
+
 $height: 80px;
 
 $factor: 0.9;
@@ -37,12 +39,15 @@ $large-vertical-margin: 32px;
 
 // NEW
 
+$half-grey: rgba(90, 90, 90, 1);
+$full-grey: rgba(120, 120, 120, 1);
+
 $font_size_normal: 18px;
 $font_size_small: 11px;
 $font_size_large: 42px;
 $font_size_large_phone: 32px;
 
-$menu_bar_height: 50px;
+$menu_bar_height: 40px;
 
 $breakpoints: (
   "small": (

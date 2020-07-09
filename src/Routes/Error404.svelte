@@ -17,7 +17,7 @@
     font-weight: 300;
     text-transform: uppercase;
     line-height: 0.9em;
-    font-family: "Janson Text LT Std";
+    font-family: $serif-stack;
     margin-left: $small-margin;
     min-height: 80vh;
 

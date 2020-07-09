@@ -10,12 +10,13 @@
   import { fade, slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
-  import { format, getYear, formatDistanceToNow } from "date-fns";
+  import { formattedDate } from "../global.js";
 
   // *** PROPS
   export let slug = "";
 
   // COMPONENTS
+  import Footer from "../Components/Footer.svelte";
 
   // STORES
   import { location, menuBarText } from "../stores.js";
@@ -75,7 +76,7 @@
 
   .single {
     font-size: $font_size_normal;
-    font-family: "Janson Text LT Std";
+    font-family: $serif-stack;
     margin: 0;
     padding: 20px;
     width: 100vw;
@@ -138,9 +139,7 @@
     <div class="inner-wrapper">
 
       <div class="meta">
-        <div class="date">
-          {format(new Date(post.publicationDate), 'yyyy-MM-dd')}
-        </div>
+        <div class="date">{formattedDate(post.publicationDate)}</div>
         <!-- AUTHOR -->
         <div class="author">{post.author}</div>
         <!-- TITLE -->
@@ -168,5 +167,7 @@
     </div>
 
   </div>
+
+  <Footer />
 
 {/await}
