@@ -24,11 +24,18 @@
 
   // ** CONSTANTS
   const query = "*[slug.current == $slug][0]";
+  const params = { slug: slug };
+  // const query = "*[]";
 
-  let post = loadData(query, { slug: slug });
+  let post = loadData(query, params);
+
+  // let fP = [];
 
   post.then(post => {
     console.dir(post);
+    // fP = post.map(p => {
+    //   return { file: p.originalFilename, id: p._id };
+    // });
   });
 
   // menuBarText.set(false);
@@ -133,7 +140,6 @@
 </style>
 
 {#await post then post}
-
   <div class="single">
 
     <div class="inner-wrapper">
@@ -141,7 +147,9 @@
       <div class="meta">
         <div class="date">{formattedDate(post.publicationDate)}</div>
         <!-- AUTHOR -->
-        <div class="author">{post.author}</div>
+        {#if post.author}
+          <div class="author">{post.author}</div>
+        {/if}
         <!-- TITLE -->
         <h1 class="title">{post.title}</h1>
       </div>

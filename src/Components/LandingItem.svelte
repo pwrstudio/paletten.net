@@ -12,9 +12,6 @@
   import { formattedDate } from "../global.js";
   import _ from "lodash";
 
-  // COMPONENTS
-  // import ListingItem from "../Components/ListingItem.svelte";
-
   // STORES
   //   import { location, filterTerm } from "../stores.js";
   //   location.set("index");
@@ -24,8 +21,21 @@
 
   console.dir(post);
 
-  // ** CONSTANTS
-  const query = "*[_id == '" + post.postLink._ref + "'][0]";
+  let query = "";
+
+  if (post.postLink) {
+    query = "*[_id == '" + post.postLink._ref + "'][0]";
+  } else {
+    query = "*[_id == '" + post._id + "'][0]";
+  }
+
+  if (!post.layout) {
+    post.layout = "full";
+  }
+
+  if (!post.imageLayout) {
+    post.imageLayout = "proportional";
+  }
 
   //   VARIABLES
   let postContent = loadData(query);
@@ -228,8 +238,8 @@
         <img
           alt={postContent.title}
           src={urlFor(postContent.mainImage.asset)
-            .width(600)
-            .quality(100)
+            .width(800)
+            .quality(90)
             .auto('format')
             .url()} />
       </div>

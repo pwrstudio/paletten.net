@@ -289,10 +289,15 @@
 </div>
 
 {#if menuOpen}
-  <div class="menu" use:links>
-    <a href="/artikel/xxx" class="menu-item">Artiklar</a>
-    <a href="/artikel/xxx" class="menu-item">Projekt</a>
-    <a href="/artikel/xxx" class="menu-item">Tidskrift</a>
+  <div
+    class="menu"
+    use:links
+    on:click={e => {
+      menuOpen = false;
+    }}>
+    <a href="/artiklar" class="menu-item">Artiklar</a>
+    <a href="/tidskrift" class="menu-item">Tidskrift</a>
+    <a href="/projekt" class="menu-item">Projekt</a>
     <a href="/artikel/xxx" class="menu-item">Om Paletten</a>
     <a href="/artikel/xxx" class="menu-item">Prenumeration</a>
     <a href="/artikel/xxx" class="menu-item">Kontakt</a>

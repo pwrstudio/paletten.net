@@ -15,6 +15,9 @@
 
   // ROUTES
   import Landing from "./Routes/Landing.svelte";
+  import Artiklar from "./Routes/Artiklar.svelte";
+  import Tidskrift from "./Routes/Tidskrift.svelte";
+  import Projekt from "./Routes/Projekt.svelte";
   import Single from "./Routes/Single.svelte";
   import Error404 from "./Routes/Error404.svelte";
 </script>
@@ -223,6 +226,9 @@ https://flickity.metafizzy.co
 
 <Router>
   <Route path="/" component={Landing} title="landing" } />
+  <Route path="/artiklar" component={Artiklar} title="artiklar" />
+  <Route path="/projekt" component={Projekt} title="projekt" />
+  <Route path="/tidskrift" component={Tidskrift} title="tidskrift" />
   <Route path="/artikel/:slug" component={Single} title="single" />
   <Route component={Error404} title="404" />
 </Router>
