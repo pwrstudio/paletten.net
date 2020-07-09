@@ -17,12 +17,18 @@
   // STORES
   import { menuBarText, location, filterTerm } from "../stores.js";
 
+  // COMPONENTS
+  import Logo from "./Logo.svelte";
+  import Hamburger from "./Hamburger.svelte";
+  import Close from "./Close.svelte";
+
   // DOM REFERENCES
   // let menuContainer = {};
   // let filterContainer = {};
   // let timeContainer = {};
 
   // VARIABLES
+  let menuOpen = false;
   // let titleActive = true;
   // let menuActive = false;
   // let filterActive = false;
@@ -172,160 +178,16 @@
 <style lang="scss">
   @import "../variables.scss";
 
-  .close {
-    background: $secondColor;
-    position: fixed;
-    z-index: 1000;
-    padding-left: 0px;
-    padding-right: 10px;
-    font-weight: 600;
-    right: 0;
-    top: 0;
-    height: 1em;
-    width: 60px;
-    box-shadow: -30px -5px 10px $secondColor;
-
-    &:hover {
-      color: $thirdColor;
-      cursor: pointer;
-    }
-
-    &:active {
-      color: white;
-    }
-  }
-
-  .about {
-    font-size: $large;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    z-index: 10000;
-    background: #ff4500;
-    font-family: "Janson Text LT Std";
-    font-size: $large;
-    font-weight: 500;
-    line-height: 0.95em;
-    padding-left: 10px;
-    overflow: hidden;
-    display: none;
-    overflow-y: auto;
-
-    &.active {
-      display: block;
-    }
-
-    @include screen-size("small") {
-      font-size: $mobile_large;
-    }
-  }
-
   .bar {
-    font-size: $large;
     position: fixed;
     top: 0;
     left: 0;
-    height: 1em;
+    height: $menu_bar_height;
     width: 100vw;
     z-index: 1000;
-    background: $secondColor;
-    font-family: "Janson Text LT Std";
-    font-size: $large;
-    font-weight: 600;
-    line-height: 0.95em;
+    background: white;
     overflow: hidden;
     user-select: none;
-
-    @include screen-size("small") {
-      font-size: $mobile_large;
-      height: 1.5em;
-      line-height: 1.5em;
-    }
-
-    .title {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      display: block;
-      opacity: 0;
-      pointer-events: none;
-      padding-left: 10px;
-      white-space: nowrap;
-
-      &.active {
-        opacity: 1;
-        pointer-events: all;
-        overflow-x: scroll;
-      }
-
-      // .inner {
-      //   &:hover {
-      //     color: $thirdColor;
-      //     cursor: pointer;
-      //   }
-      //   &:active {
-      //     color: white;
-      //   }
-      // }
-    }
-
-    .menu {
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: block;
-      opacity: 0;
-      pointer-events: none;
-      width: 100vw;
-      padding-left: 10px;
-      height: 1em;
-
-      &.active {
-        opacity: 1;
-        pointer-events: all;
-      }
-    }
-
-    .filter,
-    .timeline,
-    .search {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      display: block;
-      opacity: 0;
-      padding-left: 10px;
-      pointer-events: none;
-
-      &.active {
-        opacity: 1;
-        pointer-events: all;
-      }
-    }
-
-    .menu-item {
-      margin-right: 15px;
-      color: inherit;
-      text-decoration: none;
-      // background: yellow;
-
-      &:hover {
-        color: $thirdColor;
-        cursor: pointer;
-      }
-
-      &.selected {
-        color: white;
-      }
-
-      &:active {
-        color: white;
-      }
-    }
   }
 
   .search {
@@ -344,15 +206,84 @@
     }
   }
 
-  .slider {
-    width: calc(100vw - 80px);
-    // background: green;
+  .logo {
+    height: calc(#{$menu_bar_height} - 20px);
+    margin-left: 20px;
+    margin-top: 10px;
+    display: inline-block;
+
+    @include screen-size("small") {
+      margin-left: 10px;
+    }
+  }
+
+  .hamburger {
+    cursor: pointer;
+    float: right;
+    height: calc(#{$menu_bar_height} - 24px);
+    margin-right: 20px;
+    margin-top: 12px;
+
+    @include screen-size("small") {
+      margin-right: 10px;
+    }
+  }
+
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    // height: 500px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background: white;
+    overflow: hidden;
+    user-select: none;
+    padding-top: calc(#{$menu_bar_height} + 20px);
+    // padding-bottom: 20px;
+
+    .menu-item {
+      font-size: $font_size_large;
+      font-weight: bold;
+      text-align: right;
+      padding-right: 15px;
+
+      &:hover {
+        color: blue;
+      }
+    }
   }
 </style>
 
 <div class="bar" use:links>
-  <!-- TITLE -->
-  <div class="title active">
-    <span class="inner">PALETTEN</span>
+  <!-- Logo -->
+  <a href="/" class="logo">
+    <Logo />
+  </a>
+
+  <div
+    class="hamburger"
+    on:click={e => {
+      menuOpen = !menuOpen;
+    }}>
+    {#if menuOpen}
+      <Close />
+    {:else}
+      <Hamburger />
+    {/if}
   </div>
+
 </div>
+
+{#if menuOpen}
+  <div class="menu">
+    <div class="menu-item">Artiklar</div>
+    <div class="menu-item">Projekt</div>
+    <div class="menu-item">Tidskrift</div>
+    <div class="menu-item">Om Paletten</div>
+    <div class="menu-item">Prenumeration</div>
+    <div class="menu-item">Kontakt</div>
+    <div class="menu-item">Sök</div>
+  </div>
+{/if}

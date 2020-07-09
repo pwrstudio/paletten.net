@@ -74,108 +74,60 @@
   @import "../variables.scss";
 
   .single {
-    font-size: 18px;
-    background: $thirdColor;
+    font-size: $font_size_normal;
     font-family: "Janson Text LT Std";
     margin: 0;
-    padding: 5px;
+    padding: 20px;
     width: 100vw;
     overflow-x: hidden;
-    padding-top: calc(1em + 10px);
+
+    padding-top: calc(#{$menu_bar_height} + 20px);
 
     @include screen-size("small") {
-      font-size: $mobile_large;
+      padding: 10px;
+      padding-top: calc(#{$menu_bar_height} + 20px);
+    }
+
+    h1 {
+      font-size: $font_size_large;
+      line-height: 0.9em;
+      font-weight: 600;
+      margin: 0;
+      padding: 0;
+
+      @include screen-size("small") {
+        font-size: $font_size_large_phone;
+      }
     }
   }
 
   .meta {
-    font-size: 16px;
-    line-height: 1em;
-    text-transform: uppercase;
-    margin-bottom: $large-vertical-margin;
-    margin-top: $small-vertical-margin;
-    line-height: 1em;
-    // max-width: 90%;
-    font-family: "Janson Text LT Std";
-    margin-left: $small-margin;
-    opacity: 1;
-
-    @include screen-size("small") {
-      font-size: $mobile_large;
-      margin-top: 0.5em;
-    }
-
-    .title {
-      font-weight: 600;
-    }
-
-    // @include screen-size("small") {
-    //   font-size: $mobile_xlarge;
-    //   margin-bottom: $large-vertical-margin;
-    //   overflow: hidden;
-    // }
-
-    transition: opacity $transition;
-  }
-
-  .description {
-    font-size: $mid;
-    font-weight: 500;
-    line-height: 1em;
-    text-transform: uppercase;
-    margin-bottom: $large-vertical-margin;
-    margin-top: $small-vertical-margin;
-    line-height: 1em;
-    max-width: 90%;
-    font-family: "Janson Text LT Std";
-    opacity: 1;
-    max-width: 90%;
-
-    @include screen-size("small") {
-      font-size: $mobile_large;
-    }
+    margin-bottom: 40px;
   }
 
   .caption {
-    font-size: $small;
-    font-weight: 500;
-    line-height: 1em;
-    text-transform: uppercase;
-    margin-bottom: $large-vertical-margin;
-    margin-top: $small-vertical-margin;
-    line-height: 1em;
-    max-width: 90%;
-    font-family: "Janson Text LT Std";
-    opacity: 1;
-    max-width: 90%;
-    letter-spacing: 1px;
-
-    transition: opacity $transition;
+    font-size: $font_size_small;
   }
 
-  .content {
-    width: 70ch;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: "Janson Text LT Std";
+  .inner-wrapper {
+    width: 60ch;
+    max-width: calc(100% - 20px);
   }
 
-  .content-item {
-    font-size: $xlarge;
-    font-weight: 600;
-    line-height: 1em;
-    // background: $thirdColor;
-    margin-bottom: 0.5em;
+  .author {
+    font-size: $font_size_normal;
+    line-height: 0.9em;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
 
-    img {
-      // margin-left: auto;
-      // margin-right: auto;
-      display: block;
-      width: 100%;
-      max-height: 100vh;
-      object-fit: contain;
-    }
+  .date {
+    font-size: $font_size_small;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-bottom: 10px;
+    padding-left: 2px;
+    // text-decoration: underline;
+    letter-spacing: 0.1em;
   }
 </style>
 
@@ -183,37 +135,36 @@
 
   <div class="single">
 
-    <!-- TITLE -->
+    <div class="inner-wrapper">
 
-    <div class="meta">
-      <span class="title">{post.title},</span>
-      <!-- {#if formattedDate(post.startDate, post.endDate)}
-        <span class="date">{formattedDate(post.startDate, post.endDate)},</span>
-      {/if}
-      {#if post.location}
-        <span class="location">{post.location}</span>
-        ,
-      {/if}
-      {#if post.description}
-        {@html renderBlockText(post.description)}
-      {/if} -->
-    </div>
+      <div class="meta">
+        <div class="date">
+          {format(new Date(post.publicationDate), 'yyyy-MM-dd')}
+        </div>
+        <!-- AUTHOR -->
+        <div class="author">{post.author}</div>
+        <!-- TITLE -->
+        <h1 class="title">{post.title}</h1>
+      </div>
 
-    <!-- DESCRIPTION -->
-    <!-- <div class="description" /> -->
-
-    <!-- MAIN CONTENT -->
-    <div class="content">
-      {#if post.ingress}
-        <div>
-          {@html renderBlockText(post.ingress.content)}
+      <!-- INGRESS -->
+      {#if post.ingress && post.ingress.content}
+        <div class="ingress">
+          <div>
+            {@html renderBlockText(post.ingress.content)}
+          </div>
         </div>
       {/if}
+
+      <!-- MAIN CONTENT -->
       {#if post.content}
-        <div>
-          {@html renderBlockText(post.content.content)}
+        <div class="content">
+          <div>
+            {@html renderBlockText(post.content.content)}
+          </div>
         </div>
       {/if}
+
     </div>
 
   </div>

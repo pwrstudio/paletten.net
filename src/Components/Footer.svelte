@@ -1,27 +1,56 @@
+<script>
+  // # # # # # # # # # # # # #
+  //
+  //  FOOTER
+  //
+  // # # # # # # # # # # # # #
+
+  // IMPORTS
+  // import "intersection-observer";
+  // import { navigate } from "svelte-routing";
+  // import { onMount } from "svelte";
+  // import { links } from "svelte-routing";
+  // import { fade } from "svelte/transition";
+  // import _ from "lodash";
+  // import Flickity from "flickity";
+
+  // // STORES
+  // import { menuBarText, location, filterTerm } from "../stores.js";
+
+  // COMPONENTS
+  import Logo from "./Logo.svelte";
+</script>
+
 <style lang="scss">
   @import "../variables.scss";
 
   footer {
-    font-size: $large;
-    height: 50vh;
+    height: 300px;
     width: 100vw;
-    z-index: 1000;
-    background: $grey;
+    background: white;
     font-family: "Janson Text LT Std";
-    font-size: $large;
-    font-weight: 600;
-    line-height: 0.95em;
+    line-height: 1.4em;
     overflow: hidden;
     user-select: none;
+    padding: 20px;
+    margin-top: 80px;
+    font-weight: normal;
 
     @include screen-size("small") {
-      font-size: $mobile_large;
-      line-height: 1.5em;
+      padding: 10px;
     }
 
-    .title {
-      white-space: nowrap;
-      padding-left: 10px;
+    font-size: $font_size_small;
+    font-family: Helvetica, Arial, sans-serif;
+
+    // text-decoration: underline;
+    letter-spacing: 0.1em;
+
+    .logo {
+      height: calc(#{$menu_bar_height} - 20px);
+      margin-left: 10px;
+      margin-top: 10px;
+      display: inline-block;
     }
   }
 
@@ -30,8 +59,41 @@
       display: inline;
     }
   }
+
+  .column {
+    width: 33.33%;
+    float: left;
+
+    @include screen-size("small") {
+      width: 100%;
+    }
+
+    &.last {
+      text-align: right;
+    }
+  }
 </style>
 
 <footer>
-  <span class="title">PALETTEN</span>
+  <div class="column">
+    Paletten
+    <br />
+    <br />
+    Östra Sänkverksgatan 2
+    <br />
+    413 27 Göteborg
+    <br />
+    <br />
+    © Paletten 2017
+  </div>
+  <div class="column">Paletten lorem ipsum</div>
+  <div class="column last">
+    <div class="menu-item">Artiklar</div>
+    <div class="menu-item">Projekt</div>
+    <div class="menu-item">Tidskrift</div>
+    <div class="menu-item">Om Paletten</div>
+    <div class="menu-item">Prenumeration</div>
+    <div class="menu-item">Kontakt</div>
+    <div class="menu-item">Sök</div>
+  </div>
 </footer>

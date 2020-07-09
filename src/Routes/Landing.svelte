@@ -9,6 +9,7 @@
   import { onMount } from "svelte";
   import { fade, slide } from "svelte/transition";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
+  import { format } from "date-fns";
 
   // COMPONENTS
   // import ListingItem from "../Components/ListingItem.svelte";
@@ -46,30 +47,83 @@
 <style lang="scss">
   @import "../variables.scss";
 
-  .contact {
-    background: $thirdColor;
-    margin: 0;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10;
+  .list-item {
+    // background: red;
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-size: $font_size_normal;
+
+    @include screen-size("small") {
+      flex-wrap: wrap;
+    }
+
+    .image {
+      width: 66.66%;
+      max-height: 400px;
+
+      // background: green;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @include screen-size("small") {
+        width: 100%;
+      }
+    }
+
+    .text {
+      width: 33.333%;
+      padding-right: 20px;
+      text-decoration: none;
+      color: black;
+
+      @include screen-size("small") {
+        width: 100%;
+      }
+
+      .title {
+        font-size: $font_size_large;
+        line-height: 0.9em;
+        margin-bottom: 10px;
+        font-weight: bold;
+
+        @include screen-size("small") {
+          font-size: $font_size_large_phone;
+        }
+      }
+
+      .author {
+        font-size: $font_size_normal;
+        line-height: 0.9em;
+        margin-bottom: 10px;
+        font-style: italic;
+      }
+
+      .date {
+        font-size: $font_size_small;
+        font-family: Helvetica, Arial, sans-serif;
+        margin-bottom: 10px;
+        padding-left: 2px;
+        // text-decoration: underline;
+        letter-spacing: 0.1em;
+      }
+    }
   }
 
   .landing {
-    font-size: $large;
-    background: $firstColor;
     margin: 0;
-    padding: 10px;
-    padding-top: 1em;
-    padding-bottom: 2em;
+    padding: 20px;
+    padding-top: calc(#{$menu_bar_height} + 20px);
+    // padding-top: $menu_bar_height;
     min-height: 100vh;
 
     @include screen-size("small") {
-      font-size: $mobile_large;
-      padding-top: 1.5em;
+      padding: 10px;
+      padding-top: calc(#{$menu_bar_height} + 10px);
     }
   }
 </style>
@@ -77,18 +131,26 @@
 <div class="landing">
   {#await posts then posts}
     {#each posts as p}
-      <div>
-        <a href={'/artikel/' + p.slug.current}>
-          <img
-            alt={p.title}
-            src={urlFor(p.mainImage.asset)
-              .width(600)
-              .quality(100)
-              .auto('format')
-              .url()} />
-          <div>{p.title}</div>
-        </a>
-      </div>
+      <a href={'/artikel/' + p.slug.current} class="list-item">
+        <div class="text">
+          <div class="date">
+            {format(new Date(p.publicationDate), 'yyyy-MM-dd')}
+          </div>
+          <div class="author">{p.author}</div>
+          <div class="title">{p.title}</div>
+        </div>
+        {#if p.mainImage && p.mainImage.asset}
+          <div class="image">
+            <img
+              alt={p.title}
+              src={urlFor(p.mainImage.asset)
+                .width(600)
+                .quality(100)
+                .auto('format')
+                .url()} />
+          </div>
+        {/if}
+      </a>
     {/each}
   {/await}
 </div>

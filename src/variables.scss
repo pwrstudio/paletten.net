@@ -35,6 +35,15 @@ $small-margin: 5px;
 $small-vertical-margin: 5px;
 $large-vertical-margin: 32px;
 
+// NEW
+
+$font_size_normal: 18px;
+$font_size_small: 11px;
+$font_size_large: 42px;
+$font_size_large_phone: 32px;
+
+$menu_bar_height: 50px;
+
 $breakpoints: (
   "small": (
     max-width: 800px,
