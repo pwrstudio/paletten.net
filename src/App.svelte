@@ -220,6 +220,39 @@ https://flickity.metafizzy.co
   img {
     max-width: 100%;
   }
+
+  .embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 720px;
+    width: 100%;
+    margin-bottom: 1em;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  .soundcloud-container {
+    // height: 300px;
+    width: 100%;
+    overflow: hidden;
+    max-width: 100%;
+    margin-bottom: 1em;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
 </style>
 
 <MenuBar />

@@ -92,17 +92,18 @@ const serializers = {
         },
         embedBlock: props => {
             console.dir(props)
-            const url = props.node.url
-            let embedCode = ''
-            if (url.includes('youtube')) {
-                embedCode = "https://www.youtube.com/embed/" + getVideoId(url).id
+            // YOUTUBE
+            if (props.node.url.includes('youtube')) {
+                return h('div', { className: 'embed-container' }, h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true }))
             }
-            if (url.includes('vimeo')) {
-                embedCode = "https://player.vimeo.com/video/" + getVideoId(url).id
+            // VIMEO
+            if (props.node.url.includes('vimeo')) {
+                return h('div', { className: 'embed-container' }, h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true }))
             }
-            return h(
-                'iframe',
-                { src: embedCode, width: 480, height: 320, allow: "accelerometer; autoplay; encrypted-media; gyroscope;picture-in-picture", frameborder: 0, allowfullscreen: true })
+            // SOUNDCLOUD
+            if (props.node.url.includes('soundcloud')) {
+                return h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' }))
+            }
         },
         videoBlock: props => {
             console.dir(props)
