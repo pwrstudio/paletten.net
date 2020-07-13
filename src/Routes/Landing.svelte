@@ -23,15 +23,15 @@
   // export let term = "";
 
   // ** CONSTANTS
-  const query = "*[_id == 'landingpage']{posts}[0]";
+  const query = "*[_id == 'landingpage']{posts, right}[0]";
 
   // VARIABLES
   let landingPage = loadData(query);
   // let filteredPosts = [];
 
-  landingPage.then(l => {
-    console.dir(l);
-  });
+  // landingPage.then(l => {
+  //   console.dir(l);
+  // });
 
   // $: {
   //   posts.then(posts => {
@@ -64,14 +64,51 @@
       margin-right: 10px;
     }
   }
+
+  .left-pane {
+    height: 100vh;
+    width: 66.66vw;
+    float: left;
+
+    overflow-y: auto;
+    padding-top: calc(#{$menu_bar_height} + 10px);
+
+    @include screen-size("small") {
+      height: auto;
+      width: 100vw;
+    }
+  }
+
+  .right-pane {
+    height: 100vh;
+    width: 33.33vw;
+    float: right;
+    overflow-y: auto;
+    padding-top: calc(#{$menu_bar_height} + 10px);
+
+    @include screen-size("small") {
+      height: auto;
+      width: 100vw;
+    }
+  }
 </style>
 
 {#await landingPage then landingPage}
 
-  <div class="landing" use:links>
-    {#each landingPage.posts as post}
-      <LandingItem {post} />
-    {/each}
+  <div class="pane-container">
+
+    <div class="left-pane" use:links>
+      {#each landingPage.posts as post}
+        <LandingItem {post} />
+      {/each}
+    </div>
+
+    <div class="right-pane" use:links>
+      {#each landingPage.right as post}
+        <LandingItem {post} />
+      {/each}
+    </div>
+
   </div>
 
   <Footer />

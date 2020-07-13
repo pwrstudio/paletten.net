@@ -19,14 +19,14 @@
   // *** PROPS
   export let post = {};
 
-  console.dir(post);
+  // console.dir(post);
 
   let query = "";
 
   if (post.postLink) {
-    query = "*[_id == '" + post.postLink._ref + "'][0]";
+    query = "*[_id == '" + post.postLink._ref + "']{..., author[]->{title}}[0]";
   } else {
-    query = "*[_id == '" + post._id + "'][0]";
+    query = "*[_id == '" + post._id + "']{..., author[]->{title}}[0]";
   }
 
   if (!post.layout) {
@@ -113,7 +113,7 @@
       }
 
       .title {
-        font-size: $font_size_large;
+        font-size: $font_size_normal;
         line-height: 0.9em;
         margin-bottom: 10px;
         font-weight: bold;
@@ -143,7 +143,7 @@
     &.full {
       width: 100%;
       width: calc(100% - 20px);
-      height: 500px;
+      height: 300px;
 
       @include screen-size("small") {
         width: 100%;
@@ -153,8 +153,12 @@
 
     &.half {
       width: 50%;
-      width: calc(50% - 20px);
-      height: 400px;
+      // width: calc(50% - 20px);
+      //       width: calc(100% - 20px);
+
+      // height: 300px;
+      width: calc(100% - 20px);
+      height: 300px;
 
       @include screen-size("small") {
         width: 100%;
@@ -163,8 +167,11 @@
     }
 
     &.third {
-      width: calc(33.3333% - 20px);
-      height: 400px;
+      // width: calc(33.3333% - 20px);
+      // height: 400px;
+      width: calc(100% - 20px);
+      height: 300px;
+
       flex-wrap: wrap;
       overflow: hidden;
       display: block;
@@ -222,8 +229,8 @@
         <div class="date">{formattedDate(postContent.publicationDate)}</div>
       {/if}
       <!-- AUTHOR -->
-      {#if postContent.author}
-        <div class="author">{postContent.author}</div>
+      {#if postContent.author && postContent.author[0]}
+        <div class="author">{postContent.author[0].title}</div>
       {/if}
       <!-- TITLE -->
       <div class="title">{postContent.title}</div>

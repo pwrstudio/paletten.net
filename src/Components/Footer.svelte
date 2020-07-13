@@ -26,7 +26,7 @@
 
   footer {
     width: 100vw;
-    background: white;
+    background: #f4f4f4;
     font-family: $serif-stack;
     line-height: 1.4em;
     overflow: hidden;

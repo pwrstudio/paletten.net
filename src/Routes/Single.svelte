@@ -23,7 +23,7 @@
   location.set("single");
 
   // ** CONSTANTS
-  const query = "*[slug.current == $slug][0]";
+  const query = "*[slug.current == $slug]{..., author[]->{title}}[0]";
   const params = { slug: slug };
   // const query = "*[]";
 
@@ -147,8 +147,8 @@
       <div class="meta">
         <div class="date">{formattedDate(post.publicationDate)}</div>
         <!-- AUTHOR -->
-        {#if post.author}
-          <div class="author">{post.author}</div>
+        {#if post.author && post.author[0]}
+          <div class="author">{post.author[0].title}</div>
         {/if}
         <!-- TITLE -->
         <h1 class="title">{post.title}</h1>
