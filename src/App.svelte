@@ -31,6 +31,7 @@
     margin: 0;
     background: $secondColor;
     font-family: "Janson Text LT Std";
+    scroll-behavior: smooth;
   }
 
   p {
@@ -236,7 +237,7 @@ https://flickity.metafizzy.co
     overflow: hidden;
     max-width: 720px;
     width: 100%;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 
     iframe {
       position: absolute;
@@ -253,7 +254,7 @@ https://flickity.metafizzy.co
     width: 100%;
     overflow: hidden;
     max-width: 100%;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 
     iframe {
       width: 100%;
@@ -264,14 +265,14 @@ https://flickity.metafizzy.co
 
   figure {
     margin-bottom: 1em;
-    background: lightgray;
 
     .caption {
-      font-size: 0.8em;
+      font-size: $font_size_caption;
     }
 
     .credits {
-      font-size: 0.8em;
+      font-size: $font_size_small;
+      font-family: $sans-stack;
     }
   }
 
@@ -279,14 +280,55 @@ https://flickity.metafizzy.co
     font-size: 0.8em;
   }
 
-  body {
-    counter-reset: footnote; /* Set a counter named 'section', and its initial value is 0. */
+  .content {
+    counter-reset: fnoteCounter;
+
+    audio {
+      width: 100%;
+      border-radius: 0px;
+      background: red;
+    }
   }
 
   .footnote-link {
-    background: red;
-    counter-increment: footnote; /* Increment the value of section counter by 1 */
-    content: "(" counter(footnote) ")";
+    counter-increment: fnoteCounter;
+    color: inherit;
+    text-decoration: none;
+
+    &:after {
+      vertical-align: super;
+      font-weight: bold;
+      font-size: 0.8em;
+      content: "(" counter(fnoteCounter) ")";
+      margin-left: 3px;
+    }
+
+    &:hover {
+      color: grey;
+    }
+
+    &:target {
+      background: lightgrey;
+    }
+  }
+
+  .footnotes {
+    margin-top: 2em;
+    ol {
+      font-size: $font_size_caption;
+
+      li {
+        margin-bottom: 0.5em;
+
+        p {
+          margin-bottom: 0;
+        }
+
+        &:target {
+          background: lightgrey;
+        }
+      }
+    }
   }
 </style>
 

@@ -11,12 +11,18 @@
   import { quintOut } from "svelte/easing";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
   import { formattedDate } from "../global.js";
+  import get from "lodash/get";
+  import flatMap from "lodash/flatMap";
 
   // *** PROPS
   export let slug = "";
 
   // COMPONENTS
   import Footer from "../Components/Footer.svelte";
+  import ImageBlock from "../Components/Blocks/ImageBlock.svelte";
+  import VideoBlock from "../Components/Blocks/VideoBlock.svelte";
+  import AudioBlock from "../Components/Blocks/AudioBlock.svelte";
+  import EmbedBlock from "../Components/Blocks/EmbedBlock.svelte";
 
   // STORES
   import { location, menuBarText } from "../stores.js";
@@ -25,57 +31,21 @@
   // ** CONSTANTS
   const query = "*[slug.current == $slug]{..., author[]->{title}}[0]";
   const params = { slug: slug };
-  // const query = "*[]";
 
   let post = loadData(query, params);
-
-  // let fP = [];
+  let footnotePosts = [];
 
   post.then(post => {
     console.dir(post);
-    // fP = post.map(p => {
-    //   return { file: p.originalFilename, id: p._id };
-    // });
+
+    let a = flatMap(
+      post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
+    );
+
+    footnotePosts = a.filter(x => x._type === "footnote");
+
+    console.dir(footnotePosts);
   });
-
-  // menuBarText.set(false);
-
-  // FUNCTIONS
-  // const formattedDate = (start, end) => {
-  //   if (!start) {
-  //     return false;
-  //   }
-
-  //   const startDate = Date.parse(start);
-
-  //   if (!end) {
-  //     return format(startDate, "dd.MM.yyyy");
-  //   }
-
-  //   const endDate = Date.parse(end);
-
-  //   if (format(startDate, "dd.MM.yyyy") == format(endDate, "dd.MM.yyyy")) {
-  //     return format(startDate, "dd.MM.yyyy");
-  //   }
-
-  //   const startFormat =
-  //     getYear(startDate) == getYear(endDate) ? "dd.MM" : "dd.MM.yyyy";
-  //   const endFormat = "dd.MM.yyyy";
-
-  //   return format(startDate, startFormat) + " – " + format(endDate, endFormat);
-  // };
-
-  // post.then(p => {
-  //   console.dir(p);
-  // });
-
-  // // *** ON MOUNT
-  // onMount(async () => {
-  //   window.scrollTo(0, 0);
-  //   setTimeout(() => {
-  //     bannerActive = true;
-  //   }, 3000);
-  // });
 </script>
 
 <style lang="scss">
@@ -113,10 +83,6 @@
     margin-bottom: 40px;
   }
 
-  .caption {
-    font-size: $font_size_small;
-  }
-
   .inner-wrapper {
     width: 60ch;
     max-width: calc(100% - 20px);
@@ -131,7 +97,7 @@
 
   .date {
     font-size: $font_size_small;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: $sans-stack;
     margin-bottom: 10px;
     padding-left: 2px;
     // text-decoration: underline;
@@ -166,9 +132,34 @@
       <!-- MAIN CONTENT -->
       {#if post.content}
         <div class="content">
-          <div>
-            {@html renderBlockText(post.content.content)}
-          </div>
+          {#each post.content.content as block}
+            {#if block._type === 'block'}
+              {@html renderBlockText(block)}
+            {/if}
+            {#if block._type === 'image'}
+              <ImageBlock {block} />
+            {/if}
+            {#if block._type === 'videoBlock'}
+              <VideoBlock {block} />
+            {/if}
+            {#if block._type === 'audioBlock'}
+              <AudioBlock {block} />
+            {/if}
+            {#if block._type === 'embedBlock'}
+              <EmbedBlock {block} />
+            {/if}
+          {/each}
+
+        </div>
+        <div class="footnotes">
+          <ol>
+            {#each footnotePosts as footnote}
+              <li id={'note-' + footnote._key}>
+                {@html renderBlockText(footnote.content.content)}
+                <a href={'#link-' + footnote._key}>BACK UP</a>
+              </li>
+            {/each}
+          </ol>
         </div>
       {/if}
 

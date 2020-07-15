@@ -132,7 +132,7 @@
 
       .date {
         font-size: $font_size_small;
-        font-family: Helvetica, Arial, sans-serif;
+        font-family: $sans-stack;
         margin-bottom: 10px;
         padding-left: 2px;
         // text-decoration: underline;

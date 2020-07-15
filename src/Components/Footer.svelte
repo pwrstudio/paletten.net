@@ -40,7 +40,7 @@
     }
 
     font-size: $font_size_small;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: $sans-stack;
 
     // text-decoration: underline;
     letter-spacing: 0.1em;

@@ -2,6 +2,8 @@ import sanityClient from '@sanity/client'
 import blocksToHtml from '@sanity/block-content-to-html'
 import imageUrlBuilder from '@sanity/image-url'
 import getVideoId from "get-video-id";
+import { text } from 'svelte/internal';
+import has from 'lodash/has'
 
 const tracer = x => {
     console.dir(x)
@@ -16,6 +18,15 @@ export const client = sanityClient({
 })
 
 const h = blocksToHtml.h
+
+const prepareTextElements = props => {
+    let textElements = []
+    if (has(props, 'node.caption.content'))
+        textElements.push(h('figcaption', { className: 'caption' }, toPlainText(props.node.caption.content)))
+    if (has(props, 'node.attribution'))
+        textElements.push(h('figcaption', { className: 'credits' }, props.node.attribution))
+    return textElements
+}
 
 export const renderBlockText = text =>
     blocksToHtml({
@@ -57,17 +68,12 @@ const serializers = {
                 props.children
             ),
         footnote: props => {
-            let footNoteText = ''
-            if (props.mark && props.mark.content && props.mark.content.content) {
-                footNoteText = toPlainText(props.mark.content.content)
-            }
+            console.dir(props)
             return h(
-                'span',
-                { className: 'footnote' }, [
+                'a',
+                { id: 'link-' + props.mark._key, className: 'footnote-link', href: '#note-' + props.mark._key },
                 props.children,
-                h('sup', { className: 'footnote-link' }, 'XX'),
-                h('span', { className: 'footnote-text' }, footNoteText)
-            ])
+            )
         }
     },
     types: {
@@ -88,15 +94,48 @@ const serializers = {
 
             return h('p', { className: style }, props.children)
         },
+        image: props => {
+            // console.log('IMAGE')
+            // if (has(props, 'node.asset._ref')) {
+            //     let assetPost = loadData('*[_id == $ref][0]', { ref: props.node.asset._ref })
+            //     assetPost.then(image => {
+            //         // console.dir(image)
+            //         // console.log(urlFor(props.node.asset)
+            //         //     .width(800)
+            //         //     .quality(90)
+            //         //     .auto('format')
+            //         //     .url())
+            //         // console.dir(props)
+            //         return h('figure', { className: 'image' }, [
+            //             h('img', {
+            //                 src: urlFor(props.node.asset)
+            //                     .width(800)
+            //                     .quality(90)
+            //                     .auto('format')
+            //                     .url()
+            //             }),
+            //             ...prepareTextElements(props)
+            //         ])
+            //     })
+            // }
+            return h('figure', { className: 'image' }, [
+                h('img', {
+                    src: urlFor(props.node.asset)
+                        .width(800)
+                        .quality(90)
+                        .auto('format')
+                        .url()
+                }),
+                ...prepareTextElements(props)
+            ])
+        },
         embedBlock: props => {
-            // console.dir(props)
             // YOUTUBE
             if (props.node.url.includes('youtube')) {
                 return h('figure', { className: 'youtube' }, [
                     h('div', { className: 'embed-container' },
                         h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true })),
-                    h('figcaption', { className: 'caption' }, 'XXX'),
-                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                    ...prepareTextElements(props)
                 ])
             }
             // VIMEO
@@ -104,39 +143,33 @@ const serializers = {
                 return h('figure', { className: 'vimeo' }, [
                     h('div', { className: 'embed-container' },
                         h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true })),
-                    h('figcaption', { className: 'caption' }, 'XXX'),
-                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                    ...prepareTextElements(props)
                 ])
             }
             // SOUNDCLOUD
             if (props.node.url.includes('soundcloud')) {
                 return h('figure', { className: 'soundcloud' }, [
                     h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' })),
-                    h('figcaption', { className: 'caption' }, 'XXX'),
-                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                    ...prepareTextElements(props)
                 ])
             }
         },
         videoBlock: props => {
-            // console.dir(props)
             const videoUrl = 'https://cdn.sanity.io/files/1tpw92x3/production/' + props.node.videoFile.asset._ref
                 .replace('file-', '')
                 .replace('-mp4', '.mp4')
             return h('figure', { className: 'video' }, [
                 h('video', { src: videoUrl, controls: true, loop: true, autoplay: props.node.autoPlay }),
-                h('figcaption', { className: 'caption' }, 'XXX'),
-                h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                ...prepareTextElements(props)
             ])
         },
         audioBlock: props => {
-            // console.dir(props)
             const audioUrl = 'https://cdn.sanity.io/files/1tpw92x3/production/' + props.node.audioFile.asset._ref
                 .replace('file-', '')
                 .replace('-mp3', '.mp3')
             return h('figure', { className: 'audio' }, [
                 h('audio', { src: audioUrl, controls: true }),
-                h('figcaption', { className: 'caption' }, 'XXX'),
-                h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                ...prepareTextElements(props)
             ])
         }
     }
