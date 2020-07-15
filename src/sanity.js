@@ -56,72 +56,88 @@ const serializers = {
                 { className: 'highlight' },
                 props.children
             ),
-        footnote: props =>
-            h(
+        footnote: props => {
+            let footNoteText = ''
+            if (props.mark && props.mark.content && props.mark.content.content) {
+                footNoteText = toPlainText(props.mark.content.content)
+            }
+            return h(
                 'span',
-                { className: 'footnote' },
-                props.children
-            ),
-        alignLeft: props =>
-            h(
-                'p',
-                { className: 'align-left' },
-                props.children
-            ),
-        alignCenter: props =>
-            h(
-                'p',
-                { className: 'align-center' },
-                props.children
-            ),
-        alignRight: props =>
-            h(
-                'p',
-                { className: 'align-right' },
-                props.children
-            )
+                { className: 'footnote' }, [
+                props.children,
+                h('sup', { className: 'footnote-link' }, 'XX'),
+                h('span', { className: 'footnote-text' }, footNoteText)
+            ])
+        }
     },
     types: {
         block: props => {
             const style = props.node.style || 'normal'
-            // console.dir(props)
-            return style === 'blockquote'
-                ? h('blockquote', {}, props.children)
-                : h('p', { className: style }, props.children)
 
+            if (style === 'blockquote')
+                return h('blockquote', {}, props.children)
+
+            if (style === 'h2')
+                return h('h2', {}, props.children)
+
+            if (style === 'h3')
+                return h('h3', {}, props.children)
+
+            if (style === 'h4')
+                return h('h4', {}, props.children)
+
+            return h('p', { className: style }, props.children)
         },
         embedBlock: props => {
-            console.dir(props)
+            // console.dir(props)
             // YOUTUBE
             if (props.node.url.includes('youtube')) {
-                return h('div', { className: 'embed-container' }, h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true }))
+                return h('figure', { className: 'youtube' }, [
+                    h('div', { className: 'embed-container' },
+                        h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true })),
+                    h('figcaption', { className: 'caption' }, 'XXX'),
+                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                ])
             }
             // VIMEO
             if (props.node.url.includes('vimeo')) {
-                return h('div', { className: 'embed-container' }, h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true }))
+                return h('figure', { className: 'vimeo' }, [
+                    h('div', { className: 'embed-container' },
+                        h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true })),
+                    h('figcaption', { className: 'caption' }, 'XXX'),
+                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                ])
             }
             // SOUNDCLOUD
             if (props.node.url.includes('soundcloud')) {
-                return h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' }))
+                return h('figure', { className: 'soundcloud' }, [
+                    h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' })),
+                    h('figcaption', { className: 'caption' }, 'XXX'),
+                    h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+                ])
             }
         },
         videoBlock: props => {
-            console.dir(props)
+            // console.dir(props)
             const videoUrl = 'https://cdn.sanity.io/files/1tpw92x3/production/' + props.node.videoFile.asset._ref
                 .replace('file-', '')
                 .replace('-mp4', '.mp4')
-            return h(
-                'video',
-                { src: videoUrl, controls: true, loop: true, autoplay: props.node.autoPlay })
+            return h('figure', { className: 'video' }, [
+                h('video', { src: videoUrl, controls: true, loop: true, autoplay: props.node.autoPlay }),
+                h('figcaption', { className: 'caption' }, 'XXX'),
+                h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+            ])
         },
         audioBlock: props => {
-            console.dir(props)
+            // console.dir(props)
             const audioUrl = 'https://cdn.sanity.io/files/1tpw92x3/production/' + props.node.audioFile.asset._ref
                 .replace('file-', '')
                 .replace('-mp3', '.mp3')
-            return h(
-                'audio',
-                { src: audioUrl, controls: true })
+            return h('figure', { className: 'audio' }, [
+                h('audio', { src: audioUrl, controls: true }),
+                h('figcaption', { className: 'caption' }, 'XXX'),
+                h('figcaption', { className: 'credits' }, 'Credits: xxxx')
+            ])
         }
     }
 }

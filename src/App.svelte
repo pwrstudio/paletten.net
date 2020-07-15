@@ -221,6 +221,14 @@ https://flickity.metafizzy.co
     max-width: 100%;
   }
 
+  .right-aligned {
+    text-align: right;
+  }
+
+  .center-aligned {
+    text-align: center;
+  }
+
   .embed-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -252,6 +260,33 @@ https://flickity.metafizzy.co
       height: 100%;
       border: 0;
     }
+  }
+
+  figure {
+    margin-bottom: 1em;
+    background: lightgray;
+
+    .caption {
+      font-size: 0.8em;
+    }
+
+    .credits {
+      font-size: 0.8em;
+    }
+  }
+
+  .note {
+    font-size: 0.8em;
+  }
+
+  body {
+    counter-reset: footnote; /* Set a counter named 'section', and its initial value is 0. */
+  }
+
+  .footnote-link {
+    background: red;
+    counter-increment: footnote; /* Increment the value of section counter by 1 */
+    content: "(" counter(footnote) ")";
   }
 </style>
 
