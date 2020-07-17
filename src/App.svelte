@@ -27,6 +27,8 @@
 
   html,
   body {
+    font-size: $font_size_normal;
+    line-height: 1.4em;
     padding: 0;
     margin: 0;
     background: $secondColor;
@@ -205,10 +207,13 @@ https://flickity.metafizzy.co
 
   .align-center {
     text-align: center;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .align-right {
     text-align: right;
+    padding-left: 16px;
   }
 
   p {
@@ -263,31 +268,13 @@ https://flickity.metafizzy.co
     }
   }
 
-  figure {
-    margin-bottom: 1em;
-
-    .caption {
-      font-size: $font_size_caption;
-    }
-
-    .credits {
-      font-size: $font_size_small;
-      font-family: $sans-stack;
-    }
-  }
-
   .note {
-    font-size: 0.8em;
+    font-size: $font_size_caption;
+    line-height: 1.4em;
   }
 
   .content {
     counter-reset: fnoteCounter;
-
-    audio {
-      width: 100%;
-      border-radius: 0px;
-      background: red;
-    }
   }
 
   .footnote-link {
@@ -313,22 +300,101 @@ https://flickity.metafizzy.co
   }
 
   .footnotes {
-    margin-top: 2em;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
     ol {
+      border-top: 1px solid $grey;
+      padding-top: 2rem;
+      margin: 0;
+      padding-left: 20px;
       font-size: $font_size_caption;
+      line-height: 1.4em;
+      margin-left: auto;
+      margin-right: auto;
+      width: $text_width;
+      max-width: calc(100% - 20px);
 
       li {
         margin-bottom: 0.5em;
 
         p {
-          margin-bottom: 0;
+          // margin-bottom: 0;
+          display: inline;
+          margin: 0;
+          padding: 0;
         }
 
         &:target {
           background: lightgrey;
         }
+
+        a {
+          color: inherit;
+        }
+
+        .back-link {
+          color: inherit;
+          background: $grey;
+          padding: 2px;
+          text-decoration: none;
+
+          &:hover {
+            background: grey;
+          }
+        }
       }
     }
+  }
+
+  .content {
+    a {
+      color: inherit;
+    }
+
+    figcaption {
+      p {
+        margin-bottom: 0em;
+        padding-left: 0;
+        margin-left: 0;
+      }
+    }
+  }
+
+  .content,
+  .ingress {
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    ol,
+    ul {
+      margin-left: auto;
+      margin-right: auto;
+      width: $text_width;
+      max-width: calc(100% - 20px);
+    }
+
+    blockquote {
+      width: $text_width * 1.4;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: calc(100% - 20px);
+    }
+  }
+
+  blockquote {
+    font-size: $font_size_large;
+    line-height: 1.2em;
+    margin-bottom: 2rem;
+  }
+
+  h2,
+  h3,
+  h4 {
+    font-size: $font_size_normal;
+    font-weight: bold;
   }
 </style>
 

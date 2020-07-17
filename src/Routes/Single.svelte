@@ -55,7 +55,8 @@
     font-size: $font_size_normal;
     font-family: $serif-stack;
     margin: 0;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     width: 100vw;
     overflow-x: hidden;
 
@@ -68,10 +69,11 @@
 
     h1 {
       font-size: $font_size_large;
-      line-height: 0.9em;
-      font-weight: 600;
+      line-height: 1.1em;
+      font-weight: normal;
       margin: 0;
       padding: 0;
+      // text-transform: uppercase;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
@@ -80,18 +82,22 @@
   }
 
   .meta {
-    margin-bottom: 40px;
-  }
-
-  .inner-wrapper {
-    width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    width: $text_width;
     max-width: calc(100% - 20px);
   }
 
   .author {
     font-size: $font_size_normal;
-    line-height: 0.9em;
+    // font-size: $font_size_large;
+    line-height: 1.1em;
     margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .ingress {
     font-style: italic;
   }
 
@@ -108,62 +114,56 @@
 {#await post then post}
   <div class="single">
 
-    <div class="inner-wrapper">
-
-      <div class="meta">
-        <div class="date">{formattedDate(post.publicationDate)}</div>
-        <!-- AUTHOR -->
-        {#if post.author && post.author[0]}
-          <div class="author">{post.author[0].title}</div>
-        {/if}
-        <!-- TITLE -->
-        <h1 class="title">{post.title}</h1>
-      </div>
-
-      <!-- INGRESS -->
-      {#if post.ingress && post.ingress.content}
-        <div class="ingress">
-          <div>
-            {@html renderBlockText(post.ingress.content)}
-          </div>
-        </div>
+    <div class="meta">
+      <div class="date">{formattedDate(post.publicationDate)}</div>
+      <!-- AUTHOR -->
+      {#if post.author && post.author[0]}
+        <div class="author">{post.author[0].title}</div>
       {/if}
-
-      <!-- MAIN CONTENT -->
-      {#if post.content}
-        <div class="content">
-          {#each post.content.content as block}
-            {#if block._type === 'block'}
-              {@html renderBlockText(block)}
-            {/if}
-            {#if block._type === 'image'}
-              <ImageBlock {block} />
-            {/if}
-            {#if block._type === 'videoBlock'}
-              <VideoBlock {block} />
-            {/if}
-            {#if block._type === 'audioBlock'}
-              <AudioBlock {block} />
-            {/if}
-            {#if block._type === 'embedBlock'}
-              <EmbedBlock {block} />
-            {/if}
-          {/each}
-
-        </div>
-        <div class="footnotes">
-          <ol>
-            {#each footnotePosts as footnote}
-              <li id={'note-' + footnote._key}>
-                {@html renderBlockText(footnote.content.content)}
-                <a href={'#link-' + footnote._key}>BACK UP</a>
-              </li>
-            {/each}
-          </ol>
-        </div>
-      {/if}
-
+      <!-- TITLE -->
+      <h1 class="title">{post.title}</h1>
     </div>
+
+    <!-- INGRESS -->
+    {#if post.ingress && post.ingress.content}
+      <div class="ingress">
+        {@html renderBlockText(post.ingress.content)}
+      </div>
+    {/if}
+
+    <!-- MAIN CONTENT -->
+    {#if post.content}
+      <div class="content">
+        {#each post.content.content as block}
+          {#if block._type === 'block'}
+            {@html renderBlockText(block)}
+          {/if}
+          {#if block._type === 'image'}
+            <ImageBlock {block} />
+          {/if}
+          {#if block._type === 'videoBlock'}
+            <VideoBlock {block} />
+          {/if}
+          {#if block._type === 'audioBlock'}
+            <AudioBlock {block} />
+          {/if}
+          {#if block._type === 'embedBlock'}
+            <EmbedBlock {block} />
+          {/if}
+        {/each}
+
+      </div>
+      <div class="footnotes">
+        <ol>
+          {#each footnotePosts as footnote}
+            <li id={'note-' + footnote._key}>
+              {@html renderBlockText(footnote.content.content)}
+              <a href={'#link-' + footnote._key} class="back-link">↳</a>
+            </li>
+          {/each}
+        </ol>
+      </div>
+    {/if}
 
   </div>
 

@@ -43,13 +43,15 @@ $large-vertical-margin: 32px;
 $half-grey: rgba(90, 90, 90, 1);
 $full-grey: rgba(120, 120, 120, 1);
 
-$font_size_normal: 18px;
+$font_size_normal: 19px;
 $font_size_caption: 15px;
-$font_size_small: 11px;
-$font_size_large: 42px;
+$font_size_small: 12px;
+$font_size_large: 36px;
 $font_size_large_phone: 32px;
 
 $menu_bar_height: 40px;
+
+$text_width: 600px;
 
 $breakpoints: (
   "small": (

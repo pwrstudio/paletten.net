@@ -21,13 +21,28 @@
   @import "../../variables.scss";
 
   .audio {
-    .caption {
-      font-size: $font_size_caption;
+    width: $text_width;
+    max-width: calc(100% - 20px);
+    margin-left: auto;
+    margin-right: auto;
+    font-size: $font_size_small;
+    line-height: 1.2em;
+    font-family: $sans-stack;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    audio {
+      width: 100%;
+      border-radius: 0px;
     }
 
-    .attribution {
-      font-size: $font_size_small;
-      font-family: $sans-stack;
+    .text {
+      // display: flex;
+      .caption {
+      }
+
+      .attribution {
+      }
     }
   }
 </style>

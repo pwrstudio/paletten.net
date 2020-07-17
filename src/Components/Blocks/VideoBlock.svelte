@@ -21,13 +21,25 @@
   @import "../../variables.scss";
 
   .video {
+    width: $text_width;
+    max-width: calc(100% - 20px);
+    margin-left: auto;
+    margin-right: auto;
+    font-size: $font_size_small;
+    line-height: 1.2em;
+    font-family: $sans-stack;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    video {
+      outline: none;
+      border: 0;
+    }
+
     .caption {
-      font-size: $font_size_caption;
     }
 
     .attribution {
-      font-size: $font_size_small;
-      font-family: $sans-stack;
     }
   }
 </style>
@@ -35,7 +47,11 @@
 <figure class="video">
 
   <!-- VIDEO -->
-  <video src={videoUrl} controls loop autoplay={block.autoPlay} />
+  <video
+    src={videoUrl}
+    controls={!block.autoPlay}
+    loop={block.autoPlay}
+    autoplay={block.autoPlay} />
 
   <!-- CAPTION -->
   {#if has(block, 'caption.content')}

@@ -6,8 +6,9 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import has from "lodash/has";
   import { urlFor, loadData, renderBlockText } from "../../sanity.js";
+  import get from "lodash/get";
+  import has from "lodash/has";
 
   // PROPS
   export let block = {};
@@ -17,18 +18,66 @@
   @import "../../variables.scss";
 
   .image {
-    .caption {
-      font-size: $font_size_caption;
+    width: $text_width;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: $font_size_small;
+    line-height: 1.2em;
+    font-family: $sans-stack;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    &.fullwidth {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        max-height: 80vh;
+      }
     }
 
-    .attribution {
-      font-size: $font_size_small;
-      font-family: $sans-stack;
+    &.fullheight {
+      width: 100%;
+      max-height: unset;
+      height: calc(100vh - #{$menu_bar_height});
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 0;
+      padding-top: 0;
+      img {
+        max-height: 90vh;
+      }
+    }
+
+    &.padded {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .text {
+      // display: flex;
+      .caption {
+      }
+
+      .attribution {
+      }
     }
   }
 </style>
 
-<figure class="image">
+<figure
+  class="image"
+  style={'background: ' + get(block, 'backgroundColor.hex', 'transparent')}
+  class:padded={has(block, 'backgroundColor.hex')}
+  class:fullwidth={block.fullWidth}
+  class:fullheight={block.fullHeight}>
 
   <!-- IMAGE -->
   <img
@@ -39,15 +88,17 @@
       .url()} />
 
   <!-- CAPTION -->
-  {#if has(block, 'caption.content')}
-    <figcaption class="caption">
-      {@html renderBlockText(block.caption.content)}
-    </figcaption>
-  {/if}
+  <div class="text">
+    {#if has(block, 'caption.content')}
+      <figcaption class="caption">
+        {@html renderBlockText(block.caption.content)}
+      </figcaption>
+    {/if}
 
-  <!-- ATTRIBUTION  -->
-  {#if has(block, 'attribution')}
-    <figcaption class="attribution">{block.attribution}</figcaption>
-  {/if}
+    <!-- ATTRIBUTION  -->
+    {#if has(block, 'attribution')}
+      <figcaption class="attribution">{block.attribution}</figcaption>
+    {/if}
+  </div>
 
 </figure>

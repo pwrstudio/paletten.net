@@ -246,6 +246,7 @@
 
     .menu-item {
       font-size: $font_size_large;
+      line-height: 1.4em;
       font-weight: bold;
       text-align: right;
       padding-right: 15px;
