@@ -31,7 +31,7 @@
     "date-fns": "^2.14.0",
     "flickity": "^2.2.1",
     "get-video-id": "^3.1.4",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "scripts": {
     "build": "rollup -c",
