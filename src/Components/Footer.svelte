@@ -6,19 +6,18 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
+  // import _ from "lodash";
   // import "intersection-observer";
   // import { navigate } from "svelte-routing";
   // import { onMount } from "svelte";
   // import { links } from "svelte-routing";
   // import { fade } from "svelte/transition";
-  // import _ from "lodash";
   // import Flickity from "flickity";
 
   // // STORES
   // import { menuBarText, location, filterTerm } from "../stores.js";
 
   // COMPONENTS
-  import Logo from "./Logo.svelte";
 </script>
 
 <style lang="scss">
@@ -32,7 +31,7 @@
     overflow: hidden;
     user-select: none;
     padding: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 100px;
     font-weight: normal;
 
     @include screen-size("small") {

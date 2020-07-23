@@ -1,17 +1,17 @@
 <script>
   // # # # # # # # # # # # # #
   //
-  //  ARTIKLAR
+  //  LIST: ARTIKLAR
   //
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { urlFor, loadData, renderBlockText } from "../sanity.js";
+  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
   import { links } from "svelte-routing";
 
   // COMPONENTS
-  import LandingItem from "../Components/LandingItem.svelte";
-  import Footer from "../Components/Footer.svelte";
+  import LandingItem from "../../Components/LandingItem.svelte";
+  import Footer from "../../Components/Footer.svelte";
 
   // STORES
   // import { location, filterTerm } from "../stores.js";
@@ -26,13 +26,13 @@
   // VARIABLES
   let posts = loadData(query);
 
-  posts.then(l => {
-    console.dir(l);
-  });
+  // posts.then(l => {
+  //   console.dir(l);
+  // });
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import "../../variables.scss";
 
   .landing {
     margin: 0;
@@ -42,7 +42,7 @@
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    margin-right: 20px;
+    // margin-right: 20px;
 
     @include screen-size("small") {
       // padding: 10px;

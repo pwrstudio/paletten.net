@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "../variables.scss";
+  @import "../../variables.scss";
 
   svg {
     &:hover {

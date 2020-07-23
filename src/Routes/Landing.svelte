@@ -65,12 +65,26 @@
     }
   }
 
-  .left-pane {
-    height: 100vh;
-    width: 66.66vw;
-    float: left;
+  // .left-pane {
+  //   height: 100vh;
+  //   width: 66.66vw;
+  //   float: left;
 
-    overflow-y: auto;
+  //   overflow-y: auto;
+  //   padding-top: calc(#{$menu_bar_height} + 10px);
+
+  //   @include screen-size("small") {
+  //     height: auto;
+  //     width: 100vw;
+  //   }
+  // }
+
+  .left-pane {
+    // height: 100vh;
+    width: 100vw;
+    // float: left;
+
+    // overflow-y: auto;
     padding-top: calc(#{$menu_bar_height} + 10px);
 
     @include screen-size("small") {
@@ -103,11 +117,11 @@
       {/each}
     </div>
 
-    <div class="right-pane" use:links>
+    <!-- <div class="right-pane" use:links>
       {#each landingPage.right as post}
         <LandingItem {post} />
       {/each}
-    </div>
+    </div> -->
 
   </div>
 

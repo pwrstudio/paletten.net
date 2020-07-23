@@ -28,7 +28,7 @@
 </style>
 
 <svelte:head>
-  <title>404 / NOVEMBRE</title>
+  <title>404</title>
 </svelte:head>
 
 <div class="placeholder">

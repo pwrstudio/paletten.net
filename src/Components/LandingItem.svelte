@@ -12,6 +12,9 @@
   import { formattedDate } from "../global.js";
   import _ from "lodash";
 
+  // COMPONENTS
+  import Authors from "./Authors.svelte";
+
   // STORES
   //   import { location, filterTerm } from "../stores.js";
   //   location.set("index");
@@ -22,11 +25,13 @@
   // console.dir(post);
 
   let query = "";
+  let link = "";
 
   if (post.postLink) {
-    query = "*[_id == '" + post.postLink._ref + "']{..., author[]->{title}}[0]";
+    query =
+      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]";
   } else {
-    query = "*[_id == '" + post._id + "']{..., author[]->{title}}[0]";
+    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
   }
 
   if (!post.layout) {
@@ -42,7 +47,15 @@
   //   // let filteredPosts = [];
 
   postContent.then(l => {
-    console.dir(l);
+    let dir = "";
+    if (l._type === "post") {
+      dir = "/artiklar/";
+    } else if (l._type === "tidskrift") {
+      dir = "/tidskrift/";
+    } else if (l._type === "projekt") {
+      dir = "/projekt/";
+    }
+    link = dir + l.slug.current;
   });
 
   // $: {
@@ -91,7 +104,7 @@
         align-items: center;
         img {
           max-width: calc(100% - 40px);
-          max-height: calc(100% - 40px);
+          max-height: 280px;
         }
       }
 
@@ -128,6 +141,7 @@
         line-height: 0.9em;
         margin-bottom: 10px;
         font-style: italic;
+        pointer-events: none;
       }
 
       .date {
@@ -142,7 +156,7 @@
 
     &.full {
       width: 100%;
-      width: calc(100% - 20px);
+      width: calc(100% - 40px);
       height: 300px;
 
       @include screen-size("small") {
@@ -157,7 +171,7 @@
       //       width: calc(100% - 20px);
 
       // height: 300px;
-      width: calc(100% - 20px);
+      width: calc(100% - 40px);
       height: 300px;
 
       @include screen-size("small") {
@@ -169,7 +183,7 @@
     &.third {
       // width: calc(33.3333% - 20px);
       // height: 400px;
-      width: calc(100% - 20px);
+      width: calc(100% - 40px);
       height: 300px;
 
       flex-wrap: wrap;
@@ -215,7 +229,7 @@
     class:third={post.layout == 'third'} />
 {:then postContent}
   <a
-    href={'/artikel/' + postContent.slug.current}
+    href={link}
     class="list-item"
     in:fade
     style={'background: ' + (post.totalColor ? _.get(post, 'color.hex', 'transparent') : 'transparent')}
@@ -225,12 +239,16 @@
     class:padded={post.totalColor}>
     <div class="text">
       <!-- DATE -->
-      {#if postContent.publicationDate}
+      {#if postContent.tidsPeriod}
+        <div class="date">{postContent.tidsPeriod}</div>
+      {:else if postContent.publicationDate}
         <div class="date">{formattedDate(postContent.publicationDate)}</div>
       {/if}
       <!-- AUTHOR -->
-      {#if postContent.author && postContent.author[0]}
-        <div class="author">{postContent.author[0].title}</div>
+      {#if postContent.author}
+        <div class="author">
+          <Authors authors={postContent.author} />
+        </div>
       {/if}
       <!-- TITLE -->
       <div class="title">{postContent.title}</div>

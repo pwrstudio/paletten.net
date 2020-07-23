@@ -12,167 +12,29 @@
   import { links } from "svelte-routing";
   import { fade } from "svelte/transition";
   import _ from "lodash";
-  import Flickity from "flickity";
+  // import Flickity from "flickity";
 
   // STORES
   import { menuBarText, location, filterTerm } from "../stores.js";
 
   // COMPONENTS
-  import Logo from "./Logo.svelte";
-  import Hamburger from "./Hamburger.svelte";
-  import Close from "./Close.svelte";
+  import Logo from "./Graphics/Logo.svelte";
+  import Hamburger from "./Graphics/Hamburger.svelte";
+  import Close from "./Graphics/Close.svelte";
+
+  $: {
+    if (searchActive == true && searchInputElement) {
+      searchInputElement.focus();
+    }
+  }
 
   // DOM REFERENCES
-  // let menuContainer = {};
-  // let filterContainer = {};
-  // let timeContainer = {};
+  let searchInputElement = {};
 
   // VARIABLES
   let menuOpen = false;
-  // let titleActive = true;
-  // let menuActive = false;
-  // let filterActive = false;
-  // let timeActive = false;
-  // let searchActive = false;
-  // let aboutActive = false;
-
-  // let menuSlide = {};
-  // let filterSlide = {};
-  // let timeSlide = {};
-
-  // // CONSTANTS
-  // const filterCategories = [
-  //   {
-  //     title: "SOLO",
-  //     name: "solo-show"
-  //   },
-  //   {
-  //     title: "GROUP",
-  //     name: "group-show"
-  //   },
-  //   {
-  //     title: "PERFORMANCE",
-  //     name: "performance"
-  //   },
-  //   {
-  //     title: "TALK",
-  //     name: "talk"
-  //   },
-  //   {
-  //     title: "WORKSHOP",
-  //     name: "workshop"
-  //   },
-  //   {
-  //     title: "ONLINE",
-  //     name: "online"
-  //   },
-  //   {
-  //     title: "EVENT",
-  //     name: "event"
-  //   },
-  //   {
-  //     title: "PRESS",
-  //     name: "press"
-  //   },
-  //   {
-  //     title: "RESIDENCY",
-  //     name: "residency"
-  //   }
-  // ];
-  // const yearList = ["2021", "2020", "2019", "2018", "2017", "2016", "2015"];
-  // const sliderSettings = {
-  //   freeScroll: true,
-  //   prevNextButtons: false,
-  //   pageDots: false,
-  //   cellAlign: "left",
-  //   contain: true,
-  //   freeScrollFriction: 0.045
-  // };
-
-  // $: {
-  //   if ($location == "single") {
-  //     setTimeout(() => {
-  //       menuSlide.resize();
-  //       // filterSlide.resize();
-  //       // timeSlide.resize();
-  //     }, 500);
-  //   }
-  // }
-
-  // // // *** ON MOUNT
-  // onMount(async () => {
-  //   menuSlide = new Flickity(menuContainer, sliderSettings);
-  //   filterSlide = new Flickity(filterContainer, sliderSettings);
-  //   timeSlide = new Flickity(timeContainer, sliderSettings);
-
-  //   console.dir(menuSlide);
-
-  //   if ($filterTerm) {
-  //     titleActive = false;
-  //     menuActive = false;
-  //     filterActive = true;
-  //     filterSlide.select(
-  //       filterCategories.findIndex(f => f.name === $filterTerm)
-  //     );
-  //     filterSlide.resize();
-  //   }
-
-  //   menuSlide.on("staticClick", function(
-  //     event,
-  //     pointer,
-  //     cellElement,
-  //     cellIndex
-  //   ) {
-  //     menuSlide.resize();
-
-  //     if (cellElement.dataset.link == "about") {
-  //       aboutActive = true;
-  //     } else if (cellElement.dataset.link == "filter") {
-  //       menuActive = false;
-  //       filterActive = true;
-  //       filterSlide.resize();
-  //     } else if (cellElement.dataset.link == "time") {
-  //       menuActive = false;
-  //       timeActive = true;
-  //       timeSlide.resize();
-  //     } else if (cellElement.dataset.link == "search") {
-  //       menuActive = false;
-  //       searchActive = true;
-  //     }
-  //   });
-
-  //   filterSlide.on("staticClick", function(
-  //     event,
-  //     pointer,
-  //     cellElement,
-  //     cellIndex
-  //   ) {
-  //     if (cellElement.dataset.name == $filterTerm) {
-  //       navigate("/");
-  //     } else {
-  //       navigate("/" + cellElement.dataset.name);
-  //     }
-  //   });
-
-  //   timeSlide.on("staticClick", function(
-  //     event,
-  //     pointer,
-  //     cellElement,
-  //     cellIndex
-  //   ) {
-  //     const yOffset = -100;
-  //     const firstOfYear = document.querySelector(
-  //       ".year-" + cellElement.dataset.year
-  //     );
-  //     if (firstOfYear) {
-  //       const y =
-  //         firstOfYear.getBoundingClientRect().top +
-  //         window.pageYOffset +
-  //         yOffset;
-  //       window.scrollTo({ top: y, behavior: "smooth" });
-  //     }
-  //   });
-  // });
+  let searchActive = false;
+  let searchInputValue = "";
 </script>
 
 <style lang="scss">
@@ -192,17 +54,32 @@
 
   .search {
     input {
-      height: 0.85em;
+      height: 1.2em;
       font-family: $serif-stack;
-      font-size: $large;
-      font-weight: 600;
-      line-height: 0.95em;
+      // font-size: $large;
+      // font-weight: 600;
+      // line-height: 0.95em;
       background: transparent;
       border: 0;
       border-radius: 0;
-      border-bottom: 8px solid black;
+      background: $grey;
+      // border-bottom: 8px solid black;
       outline: 0;
-      text-transform: uppercase;
+      font-size: $font_size_large;
+      line-height: 1.4em;
+      font-weight: bold;
+      text-align: right;
+      padding-right: 5px;
+      margin-right: 10px;
+      color: black;
+      text-decoration: none;
+      display: block;
+      float: right;
+    }
+    opacity: 0;
+
+    &.active {
+      opacity: 1;
     }
   }
 
@@ -253,6 +130,7 @@
       color: black;
       text-decoration: none;
       display: block;
+      cursor: pointer;
 
       &:hover {
         color: $half-grey;
@@ -271,7 +149,14 @@
 
 <div class="bar" use:links>
   <!-- Logo -->
-  <a href="/" class="logo">
+  <a
+    href="/"
+    class="logo"
+    on:click={e => {
+      menuOpen = false;
+      searchActive = false;
+      searchInputValue = '';
+    }}>
     <Logo />
   </a>
 
@@ -279,6 +164,8 @@
     class="hamburger"
     on:click={e => {
       menuOpen = !menuOpen;
+      searchActive = false;
+      searchInputValue = '';
     }}>
     {#if menuOpen}
       <Close />
@@ -293,15 +180,48 @@
   <div
     class="menu"
     use:links
+    in:fade={{ duration: 200 }}
     on:click={e => {
       menuOpen = false;
+      searchActive = false;
+      searchInputValue = '';
     }}>
     <a href="/artiklar" class="menu-item">Artiklar</a>
     <a href="/tidskrift" class="menu-item">Tidskrift</a>
     <a href="/projekt" class="menu-item">Projekt</a>
-    <a href="/artikel/xxx" class="menu-item">Om Paletten</a>
-    <a href="/artikel/xxx" class="menu-item">Prenumeration</a>
-    <a href="/artikel/xxx" class="menu-item">Kontakt</a>
-    <a href="/artikel/xxx" class="menu-item">Sök</a>
+    <a href="/om-paletten" class="menu-item">Om Paletten</a>
+    <a href="/prenumerationer" class="menu-item">Prenumerationer</a>
+    <a href="/kontakt" class="menu-item">Kontakt</a>
+    {#if !searchActive}
+      <div
+        class="menu-item"
+        on:click={e => {
+          searchActive = true;
+          e.stopPropagation();
+        }}>
+        Sök
+      </div>
+    {/if}
+
+    <div
+      class="search"
+      class:active={searchActive}
+      on:click={e => {
+        searchActive = true;
+        e.stopPropagation();
+      }}>
+      <input
+        bind:this={searchInputElement}
+        bind:value={searchInputValue}
+        on:keyup={e => {
+          if (e.keyCode === 13) {
+            navigate('/search/' + searchInputValue);
+            searchActive = false;
+            searchInputValue = '';
+            menuOpen = false;
+          }
+        }} />
+    </div>
+
   </div>
 {/if}

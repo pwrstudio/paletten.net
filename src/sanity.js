@@ -68,7 +68,6 @@ const serializers = {
                 props.children
             ),
         footnote: props => {
-            console.dir(props)
             return h(
                 'a',
                 { id: 'link-' + props.mark._key, className: 'footnote-link', href: '#note-' + props.mark._key },
