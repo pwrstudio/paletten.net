@@ -113,17 +113,24 @@
     overflow-y: auto;
     padding-top: calc(#{$menu_bar_height} + 10px);
 
-    &.first {
-      margin-left: 20px;
-    }
-    &.second {
-      margin-left: 20px;
-    }
-    &.third {
-      margin-left: 20px;
+    margin-left: 20px;
 
-      // margin-right: 10px;
+    @include screen-size("small") {
+      height: auto;
+      width: calc(100% - 20px);
+      margin-left: 10px;
     }
+
+    // &.first {
+    // }
+    // &.second {
+    //   margin-left: 20px;
+    // }
+    // &.third {
+    //   margin-left: 20px;
+
+    //   // margin-right: 10px;
+    // }
   }
 
   .header {
