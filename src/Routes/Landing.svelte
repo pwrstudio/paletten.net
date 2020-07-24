@@ -10,6 +10,7 @@
   import { fade, slide } from "svelte/transition";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
   import { links } from "svelte-routing";
+  import shuffle from "lodash/shuffle";
 
   // COMPONENTS
   import LandingItem from "../Components/LandingItem.svelte";
@@ -23,15 +24,15 @@
   // export let term = "";
 
   // ** CONSTANTS
-  const query = "*[_id == 'landingpage']{posts, right}[0]";
+  const query = "*[_id == 'landingpage'][0]";
 
   // VARIABLES
   let landingPage = loadData(query);
   // let filteredPosts = [];
 
-  // landingPage.then(l => {
-  //   console.dir(l);
-  // });
+  landingPage.then(l => {
+    console.dir(l);
+  });
 
   // $: {
   //   posts.then(posts => {
@@ -50,7 +51,6 @@
 
   .landing {
     margin: 0;
-    // padding: 20px;
     padding-top: calc(#{$menu_bar_height} + 10px);
     // padding-top: $menu_bar_height;
     min-height: 100vh;
@@ -105,15 +105,81 @@
       width: 100vw;
     }
   }
+
+  .column {
+    width: calc(33.3333% - 30px);
+    float: left;
+    height: 100vh;
+    overflow-y: auto;
+    padding-top: calc(#{$menu_bar_height} + 10px);
+
+    &.first {
+      margin-left: 20px;
+    }
+    &.second {
+      margin-left: 20px;
+    }
+    &.third {
+      margin-left: 20px;
+
+      // margin-right: 10px;
+    }
+  }
+
+  .header {
+    // background: $grey;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 2em;
+    letter-spacing: 0.1em;
+    font-size: 0.6em;
+    border-bottom: 1px solid #e4e4e4;
+  }
 </style>
 
 {#await landingPage then landingPage}
 
   <div class="pane-container">
 
-    <div class="left-pane" use:links>
+    <!-- <div class="left-pane" use:links>
       {#each landingPage.posts as post}
         <LandingItem {post} />
+      {/each}
+    </div> -->
+
+    <div class="column first" use:links>
+      {#each landingPage.first as post}
+        {#if post._type == 'landingItem'}
+          <LandingItem {post} />
+        {/if}
+        {#if post._type == 'headerItem'}
+          <div class="header">{post.text}</div>
+        {/if}
+      {/each}
+    </div>
+
+    <div class="column second" use:links>
+      {#each landingPage.second as post}
+        {#if post._type == 'landingItem'}
+          <LandingItem {post} />
+        {/if}
+        {#if post._type == 'headerItem'}
+          <div class="header">{post.text}</div>
+        {/if}
+      {/each}
+    </div>
+
+    <div class="column third" use:links>
+      {#each landingPage.third as post}
+        {#if post._type == 'landingItem'}
+          <LandingItem {post} />
+        {/if}
+        {#if post._type == 'headerItem'}
+          <div class="header">{post.text}</div>
+        {/if}
       {/each}
     </div>
 
@@ -125,6 +191,6 @@
 
   </div>
 
-  <Footer />
+  <!-- <Footer /> -->
 
 {/await}

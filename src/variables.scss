@@ -46,8 +46,8 @@ $full-grey: rgba(120, 120, 120, 1);
 $font_size_normal: 19px;
 $font_size_caption: 15px;
 $font_size_small: 12px;
-$font_size_large: 32px;
-$font_size_large_phone: 28px;
+$font_size_large: $font_size_normal;
+$font_size_large_phone: $font_size_normal;
 
 $menu_bar_height: 40px;
 

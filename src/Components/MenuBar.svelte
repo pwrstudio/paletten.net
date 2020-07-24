@@ -50,6 +50,8 @@
     background: white;
     overflow: hidden;
     user-select: none;
+    border-bottom: 1px solid #e4e4e4;
+    font-size: $font_size_normal;
   }
 
   .search {
@@ -84,10 +86,14 @@
   }
 
   .logo {
-    height: calc(#{$menu_bar_height} - 20px);
+    height: calc(#{$menu_bar_height} - 25px);
     margin-left: 20px;
-    margin-top: 10px;
+    margin-top: 6px;
     display: inline-block;
+    font-family: $sans-stack;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 900;
 
     @include screen-size("small") {
       margin-left: 10px;
@@ -100,7 +106,11 @@
     height: calc(#{$menu_bar_height} - 20px);
     // height: $menu_bar_height;
     margin-right: 20px;
-    margin-top: 10px;
+    margin-top: 6px;
+    font-family: $sans-stack;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 900;
 
     @include screen-size("small") {
       margin-right: 10px;
@@ -157,7 +167,8 @@
       searchActive = false;
       searchInputValue = '';
     }}>
-    <Logo />
+    PALETTEN
+    <!-- <Logo /> -->
   </a>
 
   <div
@@ -168,9 +179,11 @@
       searchInputValue = '';
     }}>
     {#if menuOpen}
-      <Close />
+      STÄNG
+      <!-- <Close /> -->
     {:else}
-      <Hamburger />
+      MENY
+      <!-- <Hamburger /> -->
     {/if}
   </div>
 

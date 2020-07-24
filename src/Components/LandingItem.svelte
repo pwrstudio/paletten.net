@@ -80,32 +80,24 @@
     margin-bottom: 20px;
     text-decoration: none;
     font-size: $font_size_normal;
-    margin-left: 20px;
+    border-bottom: 1px solid #e4e4e4;
+    // height: 300px;
+    flex-wrap: wrap;
+    // margin-left: 20px;
 
     @include screen-size("small") {
       flex-wrap: wrap;
-      margin-left: 10px;
+      // margin-left: 10px;
     }
 
     .image {
-      width: 50%;
+      width: 100%;
+      padding-bottom: 10px;
 
-      &.fullbleed {
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      &.proportional {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-          max-width: calc(100% - 40px);
-          max-height: 280px;
-        }
+      img {
+        // max-width: calc(100% - 40px);
+        max-width: 100%;
+        max-height: 260px;
       }
 
       // background: green;
@@ -116,7 +108,7 @@
     }
 
     .text {
-      width: 50%;
+      width: 100%;
       padding-right: 20px;
       text-decoration: none;
       color: black;
@@ -151,63 +143,63 @@
         padding-left: 2px;
         // text-decoration: underline;
         letter-spacing: 0.1em;
+        text-align: center;
       }
     }
 
-    &.full {
-      width: 100%;
-      width: calc(100% - 40px);
-      height: 300px;
+    // &.full {
+    //   width: 100%;
+    //   height: 300px;
 
-      @include screen-size("small") {
-        width: 100%;
-        height: auto;
-      }
-    }
+    //   @include screen-size("small") {
+    //     width: 100%;
+    //     height: auto;
+    //   }
+    // }
 
-    &.half {
-      width: 50%;
-      // width: calc(50% - 20px);
-      //       width: calc(100% - 20px);
+    // &.half {
+    //   width: 50%;
+    //   // width: calc(50% - 20px);
+    //   //       width: calc(100% - 20px);
 
-      // height: 300px;
-      width: calc(100% - 40px);
-      height: 300px;
+    //   // height: 300px;
+    //   // width: calc(100% - 40px);
+    //   height: 300px;
 
-      @include screen-size("small") {
-        width: 100%;
-        height: auto;
-      }
-    }
+    //   @include screen-size("small") {
+    //     width: 100%;
+    //     height: auto;
+    //   }
+    // }
 
-    &.third {
-      // width: calc(33.3333% - 20px);
-      // height: 400px;
-      width: calc(100% - 40px);
-      height: 300px;
+    // &.third {
+    //   // width: calc(33.3333% - 20px);
+    //   // height: 400px;
+    //   width: 100%;
+    //   height: 300px;
 
-      flex-wrap: wrap;
-      overflow: hidden;
-      display: block;
+    //   flex-wrap: wrap;
+    //   overflow: hidden;
+    //   display: block;
 
-      @include screen-size("small") {
-        width: 100%;
-        height: auto;
-      }
+    //   @include screen-size("small") {
+    //     width: 100%;
+    //     height: auto;
+    //   }
 
-      .text {
-        width: 100%;
-        height: 140px;
-        .title {
-          font-size: $font_size_normal;
-        }
-      }
+    //   .text {
+    //     width: 100%;
+    //     height: 140px;
+    //     .title {
+    //       font-size: $font_size_normal;
+    //     }
+    //   }
 
-      .image {
-        width: 100%;
-        height: 260px;
-      }
-    }
+    //   .image {
+    //     width: 100%;
+    //     height: 260px;
+    //   }
+    // }
 
     &.padded {
       .text {
@@ -222,20 +214,17 @@
 </style>
 
 {#await postContent}
-  <div
+  <!-- <div
     class="placeholder"
     class:full={post.layout == 'full'}
     class:half={post.layout == 'half'}
-    class:third={post.layout == 'third'} />
+    class:third={post.layout == 'third'} /> -->
 {:then postContent}
   <a
     href={link}
-    class="list-item"
+    class="list-item full"
     in:fade
-    style={'background: ' + (post.totalColor ? _.get(post, 'color.hex', 'transparent') : 'transparent')}
-    class:full={post.layout == 'full'}
-    class:half={post.layout == 'half'}
-    class:third={post.layout == 'third'}
+    style={'background: ' + _.get(post, 'color.hex', 'transparent')}
     class:padded={post.totalColor}>
     <div class="text">
       <!-- DATE -->
