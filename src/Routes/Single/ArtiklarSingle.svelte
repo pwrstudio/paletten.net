@@ -54,16 +54,17 @@
     font-size: $font_size_normal;
     font-family: $serif-stack;
     margin: 0;
-    padding-top: 20px;
     padding-bottom: 20px;
     width: 100vw;
     overflow-x: hidden;
+    margin-left: $margin;
+    margin-right: $margin;
 
-    padding-top: calc(#{$menu_bar_height} + 20px);
+    padding-top: calc(#{$menu_bar_height} + 10px);
 
     @include screen-size("small") {
       padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 20px);
+      padding-top: calc(#{$menu_bar_height} + 10px);
     }
 
     h1 {
@@ -72,6 +73,7 @@
       font-weight: normal;
       margin: 0;
       padding: 0;
+      font-weight: bold;
       // text-transform: uppercase;
 
       @include screen-size("small") {
@@ -81,10 +83,8 @@
   }
 
   .meta {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2rem;
-    width: $text_width;
+    margin-bottom: $margin;
+    // width: $text_width;
     max-width: calc(100% - 20px);
   }
 
@@ -103,7 +103,7 @@
   .date {
     font-size: $font_size_small;
     font-family: $sans-stack;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     padding-left: 2px;
     letter-spacing: 0.1em;
   }
@@ -114,7 +114,7 @@
 
     <div class="meta">
       {#if post.publicationDate}
-        <div class="date">{formattedDate(post.publicationDate)}</div>
+        <div class="date">– {formattedDate(post.publicationDate)}</div>
       {/if}
       <!-- AUTHOR -->
       {#if post.author}

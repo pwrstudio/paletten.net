@@ -36,6 +36,7 @@
 
 <style lang="scss" global>
   @import "./variables.scss";
+  @import "./simplebar.scss";
 
   html,
   body {
@@ -224,8 +225,8 @@
     font-size: $font_size_caption;
     font-family: $sans-stack;
     line-height: 1.4em;
-    margin-left: auto;
-    margin-right: auto;
+    // margin-left: auto;
+    // margin-right: auto;
     width: $text_width;
     max-width: calc(100% - 20px);
 
@@ -263,6 +264,10 @@
 
   .content,
   .ingress {
+    // background: red;
+    width: calc(66.6666% - 16px);
+    // margin-left: calc(33.3333% + 8px);
+
     p,
     h1,
     h2,
@@ -270,16 +275,16 @@
     h4,
     ol,
     ul {
-      margin-left: auto;
-      margin-right: auto;
+      // margin-left: auto;
+      // margin-right: auto;
       width: $text_width;
       max-width: calc(100% - 20px);
     }
 
     blockquote {
       width: $text_width * 1.4;
-      margin-left: auto;
-      margin-right: auto;
+      // margin-left: auto;
+      // margin-right: auto;
       max-width: calc(100% - 20px);
     }
   }
@@ -295,6 +300,11 @@
   h4 {
     font-size: $font_size_normal;
     font-weight: bold;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 </style>
 

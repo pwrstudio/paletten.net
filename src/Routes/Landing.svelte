@@ -6,6 +6,7 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
+  import "simplebar";
   import { onMount } from "svelte";
   import { fade, slide } from "svelte/transition";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
@@ -51,12 +52,16 @@
 
   .landing {
     margin: 0;
+
     padding-top: calc(#{$menu_bar_height} + 10px);
     // padding-top: $menu_bar_height;
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
     margin-right: 20px;
+
+    margin-right: 12px;
+    margin-left: 12px;
 
     @include screen-size("small") {
       // padding: 10px;
@@ -65,55 +70,13 @@
     }
   }
 
-  // .left-pane {
-  //   height: 100vh;
-  //   width: 66.66vw;
-  //   float: left;
-
-  //   overflow-y: auto;
-  //   padding-top: calc(#{$menu_bar_height} + 10px);
-
-  //   @include screen-size("small") {
-  //     height: auto;
-  //     width: 100vw;
-  //   }
-  // }
-
-  .left-pane {
-    // height: 100vh;
-    width: 100vw;
-    // float: left;
-
-    // overflow-y: auto;
-    padding-top: calc(#{$menu_bar_height} + 10px);
-
-    @include screen-size("small") {
-      height: auto;
-      width: 100vw;
-    }
-  }
-
-  .right-pane {
-    height: 100vh;
-    width: 33.33vw;
-    float: right;
-    overflow-y: auto;
-    padding-top: calc(#{$menu_bar_height} + 10px);
-
-    @include screen-size("small") {
-      height: auto;
-      width: 100vw;
-    }
-  }
-
   .column {
-    width: calc(33.3333% - 30px);
+    width: calc(33.3333% - 8px);
+    // background: yellow;
+
     float: left;
     height: 100vh;
     overflow-y: auto;
-    padding-top: calc(#{$menu_bar_height} + 10px);
-
-    margin-left: 20px;
 
     @include screen-size("small") {
       height: auto;
@@ -121,16 +84,14 @@
       margin-left: 10px;
     }
 
-    // &.first {
-    // }
-    // &.second {
-    //   margin-left: 20px;
-    // }
-    // &.third {
-    //   margin-left: 20px;
-
-    //   // margin-right: 10px;
-    // }
+    &.first {
+    }
+    &.second {
+      margin-left: 12px;
+    }
+    &.third {
+      margin-left: 12px;
+    }
   }
 
   .header {
@@ -140,16 +101,16 @@
     line-height: 1.1em;
     text-transform: uppercase;
     font-weight: bold;
-    margin-bottom: 2em;
+    margin-bottom: 20px;
     letter-spacing: 0.1em;
     font-size: 0.6em;
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid $grey;
   }
 </style>
 
 {#await landingPage then landingPage}
 
-  <div class="pane-container">
+  <div class="landing">
 
     <!-- <div class="left-pane" use:links>
       {#each landingPage.posts as post}
@@ -157,7 +118,7 @@
       {/each}
     </div> -->
 
-    <div class="column first" use:links>
+    <div class="column first" use:links data-simplebar>
       {#each landingPage.first as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -168,7 +129,7 @@
       {/each}
     </div>
 
-    <div class="column second" use:links>
+    <div class="column second" use:links data-simplebar>
       {#each landingPage.second as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -179,7 +140,7 @@
       {/each}
     </div>
 
-    <div class="column third" use:links>
+    <div class="column third" use:links data-simplebar>
       {#each landingPage.third as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />

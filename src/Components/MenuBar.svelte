@@ -51,7 +51,11 @@
     overflow: hidden;
     user-select: none;
     border-bottom: 1px solid #e4e4e4;
-    font-size: $font_size_normal;
+    font-size: 16px;
+
+    &.open {
+      border-bottom: 1px solid white;
+    }
   }
 
   .search {
@@ -67,7 +71,7 @@
       background: $grey;
       // border-bottom: 8px solid black;
       outline: 0;
-      font-size: $font_size_large;
+      // font-size: $font_size_large;
       line-height: 1.4em;
       font-weight: bold;
       text-align: right;
@@ -87,16 +91,24 @@
 
   .logo {
     height: calc(#{$menu_bar_height} - 25px);
-    margin-left: 20px;
+    margin-left: $margin;
     margin-top: 6px;
     display: inline-block;
-    font-family: $sans-stack;
+    font-family: $logo-stack;
     color: inherit;
     text-decoration: none;
     font-weight: 900;
+    letter-spacing: 0.05em;
 
     @include screen-size("small") {
       margin-left: 10px;
+    }
+    &:hover {
+      color: $half-grey;
+    }
+
+    &:active {
+      color: $full-grey;
     }
   }
 
@@ -105,15 +117,24 @@
     float: right;
     height: calc(#{$menu_bar_height} - 20px);
     // height: $menu_bar_height;
-    margin-right: 20px;
+    margin-right: $margin;
     margin-top: 6px;
-    font-family: $sans-stack;
+    font-family: $logo-stack;
     color: inherit;
     text-decoration: none;
     font-weight: 900;
+    letter-spacing: 0.05em;
 
     @include screen-size("small") {
       margin-right: 10px;
+    }
+
+    &:hover {
+      color: $half-grey;
+    }
+
+    &:active {
+      color: $full-grey;
     }
   }
 
@@ -122,50 +143,134 @@
     top: 0;
     left: 0;
     // height: 500px;
-    width: 100vw;
+    width: 100%;
+    padding-right: $margin;
+    padding-left: $margin;
+    font-size: 16px;
+    // letter-spacing: 0.05em;
     height: 100vh;
     z-index: 100;
     background: white;
     overflow: hidden;
     user-select: none;
-    padding-top: calc(#{$menu_bar_height} + 20px);
+    padding-top: calc(#{$menu_bar_height} + 10px);
     // padding-bottom: 20px;
+    letter-spacing: 0.05em;
+
+    .column {
+      width: calc(33.3333% - 8px);
+      // background: yellow;
+
+      float: left;
+      height: 100vh;
+      overflow-y: auto;
+      position: relative;
+
+      @include screen-size("small") {
+        height: auto;
+        width: calc(100% - 20px);
+        margin-left: 10px;
+      }
+
+      &.first {
+      }
+      &.second {
+        margin-left: $margin;
+      }
+      &.third {
+        margin-left: $margin;
+      }
+
+      .bottom {
+        position: absolute;
+        top: 80%;
+
+        line-height: 1.4em;
+        overflow: hidden;
+        user-select: none;
+        font-weight: normal;
+        display: none;
+
+        @include screen-size("small") {
+          padding: 10px;
+        }
+
+        font-size: $font_size_small;
+        font-family: $sans-stack;
+
+        // text-decoration: underline;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    // .column {
+    //   width: calc(33.3333% - 25px);
+    //   float: left;
+    //   height: 100vh;
+    //   overflow-y: auto;
+    //   background: red;
+
+    //   margin-left: 20px;
+
+    //   @include screen-size("small") {
+    //     height: auto;
+    //     width: calc(100% - 20px);
+    //     margin-left: 10px;
+    //   }
+
+    //   // &.first {
+    //   // }
+    //   // &.second {
+    //   //   margin-left: 20px;
+    //   // }
+    //   // &.third {
+    //   //   margin-left: 20px;
+
+    //   //   // margin-right: 10px;
+    //   // }
+    // }
 
     .menu-item {
-      font-size: $font_size_large;
-      line-height: 1.4em;
+      // font-size: $font_size_large;
+      font-family: $logo-stack;
+      line-height: 1.6em;
       font-weight: bold;
-      text-align: right;
-      padding-right: 15px;
+      text-align: left;
       color: black;
       text-decoration: none;
       display: block;
       cursor: pointer;
+      text-transform: uppercase;
+      // margin-bottom: 8px;
 
-      &:hover {
-        color: $half-grey;
+      a {
+        &:hover {
+          color: $half-grey;
+        }
+
+        &:active {
+          color: $full-grey;
+        }
       }
 
-      &:active {
-        color: $full-grey;
+      &.search {
+        text-align: right;
       }
 
-      @include screen-size("small") {
-        font-size: $font_size_large_phone;
-      }
+      // @include screen-size("small") {
+      //   font-size: $font_size_large_phone;
+      // }
     }
   }
 </style>
 
-<div class="bar" use:links>
+<div class="bar" use:links class:open={menuOpen}>
   <!-- Logo -->
   <a
     href="/"
     class="logo"
     on:click={e => {
-      menuOpen = false;
-      searchActive = false;
-      searchInputValue = '';
+      menuOpen = !menuOpen;
     }}>
     PALETTEN
     <!-- <Logo /> -->
@@ -199,41 +304,84 @@
       searchActive = false;
       searchInputValue = '';
     }}>
-    <a href="/artiklar" class="menu-item">Artiklar</a>
-    <a href="/tidskrift" class="menu-item">Tidskrift</a>
-    <a href="/projekt" class="menu-item">Projekt</a>
-    <a href="/om-paletten" class="menu-item">Om Paletten</a>
-    <a href="/prenumerationer" class="menu-item">Prenumerationer</a>
-    <a href="/kontakt" class="menu-item">Kontakt</a>
-    {#if !searchActive}
+    <div class="column first">
+      <div class="menu-item">
+        <a href="/om-paletten">Om Paletten</a>
+      </div>
+      <div class="menu-item">
+        <a href="/prenumerationer">Prenumerationer</a>
+      </div>
+      <div class="menu-item">
+        <a href="/kontakt">Kontakt</a>
+      </div>
+      <div class="bottom">
+        <p>
+          <strong>Paletten</strong>
+          är idag en av samtidskonstens viktigaste tidskrifter. Ambition är att
+          kritiskt diskutera och presentera konsten och dess förutsättningar i
+          vår tid. Paletten fokuserar på konsten politiska villkor och
+          funktioner i dagens samhälle.
+        </p>
+      </div>
+
+    </div>
+    <div class="column second">
+      <div class="menu-item">
+        <a href="/">Index</a>
+      </div>
+      <div class="menu-item">
+        <a href="/artiklar">Artiklar</a>
+      </div>
+      <div class="menu-item">
+        <a href="/tidskrift">Tidskrift</a>
+      </div>
+      <div class="menu-item">
+        <a href="/projekt">Projekt</a>
+      </div>
+
+    </div>
+    <div class="column third">
+      <!-- {#if !searchActive} -->
       <div
         class="menu-item"
         on:click={e => {
           searchActive = true;
           e.stopPropagation();
         }}>
+        <!-- <div
+          class="search"
+          class:active={true}
+          on:click={e => {
+            searchActive = true;
+            e.stopPropagation();
+          }}>
+          <input
+            bind:this={searchInputElement}
+            bind:value={searchInputValue}
+            on:keyup={e => {
+              if (e.keyCode === 13) {
+                navigate('/search/' + searchInputValue);
+                searchActive = false;
+                searchInputValue = '';
+                menuOpen = false;
+              }
+            }} />
+        </div> -->
         Sök
       </div>
-    {/if}
 
-    <div
-      class="search"
-      class:active={searchActive}
-      on:click={e => {
-        searchActive = true;
-        e.stopPropagation();
-      }}>
-      <input
-        bind:this={searchInputElement}
-        bind:value={searchInputValue}
-        on:keyup={e => {
-          if (e.keyCode === 13) {
-            navigate('/search/' + searchInputValue);
-            searchActive = false;
-            searchInputValue = '';
-            menuOpen = false;
-          }
-        }} />
+      <div class="bottom">
+        Paletten
+        <br />
+        Östra Sänkverksgatan 2
+        <br />
+        413 27 Göteborg
+        <br />
+        <br />
+        © Paletten 2017
+      </div>
+
+      <!-- {/if} -->
     </div>
 
   </div>

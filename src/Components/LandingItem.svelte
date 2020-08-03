@@ -80,7 +80,7 @@
     margin-bottom: 20px;
     text-decoration: none;
     font-size: $font_size_normal;
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid $grey;
     // height: 300px;
     flex-wrap: wrap;
     // margin-left: 20px;
@@ -93,6 +93,9 @@
     .image {
       width: 100%;
       padding-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       img {
         // max-width: calc(100% - 40px);
@@ -139,11 +142,11 @@
       .date {
         font-size: $font_size_small;
         font-family: $sans-stack;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         padding-left: 2px;
         // text-decoration: underline;
         letter-spacing: 0.1em;
-        text-align: center;
+        // text-align: right;
       }
     }
 
@@ -231,7 +234,7 @@
       {#if postContent.tidsPeriod}
         <div class="date">{postContent.tidsPeriod}</div>
       {:else if postContent.publicationDate}
-        <div class="date">{formattedDate(postContent.publicationDate)}</div>
+        <div class="date">– {formattedDate(postContent.publicationDate)}</div>
       {/if}
       <!-- AUTHOR -->
       {#if postContent.author}

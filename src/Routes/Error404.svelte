@@ -18,7 +18,7 @@
     text-transform: uppercase;
     line-height: 0.9em;
     font-family: $serif-stack;
-    margin-left: $small-margin;
+    margin-left: $margin;
     min-height: 80vh;
 
     @include screen-size("small") {

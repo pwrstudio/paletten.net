@@ -1,7 +1,7 @@
-// $sans-stack: "Haas Grot Disp 45", Helvetica, Arial, sans-serif;
 // $sans-stack: "Janson Text LT Std", times, serif;
 $sans-stack: Helvetica, Arial, sans-serif;
 $serif-stack: "Janson Text LT Std", times, serif;
+$logo-stack: "helex", $sans-stack;
 
 $height: 80px;
 
@@ -22,7 +22,7 @@ $mobile_small: #{16 * 0.95}px;
 
 $black: rgba(0, 0, 0, 1);
 $white: rgba(254, 254, 254, 1);
-$grey: #e5e5e5;
+$grey: #e4e4e4;
 $darkgrey: #555555;
 $firstColor: white;
 $secondColor: white;
@@ -34,7 +34,7 @@ $transition: cubic-bezier(0.23, 1, 0.32, 1);
 
 $full-height: 100vh;
 
-$small-margin: 5px;
+$margin: 12px;
 $small-vertical-margin: 5px;
 $large-vertical-margin: 32px;
 
