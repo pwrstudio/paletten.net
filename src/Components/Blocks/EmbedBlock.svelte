@@ -19,7 +19,7 @@
 
   .embed {
     width: $text_width;
-    max-width: calc(100% - 20px);
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     font-size: $font_size_small;

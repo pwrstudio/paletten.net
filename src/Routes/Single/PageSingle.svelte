@@ -25,25 +25,29 @@
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
 
-  // STORES
-  // import { location, menuBarText } from "../../stores.js";
-  // location.set("single");
-
   // ** CONSTANTS
   const query = "*[_id == $slug][0]";
+  const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)";
+
   let params = { slug: slug };
   let footnotePosts = [];
   let oldSlug = slug;
-
   let post = loadData(query, params);
+  let medverkande = loadData(medverkandeQuery);
+
+  let mArray = []
 
   post.then(post => {
     let a = flatMap(
       post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
     );
-
     footnotePosts = a.filter(x => x._type === "footnote");
   });
+
+  medverkande.then(medverkande => {
+    console.dir(medverkande)
+    mArray = medverkande
+  })
 
   $: {
     if (slug !== oldSlug) {
@@ -67,115 +71,136 @@
 <style lang="scss">
   @import "../../variables.scss";
 
-  .single {
+  .page {
     font-size: $font_size_normal;
     font-family: $serif-stack;
-    margin: 0;
     padding-bottom: $line-height * 2;
-    width: 100vw;
+    width: calc(100% - #{$margin * 2});
     overflow-x: hidden;
-
-    // margin-left: auto;
-    // margin-right: auto;
-    // width: 80ch;
-    // background: red;
-
-    padding-top: calc(#{$menu_bar_height} + #{$line-height});
+    margin-left: $margin;
+    margin-right: $margin;
 
     @include screen-size("small") {
-      // padding: 10px;
+      width: calc(100% - #{$phone-margin * 2});
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
     }
 
-    h1 {
-      font-size: $font_size_large;
-      line-height: $line-height;
-      font-weight: normal;
-      margin: 0;
-      padding: 0;
-      font-weight: bold;
+    .meta {
+      margin-bottom: $line-height * 2;
+      margin-left: auto;
+      margin-right: auto;
+      width: 600px;
+      max-width: 100%;
 
-      @include screen-size("small") {
-        font-size: $font_size_large_phone;
+      .authors {
+        font-size: $font_size_large;
+        line-height: $line-height;
+        margin-bottom: $line-height / 2;
+        font-style: italic;
+      }
+
+      .date {
+        font-size: $font_size_small;
+        font-family: $sans-stack;
+        margin-bottom: $line-height / 2;
+        padding-left: 2px;
+        letter-spacing: 0.1em;
+      }
+
+      .title {
+        font-size: $font_size_large;
+        line-height: $line-height;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+
       }
     }
+
+    .column {
+      padding-top: calc(#{$menu_bar_height} + #{$line-height});
+      width: calc(50% - #{$margin});
+      float: left;
+
+      &.first {
+        margin-right: $margin;
+      }
+
+      @include screen-size("small") {
+        width: calc(100% - #{$phone-margin * 2});
+      }
+    }
+
   }
 
-  .meta {
-    margin-bottom: $line-height * 2;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-
-    // width: $text_width;
-    max-width: calc(100% - 20px);
-  }
-
-  .authors {
-    font-size: $font_size_large;
-    // font-size: $font_size_large;
-    line-height: $line-height;
-    margin-bottom: $line-height / 2;
-    font-style: italic;
-  }
-
-  .ingress {
-    font-style: italic;
-  }
-
-  .date {
-    font-size: $font_size_small;
-    font-family: $sans-stack;
-    margin-bottom: $line-height / 2;
-    padding-left: 2px;
-    letter-spacing: 0.1em;
-  }
 </style>
 
 {#await post then post}
-  <div class="single">
+  <div class="page">
 
-    <div class="meta">
-      <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
-      <!-- AUTHOR -->
-      {#if post.author}
-        <Authors authors={post.author} />
-      {/if}
-      <!-- TITLE -->
-      <h1 class="title">{post.title}</h1>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    {#if post.content}
-      <div class="content">
-        {#each post.content.content as block}
-          {#if block._type === 'block'}
-            {@html renderBlockText(block)}
-          {/if}
-          {#if block._type === 'image'}
-            <ImageBlock {block} />
-          {/if}
-          {#if block._type === 'videoBlock'}
-            <VideoBlock {block} />
-          {/if}
-          {#if block._type === 'audioBlock'}
-            <AudioBlock {block} />
-          {/if}
-          {#if block._type === 'embedBlock'}
-            <EmbedBlock {block} />
-          {/if}
-        {/each}
-
+    <div class='column first'>
+      <div class="meta">
+        <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
+        <!-- AUTHOR -->
+        {#if post.author}
+          <Authors authors={post.author} />
+        {/if}
+        <!-- TITLE -->
+        <h1 class="title">{post.title}</h1>
       </div>
 
-      <div class="footnotes">
-        <ol>
-          {#each footnotePosts as footnote}
-            <li id={'note-' + footnote._key}>
-              {@html renderBlockText(footnote.content.content)}
-              <a href={'#link-' + footnote._key} class="back-link">↳</a>
-            </li>
+      <!-- MAIN CONTENT -->
+      {#if post.content}
+        <div class="content">
+          {#each post.content.content as block}
+            {#if block._type === 'block'}
+              {@html renderBlockText(block)}
+            {/if}
+            {#if block._type === 'image'}
+              <ImageBlock {block} />
+            {/if}
+            {#if block._type === 'videoBlock'}
+              <VideoBlock {block} />
+            {/if}
+            {#if block._type === 'audioBlock'}
+              <AudioBlock {block} />
+            {/if}
+            {#if block._type === 'embedBlock'}
+              <EmbedBlock {block} />
+            {/if}
           {/each}
-        </ol>
+
+        </div>
+
+        <div class="footnotes">
+          <ol>
+            {#each footnotePosts as footnote}
+              <li id={'note-' + footnote._key}>
+                {@html renderBlockText(footnote.content.content)}
+                <a href={'#link-' + footnote._key} class="back-link">↳</a>
+              </li>
+            {/each}
+          </ol>
+        </div>
+      {/if}
+
+    </div>
+
+    {#if slug == 'om-paletten'}
+      <div class='column'>
+
+        <div class="meta">
+          <h1 class="title">Medverkande</h1>
+        </div>
+
+        <div class="content">
+          {#each mArray as m, i}
+            <a href={"/medverkande/" + get(m, 'slug.current', '')}>{m.title}</a>{#if i < mArray.length - 1},&nbsp;{/if}
+          {/each}
+        </div>
+
       </div>
     {/if}
 

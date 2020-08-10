@@ -7,7 +7,7 @@
 
   // *** IMPORTS
   import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
   import { formattedDate } from "../global.js";
   import _ from "lodash";
@@ -15,39 +15,18 @@
   // COMPONENTS
   import Authors from "./Authors.svelte";
 
-  // STORES
-  //   import { location, filterTerm } from "../stores.js";
-  //   location.set("index");
-
   // *** PROPS
   export let post = {};
-  export let cat = "";
+  export let category = "";
 
-  // console.dir(post);
-
-  let query = "";
   let link = "";
-
-  if (post.postLink) {
-    query =
-      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]";
-  } else {
-    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
-  }
-
-  if (!post.layout) {
-    post.layout = "full";
-  }
-
-  if (!post.imageLayout) {
-    post.imageLayout = "proportional";
-  }
+  let query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
 
   //   VARIABLES
   let postContent = loadData(query);
-  //   // let filteredPosts = [];
 
   postContent.then(l => {
+    console.dir(postContent)
     let dir = "";
     if (l._type === "post") {
       dir = "/artiklar/";
@@ -59,16 +38,6 @@
     link = dir + l.slug.current;
   });
 
-  // $: {
-  //   posts.then(posts => {
-  //     filterTerm.set(term);
-  //     filteredPosts = [];
-  //     window.scrollTo({ top: 0 });
-  //     setTimeout(() => {
-  //       filteredPosts = term ? posts.filter(p => post.category === term) : posts;
-  //     }, 200);
-  //   });
-  // }
 </script>
 
 <style lang="scss">
@@ -86,7 +55,7 @@
 
     @include screen-size("small") {
       flex-wrap: wrap;
-      // margin-left: 10px;
+      margin-bottom: $line-height;
     }
 
     .inner {
@@ -97,6 +66,10 @@
     .column {
       width: 50%;
       float: left;
+
+      @include screen-size("small") {
+        width: 100%;
+      }
     }
 
     .image {
@@ -111,6 +84,10 @@
         max-width: 100%;
         height: $line-height * 16;
         object-fit: cover;
+
+        @include screen-size("small") {
+          height: $line-height * 8;
+        }
       }
 
       // background: green;
@@ -146,7 +123,6 @@
       .author {
         font-size: $font_size_normal;
         line-height: $line-height;
-        // margin-bottom: $margin / 6;
         font-style: italic;
         pointer-events: none;
       }
@@ -154,67 +130,17 @@
       .date {
         font-size: $font_size_small;
         font-family: $sans-stack;
-        // margin-bottom: $margin / 6;
-        // padding-left: 2px;
-        // text-decoration: underline;
         letter-spacing: 0.1em;
-        // text-align: right;
       }
     }
 
-    // &.full {
-    //   width: 100%;
-    //   height: 300px;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-    // }
-
-    // &.half {
-    //   width: 50%;
-    //   // width: calc(50% - 20px);
-    //   //       width: calc(100% - 20px);
-
-    //   // height: 300px;
-    //   // width: calc(100% - 40px);
-    //   height: 300px;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-    // }
-
-    // &.third {
-    //   // width: calc(33.3333% - 20px);
-    //   // height: 400px;
-    //   width: 100%;
-    //   height: 300px;
-
-    //   flex-wrap: wrap;
-    //   overflow: hidden;
-    //   display: block;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-
-    //   .text {
-    //     width: 100%;
-    //     height: 140px;
-    //     .title {
-    //       font-size: $font_size_normal;
-    //     }
-    //   }
-
-    //   .image {
-    //     width: 100%;
-    //     height: 260px;
-    //   }
-    // }
+    &:hover {
+      .text {
+        .title {
+          text-decoration: underline;
+        }
+      }
+    }
 
     &.padded {
       .inner {
@@ -232,13 +158,11 @@
         align-items: center;
 
         img {
-          // max-width: calc(100% - 40px);
           max-width: 100%;
           height: $line-height * 16;
           object-fit: cover;
         }
 
-        // background: green;
       }
     }
   }
@@ -252,13 +176,7 @@
   }
 </style>
 
-{#await postContent}
-  <!-- <div
-    class="placeholder"
-    class:full={post.layout == 'full'}
-    class:half={post.layout == 'half'}
-    class:third={post.layout == 'third'} /> -->
-{:then postContent}
+{#await postContent then postContent}
   <a href={link} class="list-item full" in:fade class:padded={post.totalColor}>
     <div
       class="inner"
@@ -286,6 +204,9 @@
           {#if postContent.ingress}
             {@html renderBlockText(postContent.ingress.content)}
           {/if}
+          <!-- {#if category == "tidskrift" && postContent.content.content}
+            {@html renderBlockText(postContent.content.content)}
+          {/if} -->
         </div>
       </div>
 

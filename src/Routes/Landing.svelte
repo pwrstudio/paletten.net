@@ -51,17 +51,8 @@
   @import "../variables.scss";
 
   .landing {
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    // width: 100vw;
-    // height: calc(100vh - (#{$menu_bar_height} + 10px));
-    // overflow: hidden;
-
     margin: 0;
-
     padding-top: calc(#{$menu_bar_height} + #{$line_height});
-    // padding-top: $menu_bar_height;
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
@@ -77,19 +68,7 @@
 
   .column {
     width: calc(33.3333% - 28px);
-    // width: calc(50% - 24px);
-
-    // background: yellow;
-
     float: left;
-    // height: 100vh;
-    // overflow-y: auto;
-
-    // @include screen-size("small") {
-    //   height: auto;
-    //   width: calc(100% - 20px);
-    //   margin-left: 10px;
-    // }
 
     &.first {
     }

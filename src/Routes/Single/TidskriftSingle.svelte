@@ -22,10 +22,6 @@
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
 
-  // STORES
-  import { location, menuBarText } from "../../stores.js";
-  location.set("single");
-
   // ** CONSTANTS
   const query = "*[_type == 'tidskrift' && slug.current == $slug][0]";
   const params = { slug: slug };
@@ -53,9 +49,12 @@
 
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
-    // @include screen-size("small") {
-    //   padding: 10px;
-    // }
+    @include screen-size("small") {
+      width: calc(100% - #{$phone-margin * 2});
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
+    }
+
   }
 
   .ingress {
@@ -85,25 +84,26 @@
   .date {
     font-size: $font_size_small;
     font-family: $sans-stack;
-    // margin-bottom: $margin / 6;
-    // padding-left: 2px;
-    // text-decoration: underline;
     letter-spacing: 0.1em;
-    // text-align: right;
   }
 
   .column {
     width: calc(50% - #{$margin});
-    // width: calc(50% - 30px);
     float: left;
-    // padding-left: 20px;
-    // padding-right: 20px;
-    // padding-bottom: 60px;
-    height: 100vh;
+
+    // padding-top: calc(#{$menu_bar_height} + #{$line-height});
+    width: calc(50% - #{$margin});
+    float: left;
+
+    @include screen-size("small") {
+      width: 100%;
+    }
   }
 
   .cover {
     width: 200px;
+    margin-bottom: $line-height;
+
   }
 
   .toc {

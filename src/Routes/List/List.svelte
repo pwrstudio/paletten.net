@@ -13,10 +13,6 @@
   import ListItem from "../../Components/ListItem.svelte";
   import Footer from "../../Components/Footer.svelte";
 
-  // STORES
-  // import { location, filterTerm } from "../stores.js";
-  // location.set("index");
-
   // *** PROPS
   export let category = "";
 
@@ -50,9 +46,8 @@
     margin-right: $margin;
 
     @include screen-size("small") {
-      // padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 10px);
-      margin-right: 10px;
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
     }
   }
 </style>

@@ -27,10 +27,6 @@
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
 
-  // STORES
-  import { location, menuBarText } from "../../stores.js";
-  location.set("single");
-
   // ** CONSTANTS
   const query = "*[slug.current == $slug]{..., author[]->{title, slug}}[0]";
   const params = { slug: slug };
@@ -57,27 +53,19 @@
     padding-bottom: $line-height * 2;
     width: 100vw;
     overflow-x: hidden;
-
-    // margin-left: auto;
-    // margin-right: auto;
-    // width: 80ch;
-    // background: red;
-
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
     @include screen-size("small") {
-      // padding: 10px;
+      width: calc(100% - #{$phone-margin * 2});
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
     }
 
     h1 {
       font-size: $font_size_normal;
-      // font-size: 44px;
       line-height: $line-height;
-      // line-height: 44px;
-      // font-weight: normal;
       margin: 0;
       padding: 0;
-      // font-weight: bold;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
@@ -89,17 +77,13 @@
     margin-bottom: $line-height * 2;
     margin-left: auto;
     margin-right: auto;
-    width: 600px;
-
-    // width: $text_width;
-    max-width: calc(100% - 20px);
+    width: $text_width;
+    max-width: 100%;
   }
 
   .authors {
     font-size: $font_size_normal;
-    // font-size: $font_size_large;
     line-height: $line-height;
-    // margin-bottom: $line-height / 2;
     font-style: italic;
   }
 
@@ -172,16 +156,14 @@
       {#if post.tags}
         <div class="tags">
           {#each post.tags as tag}
-            <div>
-              <a
-                href={'/taxonomy/' + slugify(tag, {
-                    replacement: '-',
-                    lower: true,
-                    strict: true
-                  })}>
-                {tag}
-              </a>
-            </div>
+            <a
+              href={'/taxonomy/' + slugify(tag, {
+                  replacement: '-',
+                  lower: true,
+                  strict: true
+                })}>
+              {tag}
+            </a>
           {/each}
         </div>
       {/if}

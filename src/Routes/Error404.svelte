@@ -5,26 +5,30 @@
   //
   // # # # # # # # # # # # # #
 
+  // *** IMPORTS
   import { onMount } from "svelte";
+
+  // COMPONENTS
+  import Footer from "../Components/Footer.svelte";
 </script>
 
 <style lang="scss">
   @import "../variables.scss";
 
   .placeholder {
-    margin-top: 160px;
-    font-size: $xlarge;
-    font-weight: 300;
+    padding-top: calc(#{$menu_bar_height} + #{$line-height});
     text-transform: uppercase;
     line-height: $line-height;
-    font-family: $serif-stack;
+    font-family: $sans-stack;
     margin-left: $margin;
+    margin-right: $margin;
+
     min-height: 80vh;
 
     @include screen-size("small") {
-      font-size: $mobile_xlarge;
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;    }
     }
-  }
 </style>
 
 <svelte:head>
@@ -36,3 +40,5 @@
   <br />
   Page not found
 </div>
+
+<Footer/>

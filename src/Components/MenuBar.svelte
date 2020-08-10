@@ -6,21 +6,17 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  // import "intersection-observer";
   import { navigate } from "svelte-routing";
   import { onMount } from "svelte";
   import { links } from "svelte-routing";
   import { fade } from "svelte/transition";
   import _ from "lodash";
-  // import Flickity from "flickity";
-
-  // STORES
-  import { menuBarText, location, filterTerm } from "../stores.js";
 
   // COMPONENTS
   import Logo from "./Graphics/Logo.svelte";
-  import Hamburger from "./Graphics/Hamburger.svelte";
-  import Close from "./Graphics/Close.svelte";
+
+  // STORES
+  import { menuActive } from "../stores.js";
 
   $: {
     if (searchActive == true && searchInputElement) {
@@ -35,6 +31,10 @@
   let menuOpen = false;
   let searchActive = false;
   let searchInputValue = "";
+
+  $:{
+    menuActive.set(menuOpen)
+  }
 </script>
 
 <style lang="scss">
@@ -52,40 +52,34 @@
     overflow: hidden;
     user-select: none;
     border-bottom: 1px solid #e4e4e4;
-    opacity: 1;
     font-size: 28px;
+    opacity: 1;
     font-size: $font_size_normal;
 
-    transition: height 0.3s ease-out;
-
     &.open {
-      height: 440px;
+      transition: height 0.2s ease-out;
+      height: $line-height * 13;
     }
   }
 
   .search {
     input {
-      height: 1.2em;
+      font-size: $font_size_normal;
+      height: $line-height;
       font-family: $serif-stack;
-      // font-size: $large;
-      // font-weight: 600;
-      // line-height: 0.95em;
       background: transparent;
       border: 0;
       border-radius: 0;
-      background: $grey;
-      // border-bottom: 8px solid black;
+      border-bottom: 1px solid $grey;
       outline: 0;
-      // font-size: $font_size_large;
       line-height: $line-height;
       font-weight: bold;
-      text-align: right;
       padding-right: 5px;
-      margin-right: 10px;
+      margin-right: auto;
+      margin-left: auto;
       color: black;
       text-decoration: none;
       display: block;
-      float: right;
     }
     opacity: 0;
 
@@ -96,7 +90,6 @@
 
   .logo {
     margin-top: $line-height;
-    // height: calc(#{$menu_bar_height} - 25px);
     margin-left: $margin;
     display: inline-block;
     font-family: $logo-stack;
@@ -106,8 +99,12 @@
     letter-spacing: 0.05em;
 
     @include screen-size("small") {
-      margin-left: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      text-align: center;
     }
+
     &:hover {
       color: $half-grey;
     }
@@ -120,8 +117,6 @@
   .hamburger {
     cursor: pointer;
     float: right;
-    height: calc(#{$menu_bar_height} - 20px);
-    // height: $menu_bar_height;
     margin-right: $margin;
     padding-top: $line-height;
     font-family: $logo-stack;
@@ -131,7 +126,7 @@
     letter-spacing: 0.05em;
 
     @include screen-size("small") {
-      margin-right: 10px;
+      display: none;
     }
 
     &:hover {
@@ -145,74 +140,42 @@
 
   .menu {
     display: inline-block;
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    // height: 500px;
     width: 100%;
     padding-right: $margin;
     padding-left: $margin;
     font-size: 16px;
-    // letter-spacing: 0.05em;
-    // height: 100vh;
     z-index: 100;
     background: white;
     overflow: hidden;
     user-select: none;
     padding-top: $line-height;
-    // padding-bottom: 20px;
     letter-spacing: 0.05em;
-    // font-size: 32px;
     line-height: $line-height;
 
+    @include screen-size("small") {
+      padding-right: $phone-margin;
+      padding-left: $phone-margin;
+    }
+
     .column {
-      width: calc(33.3333% - 28px);
       width: 100%;
-
-      // background: yellow;
-
       float: right;
       margin-bottom: $line-height;
-      // margin-right: $margin;
-
-      // height: 100vh;
       overflow-y: auto;
       position: relative;
-
-      @include screen-size("small") {
-        height: auto;
-        width: calc(100% - 20px);
-        margin-left: 10px;
-      }
-
-      // &.first {
-      // }
-      // &.second {
-      //   margin-left: $margin;
-      // }
-      // &.third {
-      //   margin-left: $margin;
-      // }
     }
 
-    &.open {
-      height: auto;
-      border-bottom: 1px solid #e4e4e4;
-    }
     .menu-item {
-      // font-size: $font_size_large;
       font-family: $serif-stack;
-      // font-weight: bold;
-      text-align: left;
+      font-weight: bold;
+      text-align: center;
       color: black;
       text-decoration: none;
       display: block;
       cursor: pointer;
-      text-align: right;
-      text-transform: uppercase;
-      // margin-bottom: 8px;
+      // text-transform: uppercase;
 
-      a {
+      a, span {
         &:hover {
           color: $half-grey;
         }
@@ -221,32 +184,36 @@
           color: $full-grey;
         }
       }
-
-      &.search {
-        text-align: right;
-      }
-
-      // @include screen-size("small") {
-      //   font-size: $font_size_large_phone;
-      // }
     }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
   }
 </style>
 
 <div class="bar" use:links class:open={menuOpen}>
   <!-- Logo -->
-  <a
-    href="/"
+  <span
     class="logo"
     on:click={e => {
-      menuOpen = false;
-      searchActive = false;
-      searchInputValue = '';
-      navigate('/');
+      if(window.matchMedia('(max-width: 900px)').matches){
+        menuOpen = !menuOpen;
+        searchActive = false;
+        searchInputValue = '';
+      } else {
+        menuOpen = false;
+        searchActive = false;
+        searchInputValue = '';
+        navigate('/');
+      }
     }}>
     PALETTEN
-    <!-- <Logo /> -->
-  </a>
+  </span>
 
   <div
     class="hamburger"
@@ -257,10 +224,8 @@
     }}>
     {#if menuOpen}
       STÄNG
-      <!-- <Close /> -->
     {:else}
       MENY
-      <!-- <Hamburger /> -->
     {/if}
   </div>
 
@@ -296,20 +261,19 @@
       </div>
     </div>
     <div class="column third">
-      <!-- {#if !searchActive} -->
-      <div
-        class="menu-item"
-        on:click={e => {
-          searchActive = true;
-          e.stopPropagation();
-        }}>
-        <!-- <div
-          class="search"
-          class:active={true}
+      {#if !searchActive}
+        <div
+          class="menu-item"
           on:click={e => {
             searchActive = true;
             e.stopPropagation();
           }}>
+          <span>Sök</span>
+        </div>
+      {/if}
+        <div
+          class="search"
+          class:active={searchActive}>
           <input
             bind:this={searchInputElement}
             bind:value={searchInputValue}
@@ -321,17 +285,18 @@
                 menuOpen = false;
               }
             }} />
-        </div> -->
-        Sök
-      </div>
-
-      <!-- {/if} -->
+        </div>
     </div>
 
   </div>
 
 </div>
 
-<!-- {#if menuOpen} -->
+{#if menuOpen}
+  <div class='overlay' on:click={e => {
+    menuOpen = false;
+    searchActive = false;
+    searchInputValue = '';
+  }}/>
+{/if}
 
-<!-- {/if} -->

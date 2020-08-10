@@ -25,7 +25,7 @@
     font-size: $font_size_small;
     line-height: $line-height;
     font-family: $sans-stack;
-    margin-bottom: 2rem;
+    margin-bottom: $line-height;
     // margin-top: 2rem;
 
     &.fullwidth {

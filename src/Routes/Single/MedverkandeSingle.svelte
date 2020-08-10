@@ -25,11 +25,7 @@
   import VideoBlock from "../../Components/Blocks/VideoBlock.svelte";
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
-  import LandingItem from "../../Components/LandingItem.svelte";
-
-  // STORES
-  import { location, menuBarText } from "../../stores.js";
-  location.set("single");
+  import ListItem from "../../Components/ListItem.svelte";
 
   // ** CONSTANTS
   const query = "*[_type == 'medverkande' && slug.current == $slug][0]";
@@ -65,27 +61,23 @@
   .single {
     font-size: $font_size_normal;
     font-family: $serif-stack;
-    margin: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    width: 100vw;
+    padding-bottom: $line-height * 2;
+    width: calc(100% - #{$margin * 2});
     overflow-x: hidden;
-    min-height: 60vh;
-
-    padding-top: calc(#{$menu_bar_height} + 20px);
+    margin-left: $margin;
+    margin-right: $margin;
 
     @include screen-size("small") {
-      padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 20px);
+      width: calc(100% - #{$phone-margin * 2});
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
     }
 
     h1 {
       font-size: $font_size_large;
-      line-height: 1.1em;
-      font-weight: normal;
+      font-weight: bold;
       margin: 0;
       padding: 0;
-      // text-transform: uppercase;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
@@ -98,12 +90,11 @@
     margin-right: auto;
     margin-bottom: 2rem;
     width: $text_width;
-    max-width: calc(100% - 20px);
+    max-width: 100%;
   }
 
   .author {
     font-size: $font_size_normal;
-    // font-size: $font_size_large;
     line-height: 1.1em;
     margin-bottom: 10px;
     font-style: italic;
@@ -118,51 +109,80 @@
     font-family: $sans-stack;
     margin-bottom: 10px;
     padding-left: 2px;
-    // text-decoration: underline;
     letter-spacing: 0.1em;
   }
+
+  .linked {
+    margin-top: $line-height;
+    margin-left: $margin;
+    margin-right: $margin;
+
+    @include screen-size("small") {
+      margin-top: 0;
+      margin-left: $phone-margin;
+      margin-right: $phone-margin;
+    }
+  }
+
+  .column {
+      padding-top: calc(#{$menu_bar_height} + #{$line-height});
+      width: calc(50% - #{$margin});
+      float: left;
+
+      border-bottom: 1px solid $grey;
+
+
+      &.first {
+        margin-right: $margin;
+      }
+
+      @include screen-size("small") {
+        width: calc(100% - #{$phone-margin * 2});
+      }
+    }
 </style>
 
 {#await post then post}
   <div class="single">
 
-    <div class="meta">
-      <!-- TITLE -->
-      <h1 class="title">{post.title}</h1>
+    <div class='column first'>
+      <div class="meta">
+        <!-- TITLE -->
+        <h1 class="title">{post.title}</h1>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      {#if post.content}
+        <div class="content">
+          {#each post.content.content as block}
+            {#if block._type === 'block'}
+              {@html renderBlockText(block)}
+            {/if}
+            {#if block._type === 'image'}
+              <ImageBlock {block} />
+            {/if}
+            {#if block._type === 'videoBlock'}
+              <VideoBlock {block} />
+            {/if}
+            {#if block._type === 'audioBlock'}
+              <AudioBlock {block} />
+            {/if}
+            {#if block._type === 'embedBlock'}
+              <EmbedBlock {block} />
+            {/if}
+          {/each}
+        </div>
+      {/if}
     </div>
 
-    <!-- MAIN CONTENT -->
-    {#if post.content}
-      <div class="content">
-        {#each post.content.content as block}
-          {#if block._type === 'block'}
-            {@html renderBlockText(block)}
-          {/if}
-          {#if block._type === 'image'}
-            <ImageBlock {block} />
-          {/if}
-          {#if block._type === 'videoBlock'}
-            <VideoBlock {block} />
-          {/if}
-          {#if block._type === 'audioBlock'}
-            <AudioBlock {block} />
-          {/if}
-          {#if block._type === 'embedBlock'}
-            <EmbedBlock {block} />
-          {/if}
-        {/each}
-
-      </div>
-    {/if}
-
-  </div>
   <!-- {#await linkedPosts then linkedPosts} -->
+  </div>
+
   <div class="linked" use:links>
     {#each linkedPosts as linked}
-      <LandingItem post={linked} />
+      <ListItem post={linked} />
     {/each}
   </div>
-
   <!-- {/await} -->
 
   <Footer />

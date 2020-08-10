@@ -3,39 +3,13 @@ $sans-stack: Helvetica, Arial, sans-serif;
 $serif-stack: "Janson Text LT Std", times, serif;
 $logo-stack: "helex", $sans-stack;
 
-$height: 80px;
-
-$factor: 0.9;
-$mobile_factor: 0.7;
-
-$xlarge: #{90 * $factor}px;
-$large: #{90 * $factor}px;
-$mid: #{30 * $factor}px;
-$small: #{14 * 0.95}px;
-$xsmall: #{14 * 0.95}px;
-
-$mobile_xlarge: #{120 * 0.45}px;
-$mobile_large: #{50 * $mobile_factor}px;
-$mobile_intro: #{36 * $mobile_factor}px;
-$mobile_body: #{24 * 0.95}px;
-$mobile_small: #{16 * 0.95}px;
-
 $black: rgba(0, 0, 0, 1);
 $white: rgba(254, 254, 254, 1);
 $grey: #e4e4e4;
 $darkgrey: #555555;
-$firstColor: white;
-$secondColor: white;
-$thirdColor: white;
-
 // $thirdColor: rgb(197, 191, 191);
 
 $transition: cubic-bezier(0.23, 1, 0.32, 1);
-
-$full-height: 100vh;
-
-$small-vertical-margin: 5px;
-$large-vertical-margin: 32px;
 
 // NEW
 
@@ -45,11 +19,11 @@ $full-grey: rgba(120, 120, 120, 1);
 $font_size_normal: 17px;
 $font_size_caption: $font_size_normal;
 $font_size_small: 12px;
-$font_size_large: 24px;
+$font_size_large: 17px;
 
 $line-height: 22px;
 $margin: 42px;
-$phone-margin: 22px;
+$phone-margin: 21px;
 
 $font_size_large_phone: $font_size_normal;
 
@@ -59,7 +33,7 @@ $text_width: 600px;
 
 $breakpoints: (
   "small": (
-    max-width: 800px,
+    max-width: 900px,
   ),
   "medium": (
     max-width: 1000px,

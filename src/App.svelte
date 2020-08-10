@@ -9,13 +9,15 @@
   import { Router, Route } from "svelte-routing";
   import { fade } from "svelte/transition";
 
+  // STORES
+  import { menuActive } from "./stores.js";
+
   // COMPONENTS
   import Footer from "./Components/Footer.svelte";
   import MenuBar from "./Components/MenuBar.svelte";
 
-  // ROUTES
+  // LANDING
   import Landing from "./Routes/Landing.svelte";
-
   // LIST
   import List from "./Routes/List/List.svelte";
   // ARTIKLAR
@@ -30,6 +32,14 @@
   import PageSingle from "./Routes/Single/PageSingle.svelte";
   // 404
   import Error404 from "./Routes/Error404.svelte";
+
+  $:{
+    if($menuActive) {
+      document.body.classList.add('no-scroll')
+    } else {
+      document.body.classList.remove('no-scroll')
+    }
+  }
 </script>
 
 <style lang="scss" global>
@@ -44,6 +54,10 @@
     background: white;
     font-family: "Janson Text LT Std";
     scroll-behavior: smooth;
+
+    &.no-scroll {
+      overflow: hidden;
+    }
   }
 
   p {
@@ -181,7 +195,7 @@
       margin-left: auto;
       margin-right: auto;
       width: $text_width;
-      max-width: calc(100% - 20px);
+      max-width: 100%;
 
       li {
         margin-bottom: $line-height;
@@ -219,10 +233,8 @@
     margin-top: $line-height;
     margin-bottom: $line-height;
     border-top: 1px solid $grey;
-
     padding-top: $line-height;
     margin: 0;
-    text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: $font_size_small;
     font-family: $sans-stack;
@@ -230,23 +242,21 @@
     margin-left: auto;
     margin-right: auto;
     width: $text_width;
-    max-width: calc(100% - 20px);
+    max-width: 100%;
 
-    div {
+    a {
       margin-bottom: $line-height;
       float: left;
       margin-right: 10px;
       padding: 5px;
       border: 1px solid $grey;
+      color: inherit;
+        text-decoration: none;
 
       &:hover {
         background: $grey;
       }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
     }
   }
 
@@ -265,8 +275,6 @@
   }
 
   .content {
-    // width: calc(66.6666% - 16px);
-    // margin-left: calc(33.3333% + 8px);
 
     p,
     h1,
@@ -279,6 +287,12 @@
       margin-right: auto;
       width: $text_width;
       max-width: calc(100% - 20px);
+      max-width:100%;
+
+
+      @include screen-size("small") {
+        max-width: calc(100% );
+      }
     }
 
     h1,
@@ -299,8 +313,6 @@
   }
 
   .ingress {
-    // width: calc(66.6666% - 16px);
-    // margin-left: calc(33.3333% + 8px);
 
     p,
     h1,
@@ -347,30 +359,43 @@
       border-bottom: 1px solid red;
     }
   }
+
+  main { 
+    &.disabled {
+      transition: opacity 0.3s ease-out;
+      opacity: 0.35;
+      pointer-events: none;
+      filter: grayscale(1);
+    }
+  }
 </style>
 
 <MenuBar />
 
-<Router>
-  <Route path="/" component={Landing} title="landing" } />
-  <!-- ARTIKLAR -->
-  <Route path="/artiklar" component={List} category="artikel" />
-  <Route path="/artiklar/:slug" component={ArtiklarSingle} />
-  <!-- TIDSKRIFT -->
-  <Route path="/tidskrift" component={List} category="tidskrift" />
-  <Route path="/tidskrift/:slug" component={TidskriftSingle} />
-  <!-- PROJEKT -->
-  <Route path="/projekt" component={List} category="projekt" />
-  <Route path="/projekt/:slug" component={ProjektSingle} />
-  <!-- MEDVERKANDE -->
-  <Route path="/medverkande/:slug" component={MedverkandeSingle} />
-  <!-- SEARCH -->
-  <Route path="/search/:term" component={List} category="search" />
-  <!-- PAGE -->
-  <Route path="/:slug" component={PageSingle} />
-  <!-- 404 -->
-  <Route component={Error404} />
-</Router>
+<main class:disabled={$menuActive}>
+  <Router>
+    <Route path="/" component={Landing} title="landing" />
+    <!-- ARTIKLAR -->
+    <Route path="/artiklar" component={List} category="artikel" />
+    <Route path="/artiklar/:slug" component={ArtiklarSingle} />
+    <!-- TIDSKRIFT -->
+    <Route path="/tidskrift" component={List} category="tidskrift" />
+    <Route path="/tidskrift/:slug" component={TidskriftSingle} />
+    <!-- PROJEKT -->
+    <Route path="/projekt" component={List} category="projekt" />
+    <Route path="/projekt/:slug" component={ProjektSingle} />
+    <!-- MEDVERKANDE -->
+    <Route path="/medverkande/:slug" component={MedverkandeSingle} />
+    <!-- SEARCH -->
+    <Route path="/search/:term" component={List} category="search" />
+    <!-- SEARCH -->
+    <Route path="/taxonomy/:term" component={List} category="taxonomy" />
+    <!-- PAGE -->
+    <Route path="/:slug" component={PageSingle} />
+    <!-- 404 -->
+    <Route component={Error404} />
+  </Router>
+</main>
 
 <div class="grid">
   <div class="line" />

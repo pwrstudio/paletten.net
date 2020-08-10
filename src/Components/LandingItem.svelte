@@ -161,63 +161,8 @@
           text-decoration: underline;
         }
       }
-      // .image {
-      //   opacity: 0.7;
-      // }
+
     }
-    // &.full {
-    //   width: 100%;
-    //   height: 300px;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-    // }
-
-    // &.half {
-    //   width: 50%;
-    //   // width: calc(50% - 20px);
-    //   //       width: calc(100% - 20px);
-
-    //   // height: 300px;
-    //   // width: calc(100% - 40px);
-    //   height: 300px;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-    // }
-
-    // &.third {
-    //   // width: calc(33.3333% - 20px);
-    //   // height: 400px;
-    //   width: 100%;
-    //   height: 300px;
-
-    //   flex-wrap: wrap;
-    //   overflow: hidden;
-    //   display: block;
-
-    //   @include screen-size("small") {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-
-    //   .text {
-    //     width: 100%;
-    //     height: 140px;
-    //     .title {
-    //       font-size: $font_size_normal;
-    //     }
-    //   }
-
-    //   .image {
-    //     width: 100%;
-    //     height: 260px;
-    //   }
-    // }
 
     &.padded {
       .inner {
@@ -241,7 +186,6 @@
           object-fit: cover;
         }
 
-        // background: green;
       }
     }
   }

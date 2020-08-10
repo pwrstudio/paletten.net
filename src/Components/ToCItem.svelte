@@ -8,7 +8,6 @@
   // *** IMPORTS
   import { onMount } from "svelte";
   import { links } from "svelte-routing";
-  import { fade, slide } from "svelte/transition";
   import { urlFor, loadData, renderBlockText } from "../sanity.js";
   import { formattedDate } from "../global.js";
   import _ from "lodash";
@@ -18,8 +17,6 @@
 
   // *** PROPS
   export let post = {};
-
-  // console.log(post._type);
 
   let query = "";
   let link = "";
@@ -44,14 +41,12 @@
     text-decoration: none;
     line-height: $line-height;
     font-size: $font_size_normal;
-    // max-width: 40ch;
+    max-width: 50ch;
 
     .title {
       font-weight: bold;
-      // font-weight: normal;
       margin: 0;
       padding: 0;
-      // text-transform: uppercase;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
