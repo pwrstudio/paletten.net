@@ -59,6 +59,10 @@
     &.open {
       transition: height 0.2s ease-out;
       height: $line-height * 13;
+
+      @include screen-size("small") {
+        height: $line-height * 16;
+      }
     }
   }
 
@@ -98,15 +102,21 @@
     font-weight: 900;
     letter-spacing: 0.05em;
 
+    &:hover {
+      color: $half-grey;
+    }
+
+
     @include screen-size("small") {
       margin-left: auto;
       margin-right: auto;
       display: block;
       text-align: center;
-    }
 
-    &:hover {
-      color: $half-grey;
+      &:hover {
+        color: black;
+      }
+
     }
 
     &:active {
@@ -173,9 +183,14 @@
       text-decoration: none;
       display: block;
       cursor: pointer;
-      // text-transform: uppercase;
 
       a, span {
+        @include screen-size("small") {
+          display: inline-block;
+          padding-top:4px;
+          padding-bottom: 4px;
+        }
+
         &:hover {
           color: $half-grey;
         }
