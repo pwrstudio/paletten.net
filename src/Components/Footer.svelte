@@ -27,12 +27,15 @@
     width: 100vw;
     background: #f4f4f4;
     font-family: $serif-stack;
-    line-height: 1.4em;
+    line-height: $line-height;
     overflow: hidden;
     user-select: none;
-    padding: 20px;
-    padding-bottom: 100px;
+    padding-left: $margin;
+    padding-right: $margin;
+    padding-top: $line-height;
+    padding-bottom: $line-height * 5;
     font-weight: normal;
+    margin-top: $line-height;
 
     @include screen-size("small") {
       padding: 10px;
@@ -45,9 +48,6 @@
     letter-spacing: 0.1em;
 
     .logo {
-      height: calc(#{$menu_bar_height} - 20px);
-      margin-left: 10px;
-      margin-top: 10px;
       display: inline-block;
     }
   }
@@ -58,29 +58,59 @@
     }
   }
 
+  // .column {
+  //   width: 33.33%;
+  //   float: left;
+
+  //   @include screen-size("small") {
+  //     width: 100%;
+  //     margin-bottom: 10px;
+  //   }
+
+  //   // &.first {
+  //   //   width: 50%;
+  //   // }
+
+  //   // &.second {
+  //   //   width: 25%;
+  //   // }
+  //   &.last {
+  //     // width: 25%;
+
+  //     // text-align: right;
+  //   }
+  //   p {
+  //     max-width: 40ch;
+  //   }
+  // }
+
   .column {
-    width: 33.33%;
+    width: calc(33.3333% - 28px);
+    // width: calc(50% - 24px);
+
+    // background: yellow;
+
     float: left;
+    // height: 100vh;
+    // overflow-y: auto;
 
-    @include screen-size("small") {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-
-    // &.first {
-    //   width: 50%;
+    // @include screen-size("small") {
+    //   height: auto;
+    //   width: calc(100% - 20px);
+    //   margin-left: 10px;
     // }
 
-    // &.second {
-    //   width: 25%;
-    // }
-    &.last {
-      // width: 25%;
-
-      // text-align: right;
+    &.first {
     }
+    &.second {
+      margin-left: $margin;
+    }
+    &.third {
+      margin-left: $margin;
+    }
+
     p {
-      max-width: 40ch;
+      max-width: 60ch;
     }
   }
 </style>
@@ -96,6 +126,15 @@
     </p>
   </div>
   <div class="column second">
+    <div class="menu-item">Artiklar</div>
+    <div class="menu-item">Projekt</div>
+    <div class="menu-item">Tidskrift</div>
+    <div class="menu-item">Om Paletten</div>
+    <div class="menu-item">Prenumeration</div>
+    <div class="menu-item">Kontakt</div>
+    <div class="menu-item">Sök</div>
+  </div>
+  <div class="column third">
     Paletten
     <br />
     Östra Sänkverksgatan 2
@@ -105,13 +144,5 @@
     <br />
     © Paletten 2017
   </div>
-  <div class="column last">
-    <div class="menu-item">Artiklar</div>
-    <div class="menu-item">Projekt</div>
-    <div class="menu-item">Tidskrift</div>
-    <div class="menu-item">Om Paletten</div>
-    <div class="menu-item">Prenumeration</div>
-    <div class="menu-item">Kontakt</div>
-    <div class="menu-item">Sök</div>
-  </div>
+
 </footer>

@@ -45,16 +45,21 @@
     top: 0;
     left: 0;
     height: $menu_bar_height;
+    line-height: $line-height;
     width: 100vw;
     z-index: 1000;
     background: white;
     overflow: hidden;
     user-select: none;
     border-bottom: 1px solid #e4e4e4;
-    font-size: 16px;
+    opacity: 1;
+    font-size: 28px;
+    font-size: $font_size_normal;
+
+    transition: height 0.3s ease-out;
 
     &.open {
-      border-bottom: 1px solid white;
+      height: 440px;
     }
   }
 
@@ -72,7 +77,7 @@
       // border-bottom: 8px solid black;
       outline: 0;
       // font-size: $font_size_large;
-      line-height: 1.4em;
+      line-height: $line-height;
       font-weight: bold;
       text-align: right;
       padding-right: 5px;
@@ -90,9 +95,9 @@
   }
 
   .logo {
-    height: calc(#{$menu_bar_height} - 25px);
+    margin-top: $line-height;
+    // height: calc(#{$menu_bar_height} - 25px);
     margin-left: $margin;
-    margin-top: 6px;
     display: inline-block;
     font-family: $logo-stack;
     color: inherit;
@@ -118,7 +123,7 @@
     height: calc(#{$menu_bar_height} - 20px);
     // height: $menu_bar_height;
     margin-right: $margin;
-    margin-top: 6px;
+    padding-top: $line-height;
     font-family: $logo-stack;
     color: inherit;
     text-decoration: none;
@@ -139,30 +144,38 @@
   }
 
   .menu {
-    position: fixed;
-    top: 0;
-    left: 0;
+    display: inline-block;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
     // height: 500px;
     width: 100%;
     padding-right: $margin;
     padding-left: $margin;
     font-size: 16px;
     // letter-spacing: 0.05em;
-    height: 100vh;
+    // height: 100vh;
     z-index: 100;
     background: white;
     overflow: hidden;
     user-select: none;
-    padding-top: calc(#{$menu_bar_height} + 10px);
+    padding-top: $line-height;
     // padding-bottom: 20px;
     letter-spacing: 0.05em;
+    // font-size: 32px;
+    line-height: $line-height;
 
     .column {
-      width: calc(33.3333% - 8px);
+      width: calc(33.3333% - 28px);
+      width: 100%;
+
       // background: yellow;
 
-      float: left;
-      height: 100vh;
+      float: right;
+      margin-bottom: $line-height;
+      // margin-right: $margin;
+
+      // height: 100vh;
       overflow-y: auto;
       position: relative;
 
@@ -172,74 +185,30 @@
         margin-left: 10px;
       }
 
-      &.first {
-      }
-      &.second {
-        margin-left: $margin;
-      }
-      &.third {
-        margin-left: $margin;
-      }
-
-      .bottom {
-        position: absolute;
-        top: 80%;
-
-        line-height: 1.4em;
-        overflow: hidden;
-        user-select: none;
-        font-weight: normal;
-        display: none;
-
-        @include screen-size("small") {
-          padding: 10px;
-        }
-
-        font-size: $font_size_small;
-        font-family: $sans-stack;
-
-        // text-decoration: underline;
-        letter-spacing: 0.1em;
-      }
+      // &.first {
+      // }
+      // &.second {
+      //   margin-left: $margin;
+      // }
+      // &.third {
+      //   margin-left: $margin;
+      // }
     }
 
-    // .column {
-    //   width: calc(33.3333% - 25px);
-    //   float: left;
-    //   height: 100vh;
-    //   overflow-y: auto;
-    //   background: red;
-
-    //   margin-left: 20px;
-
-    //   @include screen-size("small") {
-    //     height: auto;
-    //     width: calc(100% - 20px);
-    //     margin-left: 10px;
-    //   }
-
-    //   // &.first {
-    //   // }
-    //   // &.second {
-    //   //   margin-left: 20px;
-    //   // }
-    //   // &.third {
-    //   //   margin-left: 20px;
-
-    //   //   // margin-right: 10px;
-    //   // }
-    // }
-
+    &.open {
+      height: auto;
+      border-bottom: 1px solid #e4e4e4;
+    }
     .menu-item {
       // font-size: $font_size_large;
-      font-family: $logo-stack;
-      line-height: 1.6em;
-      font-weight: bold;
+      font-family: $serif-stack;
+      // font-weight: bold;
       text-align: left;
       color: black;
       text-decoration: none;
       display: block;
       cursor: pointer;
+      text-align: right;
       text-transform: uppercase;
       // margin-bottom: 8px;
 
@@ -270,7 +239,10 @@
     href="/"
     class="logo"
     on:click={e => {
-      menuOpen = !menuOpen;
+      menuOpen = false;
+      searchActive = false;
+      searchInputValue = '';
+      navigate('/');
     }}>
     PALETTEN
     <!-- <Logo /> -->
@@ -292,18 +264,26 @@
     {/if}
   </div>
 
-</div>
-
-{#if menuOpen}
   <div
     class="menu"
     use:links
-    in:fade={{ duration: 200 }}
     on:click={e => {
       menuOpen = false;
       searchActive = false;
       searchInputValue = '';
     }}>
+
+    <div class="column second">
+      <div class="menu-item">
+        <a href="/artiklar">Artiklar</a>
+      </div>
+      <div class="menu-item">
+        <a href="/tidskrift">Tidskrift</a>
+      </div>
+      <div class="menu-item">
+        <a href="/projekt">Projekt</a>
+      </div>
+    </div>
     <div class="column first">
       <div class="menu-item">
         <a href="/om-paletten">Om Paletten</a>
@@ -314,31 +294,6 @@
       <div class="menu-item">
         <a href="/kontakt">Kontakt</a>
       </div>
-      <div class="bottom">
-        <p>
-          <strong>Paletten</strong>
-          är idag en av samtidskonstens viktigaste tidskrifter. Ambition är att
-          kritiskt diskutera och presentera konsten och dess förutsättningar i
-          vår tid. Paletten fokuserar på konsten politiska villkor och
-          funktioner i dagens samhälle.
-        </p>
-      </div>
-
-    </div>
-    <div class="column second">
-      <div class="menu-item">
-        <a href="/">Index</a>
-      </div>
-      <div class="menu-item">
-        <a href="/artiklar">Artiklar</a>
-      </div>
-      <div class="menu-item">
-        <a href="/tidskrift">Tidskrift</a>
-      </div>
-      <div class="menu-item">
-        <a href="/projekt">Projekt</a>
-      </div>
-
     </div>
     <div class="column third">
       <!-- {#if !searchActive} -->
@@ -370,19 +325,13 @@
         Sök
       </div>
 
-      <div class="bottom">
-        Paletten
-        <br />
-        Östra Sänkverksgatan 2
-        <br />
-        413 27 Göteborg
-        <br />
-        <br />
-        © Paletten 2017
-      </div>
-
       <!-- {/if} -->
     </div>
 
   </div>
-{/if}
+
+</div>
+
+<!-- {#if menuOpen} -->
+
+<!-- {/if} -->

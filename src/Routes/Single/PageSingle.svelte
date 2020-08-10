@@ -71,25 +71,28 @@
     font-size: $font_size_normal;
     font-family: $serif-stack;
     margin: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: $line-height * 2;
     width: 100vw;
     overflow-x: hidden;
 
-    padding-top: calc(#{$menu_bar_height} + 20px);
+    // margin-left: auto;
+    // margin-right: auto;
+    // width: 80ch;
+    // background: red;
+
+    padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
     @include screen-size("small") {
-      padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 20px);
+      // padding: 10px;
     }
 
     h1 {
       font-size: $font_size_large;
-      line-height: 1.1em;
+      line-height: $line-height;
       font-weight: normal;
       margin: 0;
       padding: 0;
-      // text-transform: uppercase;
+      font-weight: bold;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
@@ -98,18 +101,20 @@
   }
 
   .meta {
+    margin-bottom: $line-height * 2;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 2rem;
-    width: $text_width;
+    width: 600px;
+
+    // width: $text_width;
     max-width: calc(100% - 20px);
   }
 
-  .author {
-    font-size: $font_size_normal;
+  .authors {
+    font-size: $font_size_large;
     // font-size: $font_size_large;
-    line-height: 1.1em;
-    margin-bottom: 10px;
+    line-height: $line-height;
+    margin-bottom: $line-height / 2;
     font-style: italic;
   }
 
@@ -120,9 +125,8 @@
   .date {
     font-size: $font_size_small;
     font-family: $sans-stack;
-    margin-bottom: 10px;
+    margin-bottom: $line-height / 2;
     padding-left: 2px;
-    // text-decoration: underline;
     letter-spacing: 0.1em;
   }
 </style>

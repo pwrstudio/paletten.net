@@ -16,7 +16,7 @@
     font-size: $xlarge;
     font-weight: 300;
     text-transform: uppercase;
-    line-height: 0.9em;
+    line-height: $line-height;
     font-family: $serif-stack;
     margin-left: $margin;
     min-height: 80vh;

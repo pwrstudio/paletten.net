@@ -42,7 +42,7 @@
     margin-bottom: 1em;
     color: inherit;
     text-decoration: none;
-    line-height: 1.1em;
+    line-height: $line-height;
     font-size: $font_size_normal;
     // max-width: 40ch;
 

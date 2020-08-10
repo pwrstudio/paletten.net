@@ -54,27 +54,30 @@
     font-size: $font_size_normal;
     font-family: $serif-stack;
     margin: 0;
-    padding-bottom: 20px;
+    padding-bottom: $line-height * 2;
     width: 100vw;
     overflow-x: hidden;
-    margin-left: $margin;
-    margin-right: $margin;
 
-    padding-top: calc(#{$menu_bar_height} + 10px);
+    // margin-left: auto;
+    // margin-right: auto;
+    // width: 80ch;
+    // background: red;
+
+    padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
     @include screen-size("small") {
-      padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 10px);
+      // padding: 10px;
     }
 
     h1 {
-      font-size: $font_size_large;
-      line-height: 1.1em;
-      font-weight: normal;
+      font-size: $font_size_normal;
+      // font-size: 44px;
+      line-height: $line-height;
+      // line-height: 44px;
+      // font-weight: normal;
       margin: 0;
       padding: 0;
-      font-weight: bold;
-      // text-transform: uppercase;
+      // font-weight: bold;
 
       @include screen-size("small") {
         font-size: $font_size_large_phone;
@@ -83,7 +86,11 @@
   }
 
   .meta {
-    margin-bottom: $margin;
+    margin-bottom: $line-height * 2;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+
     // width: $text_width;
     max-width: calc(100% - 20px);
   }
@@ -91,8 +98,8 @@
   .authors {
     font-size: $font_size_normal;
     // font-size: $font_size_large;
-    line-height: 1.1em;
-    margin-bottom: 10px;
+    line-height: $line-height;
+    // margin-bottom: $line-height / 2;
     font-style: italic;
   }
 
@@ -103,7 +110,7 @@
   .date {
     font-size: $font_size_small;
     font-family: $sans-stack;
-    margin-bottom: 6px;
+    margin-bottom: $line-height / 2;
     padding-left: 2px;
     letter-spacing: 0.1em;
   }
@@ -114,7 +121,7 @@
 
     <div class="meta">
       {#if post.publicationDate}
-        <div class="date">– {formattedDate(post.publicationDate)}</div>
+        <div class="date">{formattedDate(post.publicationDate)}</div>
       {/if}
       <!-- AUTHOR -->
       {#if post.author}

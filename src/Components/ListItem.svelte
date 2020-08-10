@@ -21,6 +21,7 @@
 
   // *** PROPS
   export let post = {};
+  export let cat = "";
 
   // console.dir(post);
 
@@ -76,12 +77,12 @@
   .list-item,
   .placeholder {
     display: flex;
-    margin-bottom: $line-height;
+    margin-bottom: $line-height * 2;
     text-decoration: none;
     font-size: $font_size_normal;
     border-bottom: 1px solid $grey;
     flex-wrap: wrap;
-    user-select: none;
+    width: 100%;
 
     @include screen-size("small") {
       flex-wrap: wrap;
@@ -90,6 +91,12 @@
 
     .inner {
       width: 100%;
+      padding-bottom: $line-height;
+    }
+
+    .column {
+      width: 50%;
+      float: left;
     }
 
     .image {
@@ -98,12 +105,11 @@
       // justify-content: center;
       // align-items: center;
       padding-bottom: $line-height;
-      transition: opacity 0.3s ease-out;
 
       img {
         // max-width: calc(100% - 40px);
         max-width: 100%;
-        height: $line-height * 12;
+        height: $line-height * 16;
         object-fit: cover;
       }
 
@@ -119,6 +125,7 @@
       padding-right: 20px;
       text-decoration: none;
       color: black;
+      max-width: 60ch;
 
       @include screen-size("small") {
         width: 100%;
@@ -155,16 +162,6 @@
       }
     }
 
-    &:hover {
-      .text {
-        .title {
-          text-decoration: underline;
-        }
-      }
-      // .image {
-      //   opacity: 0.7;
-      // }
-    }
     // &.full {
     //   width: 100%;
     //   height: 300px;
@@ -266,44 +263,52 @@
     <div
       class="inner"
       style={'background: ' + _.get(post, 'color.hex', 'transparent')}>
-      <div class="text">
-        <!-- DATE -->
-        {#if postContent.tidsPeriod}
-          <div class="date">{postContent.tidsPeriod}</div>
-        {:else if postContent.publicationDate}
-          <div class="date">{formattedDate(postContent.publicationDate)}</div>
-        {/if}
-        <!-- AUTHOR -->
-        {#if postContent.author}
-          <div class="author">
-            <Authors authors={postContent.author} />
+
+      <div class="column">
+        <div class="text">
+          <!-- DATE -->
+          {#if postContent.tidsPeriod}
+            <div class="date">{postContent.tidsPeriod}</div>
+          {:else if postContent.publicationDate}
+            <div class="date">{formattedDate(postContent.publicationDate)}</div>
+          {/if}
+          <!-- AUTHOR -->
+          {#if postContent.author}
+            <div class="author">
+              <Authors authors={postContent.author} />
+            </div>
+          {/if}
+          <!-- TITLE -->
+          <div class="title">{postContent.title}</div>
+        </div>
+
+        <div class="ingress">
+          {#if postContent.ingress}
+            {@html renderBlockText(postContent.ingress.content)}
+          {/if}
+        </div>
+      </div>
+
+      <div class="column">
+
+        <!-- IMAGE -->
+        {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}
+          <div
+            class="image"
+            style={'background: ' + _.get(post, 'color.hex', 'transparent')}
+            class:fullbleed={post.imageLayout == 'fullBleed'}
+            class:proportional={post.imageLayout == 'proportional'}>
+            <img
+              alt={postContent.title}
+              src={urlFor(postContent.mainImage.asset)
+                .width(800)
+                .quality(90)
+                .auto('format')
+                .url()} />
           </div>
         {/if}
-        <!-- TITLE -->
-        <div class="title">{postContent.title}</div>
       </div>
-      <!-- IMAGE -->
-      {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}
-        <div
-          class="image"
-          style={'background: ' + _.get(post, 'color.hex', 'transparent')}
-          class:fullbleed={post.imageLayout == 'fullBleed'}
-          class:proportional={post.imageLayout == 'proportional'}>
-          <img
-            alt={postContent.title}
-            src={urlFor(postContent.mainImage.asset)
-              .width(800)
-              .quality(90)
-              .auto('format')
-              .url()} />
-        </div>
-      {/if}
 
-      <div class="ingress">
-        {#if postContent.ingress}
-          {@html renderBlockText(postContent.ingress.content)}
-        {/if}
-      </div>
     </div>
   </a>
 {/await}

@@ -15,19 +15,17 @@
 
   // ROUTES
   import Landing from "./Routes/Landing.svelte";
+
+  // LIST
+  import List from "./Routes/List/List.svelte";
   // ARTIKLAR
-  import ArtiklarList from "./Routes/List/ArtiklarList.svelte";
   import ArtiklarSingle from "./Routes/Single/ArtiklarSingle.svelte";
   // TIDSKRIFT
-  import TidskriftList from "./Routes/List/TidskriftList.svelte";
   import TidskriftSingle from "./Routes/Single/TidskriftSingle.svelte";
   // PROJEKT
-  import ProjektList from "./Routes/List/ProjektList.svelte";
   import ProjektSingle from "./Routes/Single/ProjektSingle.svelte";
   // MEDVERKANDE
   import MedverkandeSingle from "./Routes/Single/MedverkandeSingle.svelte";
-  // SEARCH
-  import SearchList from "./Routes/List/SearchList.svelte";
   // PAGE
   import PageSingle from "./Routes/Single/PageSingle.svelte";
   // 404
@@ -36,12 +34,11 @@
 
 <style lang="scss" global>
   @import "./variables.scss";
-  @import "./simplebar.scss";
 
   html,
   body {
     font-size: $font_size_normal;
-    line-height: 1.4em;
+    line-height: $line-height;
     padding: 0;
     margin: 0;
     background: white;
@@ -74,17 +71,17 @@
 
   .align-center {
     text-align: center;
-    padding-left: 16px;
-    padding-right: 16px;
+    // padding-left: 16px;
+    // padding-right: 16px;
   }
 
   .align-right {
     text-align: right;
-    padding-left: 16px;
+    // padding-left: 16px;
   }
 
   p {
-    margin-bottom: 1em;
+    margin-bottom: $line-height;
   }
 
   iframe,
@@ -109,7 +106,7 @@
     overflow: hidden;
     max-width: 720px;
     width: 100%;
-    margin-bottom: 0.5em;
+    margin-bottom: $line-height;
 
     iframe {
       position: absolute;
@@ -126,7 +123,7 @@
     width: 100%;
     overflow: hidden;
     max-width: 100%;
-    margin-bottom: 0.5em;
+    margin-bottom: $line-height;
 
     iframe {
       width: 100%;
@@ -137,7 +134,7 @@
 
   .note {
     font-size: $font_size_caption;
-    line-height: 1.4em;
+    line-height: $line-height;
   }
 
   .content {
@@ -150,11 +147,15 @@
     text-decoration: none;
 
     &:after {
-      vertical-align: super;
+      // vertical-align: super;
+      position: relative;
+      top: -6px;
+
       font-weight: bold;
       font-size: 0.8em;
+      line-height: $line-height;
       content: "(" counter(fnoteCounter) ")";
-      margin-left: 3px;
+      padding-left: 4px;
     }
 
     &:hover {
@@ -167,23 +168,23 @@
   }
 
   .footnotes {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: $line-height;
+    margin-bottom: $line-height;
 
     ol {
       border-top: 1px solid $grey;
-      padding-top: 2rem;
+      padding-top: $line-height;
       margin: 0;
       padding-left: 20px;
       font-size: $font_size_caption;
-      line-height: 1.4em;
+      line-height: $line-height;
       margin-left: auto;
       margin-right: auto;
       width: $text_width;
       max-width: calc(100% - 20px);
 
       li {
-        margin-bottom: 0.5em;
+        margin-bottom: $line-height;
 
         p {
           // margin-bottom: 0;
@@ -215,30 +216,31 @@
   }
 
   .tags {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: $line-height;
+    margin-bottom: $line-height;
     border-top: 1px solid $grey;
 
-    padding-top: 2rem;
+    padding-top: $line-height;
     margin: 0;
-    padding-left: 20px;
-    font-size: $font_size_caption;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: $font_size_small;
     font-family: $sans-stack;
-    line-height: 1.4em;
-    // margin-left: auto;
-    // margin-right: auto;
+    line-height: $line-height;
+    margin-left: auto;
+    margin-right: auto;
     width: $text_width;
     max-width: calc(100% - 20px);
 
     div {
-      margin-bottom: 0.5em;
+      margin-bottom: $line-height;
       float: left;
       margin-right: 10px;
       padding: 5px;
-      background: $grey;
+      border: 1px solid $grey;
 
       &:hover {
-        background: #c5c5c5;
+        background: $grey;
       }
 
       a {
@@ -262,10 +264,8 @@
     }
   }
 
-  .content,
-  .ingress {
-    // background: red;
-    width: calc(66.6666% - 16px);
+  .content {
+    // width: calc(66.6666% - 16px);
     // margin-left: calc(33.3333% + 8px);
 
     p,
@@ -275,24 +275,48 @@
     h4,
     ol,
     ul {
-      // margin-left: auto;
-      // margin-right: auto;
+      margin-left: auto;
+      margin-right: auto;
       width: $text_width;
       max-width: calc(100% - 20px);
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin-top: $line-height;
+      margin-bottom: $line-height;
+    }
+
     blockquote {
       width: $text_width * 1.4;
-      // margin-left: auto;
-      // margin-right: auto;
+      margin-left: auto;
+      margin-right: auto;
       max-width: calc(100% - 20px);
+    }
+  }
+
+  .ingress {
+    // width: calc(66.6666% - 16px);
+    // margin-left: calc(33.3333% + 8px);
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    ol,
+    ul {
+      max-width: 90%;
     }
   }
 
   blockquote {
     font-size: $font_size_large;
-    line-height: 1.2em;
-    margin-bottom: 2rem;
+    line-height: $line-height;
+    margin-bottom: $line-height;
   }
 
   h2,
@@ -306,6 +330,23 @@
     color: inherit;
     text-decoration: none;
   }
+
+  .grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    display: none;
+    height: 6000px;
+    pointer-events: none;
+    z-index: 100000;
+    opacity: 0.2;
+    .line {
+      width: 100vw;
+      height: $line-height;
+      border-bottom: 1px solid red;
+    }
+  }
 </style>
 
 <MenuBar />
@@ -313,20 +354,124 @@
 <Router>
   <Route path="/" component={Landing} title="landing" } />
   <!-- ARTIKLAR -->
-  <Route path="/artiklar" component={ArtiklarList} />
+  <Route path="/artiklar" component={List} category="artikel" />
   <Route path="/artiklar/:slug" component={ArtiklarSingle} />
   <!-- TIDSKRIFT -->
-  <Route path="/tidskrift" component={TidskriftList} />
+  <Route path="/tidskrift" component={List} category="tidskrift" />
   <Route path="/tidskrift/:slug" component={TidskriftSingle} />
   <!-- PROJEKT -->
-  <Route path="/projekt" component={ProjektList} />
+  <Route path="/projekt" component={List} category="projekt" />
   <Route path="/projekt/:slug" component={ProjektSingle} />
   <!-- MEDVERKANDE -->
   <Route path="/medverkande/:slug" component={MedverkandeSingle} />
   <!-- SEARCH -->
-  <Route path="/search/:term" component={SearchList} />
+  <Route path="/search/:term" component={List} category="search" />
   <!-- PAGE -->
   <Route path="/:slug" component={PageSingle} />
   <!-- 404 -->
   <Route component={Error404} />
 </Router>
+
+<div class="grid">
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+  <div class="line" />
+
+</div>

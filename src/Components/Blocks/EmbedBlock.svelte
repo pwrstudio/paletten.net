@@ -23,10 +23,10 @@
     margin-left: auto;
     margin-right: auto;
     font-size: $font_size_small;
-    line-height: 1.2em;
+    line-height: $line-height;
     font-family: $sans-stack;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin-bottom: $line-height;
+    margin-top: $line-height;
 
     .text {
       // display: flex;

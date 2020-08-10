@@ -1,7 +1,7 @@
 <script>
   // # # # # # # # # # # # # #
   //
-  //  LIST: SEARCH
+  //  LIST
   //
   // # # # # # # # # # # # # #
 
@@ -10,7 +10,7 @@
   import { links } from "svelte-routing";
 
   // COMPONENTS
-  import LandingItem from "../../Components/LandingItem.svelte";
+  import ListItem from "../../Components/ListItem.svelte";
   import Footer from "../../Components/Footer.svelte";
 
   // STORES
@@ -18,33 +18,36 @@
   // location.set("index");
 
   // *** PROPS
-  export let term = "";
+  export let category = "";
+
+  let cat = "";
+
+  if (category === "artikel") cat = "post";
+  else if (category === "tidskrift") cat = "tidskrift";
+  else if (category === "projekt") cat = "projekt";
 
   // ** CONSTANTS
-  const query =
-    "*[title match $term || content.content[].children[].text match $term]";
-  const params = { term: term };
+  const query = "*[_type == $cat] | order(publicationDate desc)";
 
   // VARIABLES
-  let posts = loadData(query, params);
+  let posts = loadData(query, { cat: cat });
 
-  //   posts.then(l => {
-  //     console.dir(l);
-  //   });
+  posts.then(l => {
+    console.dir(l);
+  });
 </script>
 
 <style lang="scss">
   @import "../../variables.scss";
 
-  .landing {
-    margin: 0;
-    // padding: 20px;
-    padding-top: calc(#{$menu_bar_height} + 10px);
-    // padding-top: $menu_bar_height;
+  .list {
+    padding-top: calc(#{$menu_bar_height} + #{$line_height});
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    // margin-right: 20px;
+
+    margin-left: $margin;
+    margin-right: $margin;
 
     @include screen-size("small") {
       // padding: 10px;
@@ -56,9 +59,9 @@
 
 {#await posts then posts}
 
-  <div class="landing" use:links>
+  <div class="list" use:links>
     {#each posts as post}
-      <LandingItem {post} />
+      <ListItem {post} category={cat} />
     {/each}
   </div>
 

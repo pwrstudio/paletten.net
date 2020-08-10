@@ -51,59 +51,76 @@
   @import "../variables.scss";
 
   .landing {
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // width: 100vw;
+    // height: calc(100vh - (#{$menu_bar_height} + 10px));
+    // overflow: hidden;
+
     margin: 0;
 
-    padding-top: calc(#{$menu_bar_height} + 10px);
+    padding-top: calc(#{$menu_bar_height} + #{$line_height});
     // padding-top: $menu_bar_height;
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    margin-right: 20px;
 
-    margin-right: 12px;
-    margin-left: 12px;
+    margin-right: $margin;
+    margin-left: $margin;
 
     @include screen-size("small") {
-      // padding: 10px;
-      padding-top: calc(#{$menu_bar_height} + 10px);
-      margin-right: 10px;
+      margin-right: $phone-margin;
+      margin-left: $phone-margin;
     }
   }
 
   .column {
-    width: calc(33.3333% - 8px);
+    width: calc(33.3333% - 28px);
+    // width: calc(50% - 24px);
+
     // background: yellow;
 
     float: left;
-    height: 100vh;
-    overflow-y: auto;
+    // height: 100vh;
+    // overflow-y: auto;
 
-    @include screen-size("small") {
-      height: auto;
-      width: calc(100% - 20px);
-      margin-left: 10px;
-    }
+    // @include screen-size("small") {
+    //   height: auto;
+    //   width: calc(100% - 20px);
+    //   margin-left: 10px;
+    // }
 
     &.first {
     }
     &.second {
-      margin-left: 12px;
+      margin-left: $margin;
     }
     &.third {
-      margin-left: 12px;
+      margin-left: $margin;
+    }
+
+    @include screen-size("small") {
+      width: 100%;
+
+      &.second {
+        margin-left: 0;
+      }
+      &.third {
+        margin-left: 0;
+      }
     }
   }
 
   .header {
-    // background: $grey;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    line-height: 1.1em;
+    line-height: $line_height;
+    height: $line_height;
     text-transform: uppercase;
     font-weight: bold;
-    margin-bottom: 20px;
-    letter-spacing: 0.1em;
-    font-size: 0.6em;
+    margin-bottom: $line_height;
+
+    letter-spacing: 0.2em;
+    font-size: 0.7em;
     border-bottom: 1px solid $grey;
   }
 </style>
@@ -118,7 +135,7 @@
       {/each}
     </div> -->
 
-    <div class="column first" use:links data-simplebar>
+    <div class="column first" use:links>
       {#each landingPage.first as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -129,7 +146,7 @@
       {/each}
     </div>
 
-    <div class="column second" use:links data-simplebar>
+    <div class="column second" use:links>
       {#each landingPage.second as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -140,7 +157,7 @@
       {/each}
     </div>
 
-    <div class="column third" use:links data-simplebar>
+    <div class="column third" use:links>
       {#each landingPage.third as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -151,14 +168,8 @@
       {/each}
     </div>
 
-    <!-- <div class="right-pane" use:links>
-      {#each landingPage.right as post}
-        <LandingItem {post} />
-      {/each}
-    </div> -->
-
   </div>
 
-  <!-- <Footer /> -->
+  <Footer />
 
 {/await}

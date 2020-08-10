@@ -34,7 +34,6 @@ $transition: cubic-bezier(0.23, 1, 0.32, 1);
 
 $full-height: 100vh;
 
-$margin: 12px;
 $small-vertical-margin: 5px;
 $large-vertical-margin: 32px;
 
@@ -43,13 +42,18 @@ $large-vertical-margin: 32px;
 $half-grey: rgba(90, 90, 90, 1);
 $full-grey: rgba(120, 120, 120, 1);
 
-$font_size_normal: 19px;
-$font_size_caption: 15px;
+$font_size_normal: 17px;
+$font_size_caption: $font_size_normal;
 $font_size_small: 12px;
-$font_size_large: $font_size_normal;
+$font_size_large: 24px;
+
+$line-height: 22px;
+$margin: 42px;
+$phone-margin: 22px;
+
 $font_size_large_phone: $font_size_normal;
 
-$menu_bar_height: 40px;
+$menu_bar_height: $line-height * 3;
 
 $text_width: 600px;
 
