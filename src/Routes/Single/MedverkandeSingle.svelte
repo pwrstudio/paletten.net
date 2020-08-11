@@ -58,7 +58,7 @@
 <style lang="scss">
   @import '../../variables.scss';
 
-  .single {
+  .medverkande {
     font-size: $font_size_normal;
     font-family: $serif-stack;
     padding-bottom: $line-height * 2;
@@ -66,6 +66,9 @@
     overflow-x: hidden;
     margin-left: $margin;
     margin-right: $margin;
+    padding-top: calc(#{$menu_bar_height} + #{$line-height});
+    border-bottom: 1px solid $grey;
+    margin-bottom: $line-height * 2;
 
     @include screen-size('small') {
       width: calc(100% - #{$phone-margin * 2});
@@ -86,8 +89,6 @@
   }
 
   .meta {
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 2rem;
     width: $text_width;
     max-width: 100%;
@@ -142,9 +143,9 @@
 </style>
 
 {#await post then post}
-  <div class="single">
+  <div class="medverkande">
 
-    <div class="column first">
+    <div class="about">
       <div class="meta">
         <!-- TITLE -->
         <h1 class="title">{post.title}</h1>
@@ -152,7 +153,7 @@
 
       <!-- MAIN CONTENT -->
       {#if post.content}
-        <div class="content">
+        <div class="bio">
           {#each post.content.content as block}
             {#if block._type === 'block'}
               {@html renderBlockText(block)}

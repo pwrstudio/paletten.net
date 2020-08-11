@@ -321,6 +321,18 @@
     }
   }
 
+  .bio {
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    ol,
+    ul {
+      max-width: 60ch;
+    }
+  }
+
   blockquote {
     font-size: $font_size_large;
     line-height: $line-height;
