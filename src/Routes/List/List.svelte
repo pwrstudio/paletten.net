@@ -15,18 +15,24 @@
 
   // *** PROPS
   export let category = ''
-
-  let cat = ''
-
-  if (category === 'artikel') cat = 'post'
-  else if (category === 'tidskrift') cat = 'tidskrift'
-  else if (category === 'projekt') cat = 'projekt'
-
-  // ** CONSTANTS
-  const query = '*[_type == $cat] | order(publicationDate desc)'
+  export let term = ''
 
   // VARIABLES
-  let posts = loadData(query, { cat: cat })
+  let cat = ''
+  let query = ''
+
+  if (category === 'artikel')
+    query = '*[_type == "post"] | order(publicationDate desc)'
+  else if (category === 'tidskrift')
+    query = '*[_type == "tidskrift"] | order(publicationDate desc)'
+  else if (category === 'projekt')
+    query = '*[_type == "projekt"] | order(publicationDate desc)'
+  else if (category === 'search')
+    query = '*[[title, content.content[].children[].text] match "' + term + '"]'
+  else if (category === 'taxonomy') query = '*["' + term + '" in tags]'
+
+  // VARIABLES
+  let posts = loadData(query)
 
   posts.then((l) => {
     console.dir(l)
@@ -41,6 +47,7 @@
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
 
     margin-left: $margin;
     margin-right: $margin;
@@ -50,13 +57,28 @@
       margin-right: $phone-margin;
     }
   }
+
+  .header {
+    border-bottom: 1px solid $grey;
+    height: $line-height * 3;
+    line-height: $line-height * 3;
+    width: 100%;
+    margin-bottom: $line-height * 2;
+  }
 </style>
 
 {#await posts then posts}
 
   <div class="list" use:links>
+
+    {#if category === 'search' || category === 'taxonomy'}
+      <div class="header">
+        <strong>{posts.length}</strong>
+        resultat för “{term}”
+      </div>
+    {/if}
     {#each posts as post}
-      <ListItem {post} category={cat} />
+      <ListItem {post} {category} />
     {/each}
   </div>
 

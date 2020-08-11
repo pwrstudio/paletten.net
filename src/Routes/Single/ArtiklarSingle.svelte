@@ -6,45 +6,47 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
-  import { formattedDate } from "../../global.js";
-  import get from "lodash/get";
-  import isArray from "lodash/isArray";
-  import flatMap from "lodash/flatMap";
-  import slugify from "slugify";
+  import { onMount } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
+  import { quintOut } from 'svelte/easing'
+  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { formattedDate } from '../../global.js'
+  import get from 'lodash/get'
+  import isArray from 'lodash/isArray'
+  import flatMap from 'lodash/flatMap'
+  import slugify from 'slugify'
 
   // *** PROPS
-  export let slug = "";
+  export let slug = ''
 
   // COMPONENTS
-  import Footer from "../../Components/Footer.svelte";
-  import Authors from "../../Components/Authors.svelte";
-  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte";
-  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte";
-  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
-  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
+  import Footer from '../../Components/Footer.svelte'
+  import Authors from '../../Components/Authors.svelte'
+  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
+  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
+  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
+  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
 
   // ** CONSTANTS
-  const query = "*[slug.current == $slug]{..., author[]->{title, slug}}[0]";
-  const params = { slug: slug };
+  const query = '*[slug.current == $slug]{..., author[]->{title, slug}}[0]'
+  const params = { slug: slug }
 
-  let post = loadData(query, params);
-  let footnotePosts = [];
+  let post = loadData(query, params)
+  let footnotePosts = []
 
-  post.then(post => {
+  post.then((post) => {
     let a = flatMap(
-      post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
-    );
+      post.content.content
+        .filter((c) => c._type == 'block')
+        .map((x) => x.markDefs)
+    )
 
-    footnotePosts = a.filter(x => x._type === "footnote");
-  });
+    footnotePosts = a.filter((x) => x._type === 'footnote')
+  })
 </script>
 
 <style lang="scss">
-  @import "../../variables.scss";
+  @import '../../variables.scss';
 
   .single {
     font-size: $font_size_normal;
@@ -55,7 +57,7 @@
     overflow-x: hidden;
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -67,7 +69,7 @@
       margin: 0;
       padding: 0;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         font-size: $font_size_large_phone;
       }
     }
@@ -156,12 +158,13 @@
       {#if post.tags}
         <div class="tags">
           {#each post.tags as tag}
-            <a
+            <a href={'/taxonomy/' + tag}>
+              <!-- <a
               href={'/taxonomy/' + slugify(tag, {
                   replacement: '-',
                   lower: true,
                   strict: true
-                })}>
+                })}> -->
               {tag}
             </a>
           {/each}
