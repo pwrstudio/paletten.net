@@ -6,57 +6,57 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
-  import { urlFor, loadData, renderBlockText } from "../sanity.js";
-  import { formattedDate } from "../global.js";
-  import _ from "lodash";
+  import { onMount } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
+  import { urlFor, loadData, renderBlockText } from '../sanity.js'
+  import { formattedDate } from '../global.js'
+  import _ from 'lodash'
 
   // COMPONENTS
-  import Authors from "./Authors.svelte";
+  import Authors from './Authors.svelte'
 
   // STORES
   //   import { location, filterTerm } from "../stores.js";
   //   location.set("index");
 
   // *** PROPS
-  export let post = {};
+  export let post = {}
 
   // console.dir(post);
 
-  let query = "";
-  let link = "";
+  let query = ''
+  let link = ''
 
   if (post.postLink) {
     query =
-      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]";
+      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]"
   } else {
-    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
+    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]"
   }
 
   if (!post.layout) {
-    post.layout = "full";
+    post.layout = 'full'
   }
 
   if (!post.imageLayout) {
-    post.imageLayout = "proportional";
+    post.imageLayout = 'proportional'
   }
 
   //   VARIABLES
-  let postContent = loadData(query);
+  let postContent = loadData(query)
   //   // let filteredPosts = [];
 
-  postContent.then(l => {
-    let dir = "";
-    if (l._type === "post") {
-      dir = "/artiklar/";
-    } else if (l._type === "tidskrift") {
-      dir = "/tidskrift/";
-    } else if (l._type === "projekt") {
-      dir = "/projekt/";
+  postContent.then((l) => {
+    let dir = ''
+    if (l._type === 'post') {
+      dir = '/artiklar/'
+    } else if (l._type === 'tidskrift') {
+      dir = '/tidskrift/'
+    } else if (l._type === 'projekt') {
+      dir = '/projekt/'
     }
-    link = dir + l.slug.current;
-  });
+    link = dir + l.slug.current
+  })
 
   // $: {
   //   posts.then(posts => {
@@ -71,7 +71,7 @@
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import '../variables.scss';
 
   .list-item,
   .placeholder {
@@ -83,7 +83,7 @@
     flex-wrap: wrap;
     user-select: none;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       flex-wrap: wrap;
       // margin-left: 10px;
     }
@@ -109,7 +109,7 @@
 
       // background: green;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         width: 100%;
       }
     }
@@ -120,7 +120,7 @@
       text-decoration: none;
       color: black;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         width: 100%;
       }
 
@@ -131,7 +131,7 @@
         font-weight: bold;
         max-width: 45ch;
 
-        @include screen-size("small") {
+        @include screen-size('small') {
           font-size: $font_size_large_phone;
         }
       }
@@ -161,7 +161,6 @@
           text-decoration: underline;
         }
       }
-
     }
 
     &.padded {
@@ -185,7 +184,6 @@
           height: $line-height * 16;
           object-fit: cover;
         }
-
       }
     }
   }
@@ -244,7 +242,7 @@
       {/if}
 
       <div class="ingress">
-        {#if postContent.ingress}
+        {#if postContent.ingress && !post.totalColor}
           {@html renderBlockText(postContent.ingress.content)}
         {/if}
       </div>

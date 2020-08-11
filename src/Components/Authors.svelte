@@ -6,14 +6,14 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import get from "lodash/get";
+  import get from 'lodash/get'
 
   // *** PROPS
-  export let authors = {};
+  export let authors = {}
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import '../variables.scss';
 
   .authors {
     font-style: italic;

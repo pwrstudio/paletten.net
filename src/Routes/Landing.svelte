@@ -6,16 +6,16 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import "simplebar";
-  import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
-  import { urlFor, loadData, renderBlockText } from "../sanity.js";
-  import { links } from "svelte-routing";
-  import shuffle from "lodash/shuffle";
+  import 'simplebar'
+  import { onMount } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
+  import { urlFor, loadData, renderBlockText } from '../sanity.js'
+  import { links } from 'svelte-routing'
+  import shuffle from 'lodash/shuffle'
 
   // COMPONENTS
-  import LandingItem from "../Components/LandingItem.svelte";
-  import Footer from "../Components/Footer.svelte";
+  import LandingItem from '../Components/LandingItem.svelte'
+  import Footer from '../Components/Footer.svelte'
 
   // STORES
   // import { location, filterTerm } from "../stores.js";
@@ -25,15 +25,15 @@
   // export let term = "";
 
   // ** CONSTANTS
-  const query = "*[_id == 'landingpage'][0]";
+  const query = "*[_id == 'landingpage'][0]"
 
   // VARIABLES
-  let landingPage = loadData(query);
+  let landingPage = loadData(query)
   // let filteredPosts = [];
 
-  landingPage.then(l => {
-    console.dir(l);
-  });
+  landingPage.then((l) => {
+    console.dir(l)
+  })
 
   // $: {
   //   posts.then(posts => {
@@ -48,7 +48,7 @@
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import '../variables.scss';
 
   .landing {
     margin: 0;
@@ -60,7 +60,7 @@
     margin-right: $margin;
     margin-left: $margin;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       margin-right: $phone-margin;
       margin-left: $phone-margin;
     }
@@ -79,7 +79,7 @@
       margin-left: $margin;
     }
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       width: 100%;
 
       &.second {

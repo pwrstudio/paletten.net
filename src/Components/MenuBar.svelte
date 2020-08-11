@@ -6,39 +6,39 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { navigate } from "svelte-routing";
-  import { onMount } from "svelte";
-  import { links } from "svelte-routing";
-  import { fade } from "svelte/transition";
-  import _ from "lodash";
+  import { navigate } from 'svelte-routing'
+  import { onMount } from 'svelte'
+  import { links } from 'svelte-routing'
+  import { fade } from 'svelte/transition'
+  import _ from 'lodash'
 
   // COMPONENTS
-  import Logo from "./Graphics/Logo.svelte";
+  import Logo from './Graphics/Logo.svelte'
 
   // STORES
-  import { menuActive } from "../stores.js";
+  import { menuActive } from '../stores.js'
 
   $: {
     if (searchActive == true && searchInputElement) {
-      searchInputElement.focus();
+      searchInputElement.focus()
     }
   }
 
   // DOM REFERENCES
-  let searchInputElement = {};
+  let searchInputElement = {}
 
   // VARIABLES
-  let menuOpen = false;
-  let searchActive = false;
-  let searchInputValue = "";
+  let menuOpen = false
+  let searchActive = false
+  let searchInputValue = ''
 
-  $:{
+  $: {
     menuActive.set(menuOpen)
   }
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import '../variables.scss';
 
   .bar {
     position: fixed;
@@ -60,7 +60,7 @@
       transition: height 0.2s ease-out;
       height: $line-height * 13;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         height: $line-height * 16;
       }
     }
@@ -106,8 +106,7 @@
       color: $half-grey;
     }
 
-
-    @include screen-size("small") {
+    @include screen-size('small') {
       margin-left: auto;
       margin-right: auto;
       display: block;
@@ -116,7 +115,6 @@
       &:hover {
         color: black;
       }
-
     }
 
     &:active {
@@ -135,7 +133,7 @@
     font-weight: 900;
     letter-spacing: 0.05em;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       display: none;
     }
 
@@ -162,7 +160,7 @@
     letter-spacing: 0.05em;
     line-height: $line-height;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       padding-right: $phone-margin;
       padding-left: $phone-margin;
     }
@@ -184,10 +182,11 @@
       display: block;
       cursor: pointer;
 
-      a, span {
-        @include screen-size("small") {
+      a,
+      span {
+        @include screen-size('small') {
           display: inline-block;
-          padding-top:4px;
+          padding-top: 4px;
           padding-bottom: 4px;
         }
 
@@ -215,16 +214,16 @@
   <!-- Logo -->
   <span
     class="logo"
-    on:click={e => {
-      if(window.matchMedia('(max-width: 900px)').matches){
-        menuOpen = !menuOpen;
-        searchActive = false;
-        searchInputValue = '';
+    on:click={(e) => {
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        menuOpen = !menuOpen
+        searchActive = false
+        searchInputValue = ''
       } else {
-        menuOpen = false;
-        searchActive = false;
-        searchInputValue = '';
-        navigate('/');
+        menuOpen = false
+        searchActive = false
+        searchInputValue = ''
+        navigate('/')
       }
     }}>
     PALETTEN
@@ -232,25 +231,21 @@
 
   <div
     class="hamburger"
-    on:click={e => {
-      menuOpen = !menuOpen;
-      searchActive = false;
-      searchInputValue = '';
+    on:click={(e) => {
+      menuOpen = !menuOpen
+      searchActive = false
+      searchInputValue = ''
     }}>
-    {#if menuOpen}
-      STÄNG
-    {:else}
-      MENY
-    {/if}
+    {#if menuOpen}STÄNG{:else}MENY{/if}
   </div>
 
   <div
     class="menu"
     use:links
-    on:click={e => {
-      menuOpen = false;
-      searchActive = false;
-      searchInputValue = '';
+    on:click={(e) => {
+      menuOpen = false
+      searchActive = false
+      searchInputValue = ''
     }}>
 
     <div class="column second">
@@ -279,28 +274,26 @@
       {#if !searchActive}
         <div
           class="menu-item"
-          on:click={e => {
-            searchActive = true;
-            e.stopPropagation();
+          on:click={(e) => {
+            searchActive = true
+            e.stopPropagation()
           }}>
           <span>Sök</span>
         </div>
       {/if}
-        <div
-          class="search"
-          class:active={searchActive}>
-          <input
-            bind:this={searchInputElement}
-            bind:value={searchInputValue}
-            on:keyup={e => {
-              if (e.keyCode === 13) {
-                navigate('/search/' + searchInputValue);
-                searchActive = false;
-                searchInputValue = '';
-                menuOpen = false;
-              }
-            }} />
-        </div>
+      <div class="search" class:active={searchActive}>
+        <input
+          bind:this={searchInputElement}
+          bind:value={searchInputValue}
+          on:keyup={(e) => {
+            if (e.keyCode === 13) {
+              navigate('/search/' + searchInputValue)
+              searchActive = false
+              searchInputValue = ''
+              menuOpen = false
+            }
+          }} />
+      </div>
     </div>
 
   </div>
@@ -308,10 +301,11 @@
 </div>
 
 {#if menuOpen}
-  <div class='overlay' on:click={e => {
-    menuOpen = false;
-    searchActive = false;
-    searchInputValue = '';
-  }}/>
+  <div
+    class="overlay"
+    on:click={(e) => {
+      menuOpen = false
+      searchActive = false
+      searchInputValue = ''
+    }} />
 {/if}
-

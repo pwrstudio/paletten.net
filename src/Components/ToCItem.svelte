@@ -6,34 +6,34 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from "svelte";
-  import { links } from "svelte-routing";
-  import { urlFor, loadData, renderBlockText } from "../sanity.js";
-  import { formattedDate } from "../global.js";
-  import _ from "lodash";
+  import { onMount } from 'svelte'
+  import { links } from 'svelte-routing'
+  import { urlFor, loadData, renderBlockText } from '../sanity.js'
+  import { formattedDate } from '../global.js'
+  import _ from 'lodash'
 
   // COMPONENTS
-  import Authors from "./Authors.svelte";
+  import Authors from './Authors.svelte'
 
   // *** PROPS
-  export let post = {};
+  export let post = {}
 
-  let query = "";
-  let link = "";
-  let postContent = {};
+  let query = ''
+  let link = ''
+  let postContent = {}
 
-  if (post._type == "postLink") {
-    query = "*[_id == '" + post._ref + "']{..., author[]->{title, slug}}[0]";
-    postContent = loadData(query);
-  } else if (post._type == "artikel") {
-    let params = { authorRefs: post.author.map(a => a._ref) };
-    query = "*[_id in $authorRefs]{..., author[]->{title, slug}}";
-    postContent = loadData(query, params);
+  if (post._type == 'postLink') {
+    query = "*[_id == '" + post._ref + "']{..., author[]->{title, slug}}[0]"
+    postContent = loadData(query)
+  } else if (post._type == 'artikel') {
+    let params = { authorRefs: post.author.map((a) => a._ref) }
+    query = '*[_id in $authorRefs]{..., author[]->{title, slug}}'
+    postContent = loadData(query, params)
   }
 </script>
 
 <style lang="scss">
-  @import "../variables.scss";
+  @import '../variables.scss';
 
   .toc-item {
     margin-bottom: 1em;
@@ -48,7 +48,7 @@
       margin: 0;
       padding: 0;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         font-size: $font_size_large_phone;
       }
     }

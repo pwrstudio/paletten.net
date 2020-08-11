@@ -6,44 +6,44 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
-  import { formattedDate } from "../../global.js";
-  import get from "lodash/get";
-  import flatMap from "lodash/flatMap";
-  import { links } from "svelte-routing";
+  import { onMount } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
+  import { quintOut } from 'svelte/easing'
+  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { formattedDate } from '../../global.js'
+  import get from 'lodash/get'
+  import flatMap from 'lodash/flatMap'
+  import { links } from 'svelte-routing'
 
   // *** PROPS
-  export let slug = "";
+  export let slug = ''
 
   // COMPONENTS
-  import Footer from "../../Components/Footer.svelte";
-  import Authors from "../../Components/Authors.svelte";
-  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte";
-  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte";
-  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
-  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
-  import ListItem from "../../Components/ListItem.svelte";
+  import Footer from '../../Components/Footer.svelte'
+  import Authors from '../../Components/Authors.svelte'
+  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
+  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
+  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
+  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
+  import ListItem from '../../Components/ListItem.svelte'
 
   // ** CONSTANTS
-  const query = "*[_type == 'medverkande' && slug.current == $slug][0]";
-  const params = { slug: slug };
+  const query = "*[_type == 'medverkande' && slug.current == $slug][0]"
+  const params = { slug: slug }
 
-  let post = loadData(query, params);
-  let footnotePosts = [];
+  let post = loadData(query, params)
+  let footnotePosts = []
 
-  let linkedPosts = [];
+  let linkedPosts = []
 
-  post.then(post => {
+  post.then((post) => {
     let fetchLinked = loadData("*[_type == 'post' && author[]._ref == $id]", {
-      id: post._id
-    });
+      id: post._id,
+    })
 
-    fetchLinked.then(f => {
-      linkedPosts = f;
-    });
+    fetchLinked.then((f) => {
+      linkedPosts = f
+    })
 
     // let a = flatMap(
     //   post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
@@ -52,11 +52,11 @@
     // footnotePosts = a.filter(x => x._type === "footnote");
 
     // console.dir(footnotePosts);
-  });
+  })
 </script>
 
 <style lang="scss">
-  @import "../../variables.scss";
+  @import '../../variables.scss';
 
   .single {
     font-size: $font_size_normal;
@@ -67,7 +67,7 @@
     margin-left: $margin;
     margin-right: $margin;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -79,7 +79,7 @@
       margin: 0;
       padding: 0;
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         font-size: $font_size_large_phone;
       }
     }
@@ -117,7 +117,7 @@
     margin-left: $margin;
     margin-right: $margin;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       margin-top: 0;
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -125,27 +125,26 @@
   }
 
   .column {
-      padding-top: calc(#{$menu_bar_height} + #{$line-height});
-      width: calc(50% - #{$margin});
-      float: left;
+    padding-top: calc(#{$menu_bar_height} + #{$line-height});
+    width: calc(50% - #{$margin});
+    float: left;
 
-      border-bottom: 1px solid $grey;
+    border-bottom: 1px solid $grey;
 
-
-      &.first {
-        margin-right: $margin;
-      }
-
-      @include screen-size("small") {
-        width: calc(100% - #{$phone-margin * 2});
-      }
+    &.first {
+      margin-right: $margin;
     }
+
+    @include screen-size('small') {
+      width: calc(100% - #{$phone-margin * 2});
+    }
+  }
 </style>
 
 {#await post then post}
   <div class="single">
 
-    <div class='column first'>
+    <div class="column first">
       <div class="meta">
         <!-- TITLE -->
         <h1 class="title">{post.title}</h1>
@@ -175,7 +174,7 @@
       {/if}
     </div>
 
-  <!-- {#await linkedPosts then linkedPosts} -->
+    <!-- {#await linkedPosts then linkedPosts} -->
   </div>
 
   <div class="linked" use:links>

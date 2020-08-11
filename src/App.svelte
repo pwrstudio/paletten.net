@@ -6,35 +6,35 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { Router, Route } from "svelte-routing";
-  import { fade } from "svelte/transition";
+  import { Router, Route } from 'svelte-routing'
+  import { fade } from 'svelte/transition'
 
   // STORES
-  import { menuActive } from "./stores.js";
+  import { menuActive } from './stores.js'
 
   // COMPONENTS
-  import Footer from "./Components/Footer.svelte";
-  import MenuBar from "./Components/MenuBar.svelte";
+  import Footer from './Components/Footer.svelte'
+  import MenuBar from './Components/MenuBar.svelte'
 
   // LANDING
-  import Landing from "./Routes/Landing.svelte";
+  import Landing from './Routes/Landing.svelte'
   // LIST
-  import List from "./Routes/List/List.svelte";
+  import List from './Routes/List/List.svelte'
   // ARTIKLAR
-  import ArtiklarSingle from "./Routes/Single/ArtiklarSingle.svelte";
+  import ArtiklarSingle from './Routes/Single/ArtiklarSingle.svelte'
   // TIDSKRIFT
-  import TidskriftSingle from "./Routes/Single/TidskriftSingle.svelte";
+  import TidskriftSingle from './Routes/Single/TidskriftSingle.svelte'
   // PROJEKT
-  import ProjektSingle from "./Routes/Single/ProjektSingle.svelte";
+  import ProjektSingle from './Routes/Single/ProjektSingle.svelte'
   // MEDVERKANDE
-  import MedverkandeSingle from "./Routes/Single/MedverkandeSingle.svelte";
+  import MedverkandeSingle from './Routes/Single/MedverkandeSingle.svelte'
   // PAGE
-  import PageSingle from "./Routes/Single/PageSingle.svelte";
+  import PageSingle from './Routes/Single/PageSingle.svelte'
   // 404
-  import Error404 from "./Routes/Error404.svelte";
+  import Error404 from './Routes/Error404.svelte'
 
-  $:{
-    if($menuActive) {
+  $: {
+    if ($menuActive) {
       document.body.classList.add('no-scroll')
     } else {
       document.body.classList.remove('no-scroll')
@@ -43,7 +43,7 @@
 </script>
 
 <style lang="scss" global>
-  @import "./variables.scss";
+  @import './variables.scss';
 
   html,
   body {
@@ -52,7 +52,7 @@
     padding: 0;
     margin: 0;
     background: white;
-    font-family: "Janson Text LT Std";
+    font-family: 'Janson Text LT Std';
     scroll-behavior: smooth;
 
     &.no-scroll {
@@ -168,7 +168,7 @@
       font-weight: bold;
       font-size: 0.8em;
       line-height: $line-height;
-      content: "(" counter(fnoteCounter) ")";
+      content: '(' counter(fnoteCounter) ')';
       padding-left: 4px;
     }
 
@@ -251,12 +251,11 @@
       padding: 5px;
       border: 1px solid $grey;
       color: inherit;
-        text-decoration: none;
+      text-decoration: none;
 
       &:hover {
         background: $grey;
       }
-
     }
   }
 
@@ -275,7 +274,6 @@
   }
 
   .content {
-
     p,
     h1,
     h2,
@@ -287,11 +285,10 @@
       margin-right: auto;
       width: $text_width;
       max-width: calc(100% - 20px);
-      max-width:100%;
+      max-width: 100%;
 
-
-      @include screen-size("small") {
-        max-width: calc(100% );
+      @include screen-size('small') {
+        max-width: calc(100%);
       }
     }
 
@@ -313,7 +310,6 @@
   }
 
   .ingress {
-
     p,
     h1,
     h2,
@@ -321,7 +317,7 @@
     h4,
     ol,
     ul {
-      max-width: 90%;
+      max-width: 60ch;
     }
   }
 
@@ -360,7 +356,7 @@
     }
   }
 
-  main { 
+  main {
     &.disabled {
       transition: opacity 0.3s ease-out;
       opacity: 0.35;

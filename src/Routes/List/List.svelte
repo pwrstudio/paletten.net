@@ -6,35 +6,35 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
-  import { links } from "svelte-routing";
+  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { links } from 'svelte-routing'
 
   // COMPONENTS
-  import ListItem from "../../Components/ListItem.svelte";
-  import Footer from "../../Components/Footer.svelte";
+  import ListItem from '../../Components/ListItem.svelte'
+  import Footer from '../../Components/Footer.svelte'
 
   // *** PROPS
-  export let category = "";
+  export let category = ''
 
-  let cat = "";
+  let cat = ''
 
-  if (category === "artikel") cat = "post";
-  else if (category === "tidskrift") cat = "tidskrift";
-  else if (category === "projekt") cat = "projekt";
+  if (category === 'artikel') cat = 'post'
+  else if (category === 'tidskrift') cat = 'tidskrift'
+  else if (category === 'projekt') cat = 'projekt'
 
   // ** CONSTANTS
-  const query = "*[_type == $cat] | order(publicationDate desc)";
+  const query = '*[_type == $cat] | order(publicationDate desc)'
 
   // VARIABLES
-  let posts = loadData(query, { cat: cat });
+  let posts = loadData(query, { cat: cat })
 
-  posts.then(l => {
-    console.dir(l);
-  });
+  posts.then((l) => {
+    console.dir(l)
+  })
 </script>
 
 <style lang="scss">
-  @import "../../variables.scss";
+  @import '../../variables.scss';
 
   .list {
     padding-top: calc(#{$menu_bar_height} + #{$line_height});
@@ -45,7 +45,7 @@
     margin-left: $margin;
     margin-right: $margin;
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       margin-left: $phone-margin;
       margin-right: $phone-margin;
     }
