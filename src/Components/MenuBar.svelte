@@ -292,6 +292,7 @@
               searchActive = false
               searchInputValue = ''
               menuOpen = false
+              searchInputElement.blur()
             }
           }} />
       </div>

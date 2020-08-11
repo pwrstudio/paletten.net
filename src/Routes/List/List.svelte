@@ -34,9 +34,9 @@
   // VARIABLES
   let posts = loadData(query)
 
-  posts.then((l) => {
-    console.dir(l)
-  })
+  // posts.then((l) => {
+  //   console.dir(l)
+  // })
 </script>
 
 <style lang="scss">

@@ -47,7 +47,7 @@
   })
 
   medverkande.then((medverkande) => {
-    console.dir(medverkande)
+    // console.dir(medverkande)
     mArray = medverkande
   })
 

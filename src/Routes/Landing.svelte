@@ -31,9 +31,9 @@
   let landingPage = loadData(query)
   // let filteredPosts = [];
 
-  landingPage.then((l) => {
-    console.dir(l)
-  })
+  // landingPage.then((l) => {
+  //   console.dir(l)
+  // })
 
   // $: {
   //   posts.then(posts => {

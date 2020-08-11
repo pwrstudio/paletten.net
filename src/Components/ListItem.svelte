@@ -26,7 +26,7 @@
   let postContent = loadData(query)
 
   postContent.then((l) => {
-    console.dir(postContent)
+    // console.dir(postContent)
     let dir = ''
     if (l._type === 'post') {
       dir = '/artiklar/'
