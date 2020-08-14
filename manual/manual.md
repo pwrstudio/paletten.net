@@ -18,6 +18,8 @@ Författare kan koppas till i _Artikelposter_ genoma att först skapa en separat
 
 Innehållsförteckning kan fyllas med:
 
+![Innehållsförteckning](toc.png)
+
 ### Artikel (Online)
 
 Länkar till en artikel-post
@@ -30,5 +32,7 @@ Title fylls i och författare väljs manuellt.
 ## Förstasida
 
 De tre kolumnerna kan fyllas med artiklar, tidskrifter, projekt och avdelas med rubriker.
+
+![Förstasida](frontpage.png)
 
 För artiklar, tidskrifter, projekt kan även en bakgrundfärg väljas.
