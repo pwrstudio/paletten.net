@@ -3,15 +3,15 @@
 
 ## Redigering av textinnehåll
 
-- Bildtexter läggs till i popup-rutan där bilden laddas upp. Samma gäller för video och ljud.
-– För bilder och video finns två layoutalternativ i popup-rutan: fullbredd och bakgrundsfärg.
-– Videofiler måste vara av typen '.mp4'
-– Ljudfiler måste vara av typen '.mp3'
+* Bildtexter läggs till i popup-rutan där bilden laddas upp. Samma gäller för video och ljud.
+* För bilder och video finns två layoutalternativ i popup-rutan: fullbredd och bakgrundsfärg.
+* Videofiler måste vara av typen *'.mp4'*
+* Ljudfiler måste vara av typen *'.mp3'*
 
 
 ## Medverkande
 
-Författare kan koppas till i _Artikelposter_ genoma att först skapa en separat _Medverkandepost_, och sedan läggas till udner fältet _Författare_. 
+Författare kan koppas till i *Artikelposter* genoma att först skapa en separat *Medverkandepost*, och sedan läggas till udner fältet _Författare_. 
 
 
 ## Tidskrifter
