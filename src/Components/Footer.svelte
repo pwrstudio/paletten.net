@@ -6,22 +6,15 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  // import _ from "lodash";
-  // import "intersection-observer";
-  import { links } from 'svelte-routing'
-  // import { onMount } from "svelte";
-  // import { links } from "svelte-routing";
-  // import { fade } from "svelte/transition";
-  // import Flickity from "flickity";
+  import { links } from "svelte-routing";
+  import { loadData, renderBlockText } from "../sanity.js";
 
-  // // STORES
-  // import { menuBarText, location, filterTerm } from "../stores.js";
-
-  // COMPONENTS
+  const query = '*[_type == "footer"][0]';
+  let post = loadData(query);
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import "../variables.scss";
 
   footer {
     width: 100vw;
@@ -36,7 +29,7 @@
     font-weight: normal;
     margin-top: $line-height;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       padding-left: $phone-margin;
       padding-right: $phone-margin;
       padding-bottom: $line-height * 2;
@@ -72,7 +65,7 @@
       max-width: 40ch;
     }
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: 100%;
       // text-align: center;
 
@@ -98,34 +91,23 @@
 </style>
 
 <footer>
-  <div class="column first">
-    <p>
-      <strong>Paletten</strong>
-      är idag en av samtidskonstens viktigaste tidskrifter. Ambition är att
-      kritiskt diskutera och presentera konsten och dess förutsättningar i vår
-      tid. Paletten fokuserar på konsten politiska villkor och funktioner i
-      dagens samhälle.
-    </p>
-  </div>
+  {#await post then post}
+    <div class="column first">
+      {@html renderBlockText(post.description.content)}
+    </div>
 
-  <div class="column second">
-    Paletten
-    <br />
-    Östra Sänkverksgatan 2
-    <br />
-    413 27 Göteborg
-    <br />
-    <br />
-    © Paletten 2017
-  </div>
+    <div class="column second">
+      {@html renderBlockText(post.address.content)}
+    </div>
 
-  <div class="column third" use:links>
-    <a href="/artiklar" class="menu-item">Artiklar</a>
-    <a href="/projekt" class="menu-item">Projekt</a>
-    <a href="/tidskrift" class="menu-item">Tidskrift</a>
-    <a href="/om-paletten" class="menu-item">Om Paletten</a>
-    <a href="/prenumeratio" class="menu-item">Prenumeration</a>
-    <a href="/kontakt" class="menu-item">Kontakt</a>
-  </div>
+    <div class="column third" use:links>
+      <a href="/artiklar" class="menu-item">Artiklar</a>
+      <a href="/projekt" class="menu-item">Projekt</a>
+      <a href="/tidskrift" class="menu-item">Tidskrift</a>
+      <a href="/om-paletten" class="menu-item">Om Paletten</a>
+      <a href="/prenumeratio" class="menu-item">Prenumeration</a>
+      <a href="/kontakt" class="menu-item">Kontakt</a>
+    </div>
+  {/await}
 
 </footer>
