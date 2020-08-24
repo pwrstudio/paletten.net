@@ -6,81 +6,85 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from "svelte";
-  import { fade, slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
-  import { formattedDate } from "../../global.js";
-  import get from "lodash/get";
-  import flatMap from "lodash/flatMap";
+  import { onMount } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
+  import { quintOut } from 'svelte/easing'
+  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { formattedDate } from '../../global.js'
+  import get from 'lodash/get'
+  import flatMap from 'lodash/flatMap'
 
   // *** PROPS
-  export let slug = "";
+  export let slug = ''
 
   // COMPONENTS
-  import Footer from "../../Components/Footer.svelte";
-  import Authors from "../../Components/Authors.svelte";
-  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte";
-  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte";
-  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
-  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
+  import Footer from '../../Components/Footer.svelte'
+  import Authors from '../../Components/Authors.svelte'
+  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
+  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
+  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
+  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
 
   // ** CONSTANTS
-  const query = "*[_id == $slug][0]";
-  const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)";
+  const query = '*[_id == $slug][0]'
+  const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)"
 
-  let params = { slug: slug };
-  let footnotePosts = [];
-  let oldSlug = slug;
-  let post = loadData(query, params);
-  let medverkande = loadData(medverkandeQuery);
+  let params = { slug: slug }
+  let footnotePosts = []
+  let oldSlug = slug
+  let post = loadData(query, params)
+  let medverkande = loadData(medverkandeQuery)
 
-  let mArray = [];
+  let mArray = []
 
-  post.then(post => {
+  post.then((post) => {
     let a = flatMap(
-      post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
-    );
-    footnotePosts = a.filter(x => x._type === "footnote");
-  });
+      post.content.content
+        .filter((c) => c._type == 'block')
+        .map((x) => x.markDefs)
+    )
+    footnotePosts = a.filter((x) => x._type === 'footnote')
+  })
 
-  medverkande.then(medverkande => {
+  medverkande.then((medverkande) => {
     // console.dir(medverkande)
-    mArray = medverkande;
-  });
+    mArray = medverkande
+  })
 
   $: {
     if (slug !== oldSlug) {
-      oldSlug = slug;
-      params = { slug: slug };
-      post = loadData(query, params);
+      oldSlug = slug
+      params = { slug: slug }
+      post = loadData(query, params)
 
-      post.then(post => {
+      post.then((post) => {
         let a = flatMap(
           post.content.content
-            .filter(c => c._type == "block")
-            .map(x => x.markDefs)
-        );
+            .filter((c) => c._type == 'block')
+            .map((x) => x.markDefs)
+        )
 
-        footnotePosts = a.filter(x => x._type === "footnote");
-      });
+        footnotePosts = a.filter((x) => x._type === 'footnote')
+      })
     }
   }
 </script>
 
 <style lang="scss">
-  @import "../../variables.scss";
+  @import '../../variables.scss';
 
   .page {
     font-size: $font_size_normal;
     font-family: $serif-stack;
     padding-bottom: $line-height * 2;
     width: calc(100% - #{$margin * 2});
+    // width: 100%;
     overflow-x: hidden;
     margin-left: $margin;
     margin-right: $margin;
+    min-height: calc(100vh - #{$menu_bar_height});
 
-    @include screen-size("small") {
+    @include screen-size('small') {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -127,7 +131,7 @@
         margin-right: $margin;
       }
 
-      @include screen-size("small") {
+      @include screen-size('small') {
         width: calc(100% - #{$phone-margin * 2});
       }
     }
@@ -196,9 +200,9 @@
           {#each mArray as m, i}
             <span>
               <a href={'/medverkande/' + get(m, 'slug.current', '')}>
-                {m.title}
+                {m.title},&nbsp;
               </a>
-              {#if i < mArray.length - 1},&nbsp;{/if}
+              <!-- {#if i < mArray.length - 1},&nbsp;{/if} -->
             </span>
           {/each}
         </div>
