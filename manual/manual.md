@@ -7,6 +7,7 @@
 * För bilder och video finns två layoutalternativ i popup-rutan: fullbredd och bakgrundsfärg.
 * Videofiler måste vara av typen **'.mp4'**
 * Ljudfiler måste vara av typen **'.mp3'**
+* Texten i fältet 'Ingress' används i förhandsvisningar i listor etc...
 
 
 ## Medverkande
