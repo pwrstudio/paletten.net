@@ -43,6 +43,7 @@
     padding-bottom: $line-height;
     width: calc(100% - #{$margin} * 2);
     overflow-x: hidden;
+    min-height: calc(100vh - #{$menu_bar_height});
 
     margin-left: $margin;
     margin-right: $margin;

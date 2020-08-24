@@ -69,6 +69,7 @@
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
     border-bottom: 1px solid $grey;
     margin-bottom: $line-height * 2;
+    min-height: calc(100vh - #{$menu_bar_height});
 
     @include screen-size('small') {
       width: calc(100% - #{$phone-margin * 2});
