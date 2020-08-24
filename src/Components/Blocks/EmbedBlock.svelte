@@ -72,6 +72,7 @@
       <iframe
         width="720"
         height="480"
+        title="paletten"
         src={'https://www.youtube.com/embed/' + getVideoId(block.url).id}
         frameborder="no"
         allow="autoplay; fullscreen"
@@ -85,6 +86,7 @@
       <iframe
         width="720"
         height="480"
+        title="paletten"
         src={'https://player.vimeo.com/video/' + getVideoId(block.url).id}
         frameborder="no"
         scrolling="no"
@@ -101,6 +103,7 @@
       <iframe
         width="100%"
         height="300"
+        title="paletten"
         src={'https://w.soundcloud.com/player/?url=' + block.url + '&color=%23fffff'}
         frameborder="no"
         scrolling="no"
