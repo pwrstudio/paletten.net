@@ -28,15 +28,6 @@
     margin-bottom: $line-height;
     margin-top: $line-height;
 
-    .text {
-      // display: flex;
-      .caption {
-      }
-
-      .attribution {
-      }
-    }
-
     .youtube-container,
     .vimeo-container {
       position: relative;
@@ -122,11 +113,6 @@
     <figcaption class="caption">
       {@html renderBlockText(block.caption.content)}
     </figcaption>
-  {/if}
-
-  <!-- ATTRIBUTION  -->
-  {#if has(block, 'attribution')}
-    <figcaption class="attribution">{block.attribution}</figcaption>
   {/if}
 
 </figure>

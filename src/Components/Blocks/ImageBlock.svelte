@@ -57,18 +57,14 @@
     }
 
     &.padded {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+      padding-top: $line-height * 4;
+      padding-bottom: $line-height * 4;
     }
+  }
 
-    .text {
-      // display: flex;
-      .caption {
-      }
-
-      .attribution {
-      }
-    }
+  .caption {
+    text-align: left;
+    float: left;
   }
 </style>
 
@@ -90,15 +86,14 @@
   <!-- CAPTION -->
   <div class="text">
     {#if has(block, 'caption.content')}
-      <figcaption class="caption">
-        {@html renderBlockText(block.caption.content)}
+      <figcaption>
+        <!-- CAPTION -->
+        <span class="caption>">
+          {@html renderBlockText(block.caption.content)}
+        </span>
       </figcaption>
     {/if}
 
-    <!-- ATTRIBUTION  -->
-    {#if has(block, 'attribution')}
-      <figcaption class="attribution">{block.attribution}</figcaption>
-    {/if}
   </div>
 
 </figure>
