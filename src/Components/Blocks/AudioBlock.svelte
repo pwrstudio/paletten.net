@@ -5,6 +5,8 @@
   //
   // # # # # # # # # # # # # #
 
+  import get from "lodash/get";
+
   // PROPS
   export let block = {};
 
