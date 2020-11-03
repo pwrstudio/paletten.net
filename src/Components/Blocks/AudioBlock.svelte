@@ -10,7 +10,7 @@
 
   const audioUrl =
     "https://cdn.sanity.io/files/1tpw92x3/production/" +
-    block.audioFile.asset._ref.replace("file-", "").replace("-mp3", ".mp3");
+    get(block, 'audioFile.asset._ref', '').replace("file-", "").replace("-mp3", ".mp3");
 
   // *** VARIABLES
   let time = 0;
