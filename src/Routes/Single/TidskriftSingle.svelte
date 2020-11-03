@@ -6,15 +6,12 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
   import { urlFor, loadData, renderBlockText } from '../../sanity.js'
-  import { formattedDate } from '../../global.js'
-  import get from 'lodash/get'
 
   // *** PROPS
   export let slug = ''
 
-  // COMPONENTS
+  // *** COMPONENTS
   import ToCItem from '../../Components/ToCItem.svelte'
   import Footer from '../../Components/Footer.svelte'
   import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
@@ -22,15 +19,12 @@
   import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
   import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
 
-  // ** CONSTANTS
+  // *** CONSTANTS
   const query = "*[_type == 'tidskrift' && slug.current == $slug][0]"
   const params = { slug: slug }
 
+  // *** VARIABLES
   let post = loadData(query, params)
-
-  // post.then(post => {
-  //   console.dir(post);
-  // });
 </script>
 
 <style lang="scss">

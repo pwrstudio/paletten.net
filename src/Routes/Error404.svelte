@@ -5,9 +5,6 @@
   //
   // # # # # # # # # # # # # #
 
-  // *** IMPORTS
-  import { onMount } from "svelte";
-
   // COMPONENTS
   import Footer from "../Components/Footer.svelte";
 </script>

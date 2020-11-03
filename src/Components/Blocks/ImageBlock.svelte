@@ -6,7 +6,7 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
+  import { urlFor, renderBlockText } from "../../sanity.js";
   import get from "lodash/get";
   import has from "lodash/has";
 

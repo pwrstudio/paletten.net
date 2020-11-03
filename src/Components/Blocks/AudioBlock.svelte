@@ -5,10 +5,6 @@
   //
   // # # # # # # # # # # # # #
 
-  // IMPORTS
-  import has from "lodash/has";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
-
   // PROPS
   export let block = {};
 

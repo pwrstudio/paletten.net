@@ -6,7 +6,7 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { loadData } from '../../sanity.js'
   import { links } from 'svelte-routing'
 
   // COMPONENTS

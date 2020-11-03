@@ -7,11 +7,8 @@
 
   // *** IMPORTS
   import 'simplebar'
-  import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
-  import { urlFor, loadData, renderBlockText } from '../sanity.js'
+  import { loadData, renderBlockText } from '../sanity.js'
   import { links } from 'svelte-routing'
-  import shuffle from 'lodash/shuffle'
 
   // COMPONENTS
   import LandingItem from '../Components/LandingItem.svelte'
@@ -24,10 +21,10 @@
   // *** PROPS
   // export let term = "";
 
-  // ** CONSTANTS
+  // *** CONSTANTS
   const query = "*[_id == 'landingpage'][0]"
 
-  // VARIABLES
+  // *** VARIABLES
   let landingPage = loadData(query)
   // let filteredPosts = [];
 

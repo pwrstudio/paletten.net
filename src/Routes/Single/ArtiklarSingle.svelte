@@ -6,15 +6,11 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
-  import { quintOut } from 'svelte/easing'
-  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { loadData, renderBlockText } from '../../sanity.js'
   import { formattedDate } from '../../global.js'
   import get from 'lodash/get'
   import isArray from 'lodash/isArray'
   import flatMap from 'lodash/flatMap'
-  import slugify from 'slugify'
 
   // *** PROPS
   export let slug = ''
@@ -35,6 +31,8 @@
   let footnotePosts = []
 
   post.then((post) => {
+
+    console.log('post', post)
     let a = flatMap(
       post.content.content
         .filter((c) => c._type == 'block')

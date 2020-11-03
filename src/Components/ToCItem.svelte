@@ -6,11 +6,8 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
   import { links } from 'svelte-routing'
-  import { urlFor, loadData, renderBlockText } from '../sanity.js'
-  import { formattedDate } from '../global.js'
-  import _ from 'lodash'
+  import { loadData } from '../sanity.js'
 
   // COMPONENTS
   import Authors from './Authors.svelte'

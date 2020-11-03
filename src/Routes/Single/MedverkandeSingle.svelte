@@ -6,34 +6,25 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
-  import { quintOut } from 'svelte/easing'
-  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
-  import { formattedDate } from '../../global.js'
-  import get from 'lodash/get'
-  import flatMap from 'lodash/flatMap'
+  import { loadData, renderBlockText } from '../../sanity.js'
   import { links } from 'svelte-routing'
 
   // *** PROPS
   export let slug = ''
 
-  // COMPONENTS
+  // *** COMPONENTS
   import Footer from '../../Components/Footer.svelte'
-  import Authors from '../../Components/Authors.svelte'
   import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
   import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
   import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
   import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
   import ListItem from '../../Components/ListItem.svelte'
 
-  // ** CONSTANTS
+  // *** CONSTANTS
   const query = "*[_type == 'medverkande' && slug.current == $slug][0]"
   const params = { slug: slug }
 
   let post = loadData(query, params)
-  let footnotePosts = []
-
   let linkedPosts = []
 
   post.then((post) => {
@@ -44,14 +35,6 @@
     fetchLinked.then((f) => {
       linkedPosts = f
     })
-
-    // let a = flatMap(
-    //   post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
-    // );
-
-    // footnotePosts = a.filter(x => x._type === "footnote");
-
-    // console.dir(footnotePosts);
   })
 </script>
 

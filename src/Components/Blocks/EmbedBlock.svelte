@@ -8,7 +8,7 @@
   // IMPORTS
   import has from "lodash/has";
   import getVideoId from "get-video-id";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
+  import { renderBlockText } from "../../sanity.js";
 
   // PROPS
   export let block = {};

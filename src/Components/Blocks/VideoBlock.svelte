@@ -9,16 +9,15 @@
   import { onMount } from "svelte";
   import has from "lodash/has";
   import get from "lodash/get";
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
 
   // PROPS
   export let block = {};
 
+  console.log('____ videoblock')
   console.dir(block);
 
-  const videoUrl =
-    "https://cdn.sanity.io/files/1tpw92x3/production/" +
-    block.videoFile.asset._ref.replace("file-", "").replace("-mp4", ".mp4");
+  const videoUrl = "https://cdn.sanity.io/files/1tpw92x3/production/" +
+    get(block, 'videoFile.asset._ref', '').replace("file-", "").replace("-mp4", ".mp4");
 
   // *** DOM REFERENCES
   let videoEl = {};

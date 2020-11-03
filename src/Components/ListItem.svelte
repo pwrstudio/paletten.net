@@ -6,11 +6,10 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { urlFor, loadData, renderBlockText } from '../sanity.js'
   import { formattedDate } from '../global.js'
-  import _ from 'lodash'
+  import get from 'lodash/get'
 
   // COMPONENTS
   import Authors from './Authors.svelte'
@@ -178,7 +177,7 @@
   <a href={link} class="list-item full" in:fade class:padded={post.totalColor}>
     <div
       class="inner"
-      style={'background: ' + _.get(post, 'color.hex', 'transparent')}>
+      style={'background: ' + get(post, 'color.hex', 'transparent')}>
 
       <div class="column">
         <div class="text">
@@ -214,7 +213,7 @@
         {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}
           <div
             class="image"
-            style={'background: ' + _.get(post, 'color.hex', 'transparent')}
+            style={'background: ' + get(post, 'color.hex', 'transparent')}
             class:fullbleed={post.imageLayout == 'fullBleed'}
             class:proportional={post.imageLayout == 'proportional'}>
             <img

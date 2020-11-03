@@ -27,7 +27,7 @@ Länkar till en artikel-post
 
 ### Artikel (Offline)
 
-Title fylls i och författare väljs manuellt.
+Titel fylls i och författare väljs manuellt.
 
 
 ## Förstasida

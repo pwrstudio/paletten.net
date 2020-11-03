@@ -7,13 +7,7 @@
 
   // IMPORTS
   import { navigate } from 'svelte-routing'
-  import { onMount } from 'svelte'
   import { links } from 'svelte-routing'
-  import { fade } from 'svelte/transition'
-  import _ from 'lodash'
-
-  // COMPONENTS
-  import Logo from './Graphics/Logo.svelte'
 
   // STORES
   import { menuActive } from '../stores.js'

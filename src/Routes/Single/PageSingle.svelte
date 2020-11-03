@@ -6,18 +6,14 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
-  import { quintOut } from 'svelte/easing'
-  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
-  import { formattedDate } from '../../global.js'
+  import { loadData, renderBlockText } from '../../sanity.js'
   import get from 'lodash/get'
   import flatMap from 'lodash/flatMap'
 
   // *** PROPS
   export let slug = ''
 
-  // COMPONENTS
+  // *** COMPONENTS
   import Footer from '../../Components/Footer.svelte'
   import Authors from '../../Components/Authors.svelte'
   import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
@@ -25,16 +21,16 @@
   import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
   import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
 
-  // ** CONSTANTS
+  // *** CONSTANTS
   const query = '*[_id == $slug][0]'
   const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)"
 
+  // *** VARIABLES
   let params = { slug: slug }
   let footnotePosts = []
   let oldSlug = slug
   let post = loadData(query, params)
   let medverkande = loadData(medverkandeQuery)
-
   let mArray = []
 
   post.then((post) => {

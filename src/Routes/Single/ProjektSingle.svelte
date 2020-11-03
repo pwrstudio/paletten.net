@@ -6,10 +6,7 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
   import { urlFor, loadData, renderBlockText } from '../../sanity.js'
-  import { formattedDate } from '../../global.js'
-  import get from 'lodash/get'
 
   // *** PROPS
   export let slug = ''
@@ -26,11 +23,8 @@
   const query = "*[_type == 'projekt' && slug.current == $slug][0]"
   const params = { slug: slug }
 
+  // *** VARIABLES
   let post = loadData(query, params)
-
-  // post.then(post => {
-  //   console.dir(post);
-  // });
 </script>
 
 <style lang="scss">

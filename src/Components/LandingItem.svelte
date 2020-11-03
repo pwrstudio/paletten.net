@@ -6,8 +6,7 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
+  import { fade } from 'svelte/transition'
   import { urlFor, loadData, renderBlockText } from '../sanity.js'
   import { formattedDate } from '../global.js'
   import _ from 'lodash'

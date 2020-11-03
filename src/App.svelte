@@ -506,5 +506,4 @@
   <div class="line" />
   <div class="line" />
   <div class="line" />
-
 </div>
