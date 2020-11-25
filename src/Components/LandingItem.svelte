@@ -6,13 +6,13 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { fade } from 'svelte/transition'
-  import { urlFor, loadData, renderBlockText } from '../sanity.js'
-  import { formattedDate } from '../global.js'
-  import _ from 'lodash'
+  import { fade } from "svelte/transition"
+  import { urlFor, loadData, renderBlockText } from "../sanity.js"
+  import { formattedDate } from "../global.js"
+  import _ from "lodash"
 
   // COMPONENTS
-  import Authors from './Authors.svelte'
+  import Authors from "./Authors.svelte"
 
   // STORES
   //   import { location, filterTerm } from "../stores.js";
@@ -21,10 +21,11 @@
   // *** PROPS
   export let post = {}
 
-  // console.dir(post);
+  console.log("first page post")
+  console.dir(post)
 
-  let query = ''
-  let link = ''
+  let query = ""
+  let link = ""
 
   if (post.postLink) {
     query =
@@ -34,25 +35,25 @@
   }
 
   if (!post.layout) {
-    post.layout = 'full'
+    post.layout = "full"
   }
 
   if (!post.imageLayout) {
-    post.imageLayout = 'proportional'
+    post.imageLayout = "proportional"
   }
 
   //   VARIABLES
   let postContent = loadData(query)
   //   // let filteredPosts = [];
 
-  postContent.then((l) => {
-    let dir = ''
-    if (l._type === 'post') {
-      dir = '/artiklar/'
-    } else if (l._type === 'tidskrift') {
-      dir = '/tidskrift/'
-    } else if (l._type === 'projekt') {
-      dir = '/projekt/'
+  postContent.then(l => {
+    let dir = ""
+    if (l._type === "post") {
+      dir = "/artiklar/"
+    } else if (l._type === "tidskrift") {
+      dir = "/tidskrift/"
+    } else if (l._type === "projekt") {
+      dir = "/projekt/"
     }
     link = dir + l.slug.current
   })
@@ -70,7 +71,7 @@
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import "../variables.scss";
 
   .list-item,
   .placeholder {
@@ -82,7 +83,7 @@
     flex-wrap: wrap;
     user-select: none;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       flex-wrap: wrap;
       // margin-left: 10px;
     }
@@ -108,7 +109,7 @@
 
       // background: green;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: 100%;
       }
     }
@@ -119,7 +120,7 @@
       text-decoration: none;
       color: black;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: 100%;
       }
 
@@ -130,7 +131,7 @@
         font-weight: bold;
         max-width: 45ch;
 
-        @include screen-size('small') {
+        @include screen-size("small") {
           font-size: $font_size_large_phone;
         }
       }
@@ -196,14 +197,12 @@
   }
 </style>
 
-{#await postContent}
-  <!-- <div
-    class="placeholder"
-    class:full={post.layout == 'full'}
-    class:half={post.layout == 'half'}
-    class:third={post.layout == 'third'} /> -->
-{:then postContent}
-  <a href={link} class="list-item full" in:fade class:padded={post.totalColor}>
+{#await postContent then postContent}
+  <a
+    href={link}
+    class="list-item full"
+    in:fade
+    class:padded={_.has(post, 'color')}>
     <div
       class="inner"
       style={'background: ' + _.get(post, 'color.hex', 'transparent')}>
