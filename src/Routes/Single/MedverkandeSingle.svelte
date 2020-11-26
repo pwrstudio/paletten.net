@@ -6,19 +6,19 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { loadData, renderBlockText } from '../../sanity.js'
-  import { links } from 'svelte-routing'
+  import { loadData, renderBlockText } from "../../sanity.js"
+  import { links } from "svelte-routing"
 
   // *** PROPS
-  export let slug = ''
+  export let slug = ""
 
   // *** COMPONENTS
-  import Footer from '../../Components/Footer.svelte'
-  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
-  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
-  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
-  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
-  import ListItem from '../../Components/ListItem.svelte'
+  import Footer from "../../Components/Footer.svelte"
+  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
+  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
+  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
+  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
+  import ListItem from "../../Components/ListItem.svelte"
 
   // *** CONSTANTS
   const query = "*[_type == 'medverkande' && slug.current == $slug][0]"
@@ -27,19 +27,19 @@
   let post = loadData(query, params)
   let linkedPosts = []
 
-  post.then((post) => {
+  post.then(post => {
     let fetchLinked = loadData("*[_type == 'post' && author[]._ref == $id]", {
       id: post._id,
     })
 
-    fetchLinked.then((f) => {
+    fetchLinked.then(f => {
       linkedPosts = f
     })
   })
 </script>
 
 <style lang="scss">
-  @import '../../variables.scss';
+  @import "../../variables.scss";
 
   .medverkande {
     font-size: $font_size_normal;
@@ -52,9 +52,9 @@
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
     border-bottom: 1px solid $grey;
     margin-bottom: $line-height * 2;
-    min-height: calc(100vh - #{$menu_bar_height});
+    // min-height: calc(100vh - #{$menu_bar_height});
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -66,7 +66,7 @@
       margin: 0;
       padding: 0;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         font-size: $font_size_large_phone;
       }
     }
@@ -102,7 +102,7 @@
     margin-left: $margin;
     margin-right: $margin;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       margin-top: 0;
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -120,7 +120,7 @@
       margin-right: $margin;
     }
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
     }
   }
@@ -128,7 +128,6 @@
 
 {#await post then post}
   <div class="medverkande">
-
     <div class="about">
       <div class="meta">
         <!-- TITLE -->
@@ -170,5 +169,4 @@
   <!-- {/await} -->
 
   <Footer />
-
 {/await}

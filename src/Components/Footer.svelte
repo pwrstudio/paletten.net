@@ -6,11 +6,11 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { links } from "svelte-routing";
-  import { loadData, renderBlockText } from "../sanity.js";
+  import { links } from "svelte-routing"
+  import { loadData, renderBlockText } from "../sanity.js"
 
-  const query = '*[_type == "footer"][0]';
-  let post = loadData(query);
+  const query = '*[_type == "footer"][0]'
+  let post = loadData(query)
 </script>
 
 <style lang="scss">
@@ -59,6 +59,12 @@
     }
     &.third {
       margin-left: $margin;
+
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     p {
@@ -109,5 +115,4 @@
       <a href="/kontakt" class="menu-item">Kontakt</a>
     </div>
   {/await}
-
 </footer>

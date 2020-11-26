@@ -6,23 +6,24 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { loadData, renderBlockText } from '../../sanity.js'
-  import get from 'lodash/get'
-  import flatMap from 'lodash/flatMap'
+  import { loadData, renderBlockText } from "../../sanity.js"
+  import get from "lodash/get"
+  import flatMap from "lodash/flatMap"
+  import { links } from "svelte-routing"
 
   // *** PROPS
-  export let slug = ''
+  export let slug = ""
 
   // *** COMPONENTS
-  import Footer from '../../Components/Footer.svelte'
-  import Authors from '../../Components/Authors.svelte'
-  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
-  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
-  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
-  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
+  import Footer from "../../Components/Footer.svelte"
+  import Authors from "../../Components/Authors.svelte"
+  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
+  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
+  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
+  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
 
   // *** CONSTANTS
-  const query = '*[_id == $slug][0]'
+  const query = "*[_id == $slug][0]"
   const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)"
 
   // *** VARIABLES
@@ -33,16 +34,14 @@
   let medverkande = loadData(medverkandeQuery)
   let mArray = []
 
-  post.then((post) => {
+  post.then(post => {
     let a = flatMap(
-      post.content.content
-        .filter((c) => c._type == 'block')
-        .map((x) => x.markDefs)
+      post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
     )
-    footnotePosts = a.filter((x) => x._type === 'footnote')
+    footnotePosts = a.filter(x => x._type === "footnote")
   })
 
-  medverkande.then((medverkande) => {
+  medverkande.then(medverkande => {
     // console.dir(medverkande)
     mArray = medverkande
   })
@@ -53,21 +52,21 @@
       params = { slug: slug }
       post = loadData(query, params)
 
-      post.then((post) => {
+      post.then(post => {
         let a = flatMap(
           post.content.content
-            .filter((c) => c._type == 'block')
-            .map((x) => x.markDefs)
+            .filter(c => c._type == "block")
+            .map(x => x.markDefs)
         )
 
-        footnotePosts = a.filter((x) => x._type === 'footnote')
+        footnotePosts = a.filter(x => x._type === "footnote")
       })
     }
   }
 </script>
 
 <style lang="scss">
-  @import '../../variables.scss';
+  @import "../../variables.scss";
 
   .page {
     font-size: $font_size_normal;
@@ -80,7 +79,7 @@
     margin-right: $margin;
     min-height: calc(100vh - #{$menu_bar_height});
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -127,7 +126,7 @@
         margin-right: $margin;
       }
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: calc(100% - #{$phone-margin * 2});
       }
     }
@@ -135,8 +134,7 @@
 </style>
 
 {#await post then post}
-  <div class="page">
-
+  <div class="page" use:links>
     <div class="column first">
       <div class="meta">
         <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
@@ -168,7 +166,6 @@
               <EmbedBlock {block} />
             {/if}
           {/each}
-
         </div>
 
         <div class="footnotes">
@@ -182,17 +179,15 @@
           </ol>
         </div>
       {/if}
-
     </div>
 
     {#if slug == 'om-paletten'}
       <div class="column">
-
         <div class="meta">
           <h1 class="title">Medverkande</h1>
         </div>
 
-        <div class="content">
+        <div class="content medverkande">
           {#each mArray as m, i}
             <span>
               <a href={'/medverkande/' + get(m, 'slug.current', '')}>
@@ -202,12 +197,9 @@
             </span>
           {/each}
         </div>
-
       </div>
     {/if}
-
   </div>
 
   <Footer />
-
 {/await}

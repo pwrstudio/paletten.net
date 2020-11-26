@@ -6,11 +6,11 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { navigate } from 'svelte-routing'
-  import { links } from 'svelte-routing'
+  import { navigate } from "svelte-routing"
+  import { links } from "svelte-routing"
 
   // STORES
-  import { menuActive } from '../stores.js'
+  import { menuActive } from "../stores.js"
 
   $: {
     if (searchActive == true && searchInputElement) {
@@ -24,7 +24,7 @@
   // VARIABLES
   let menuOpen = false
   let searchActive = false
-  let searchInputValue = ''
+  let searchInputValue = ""
 
   $: {
     menuActive.set(menuOpen)
@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import "../variables.scss";
 
   .bar {
     position: fixed;
@@ -54,7 +54,7 @@
       transition: height 0.2s ease-out;
       height: $line-height * 13;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         height: $line-height * 16;
       }
     }
@@ -96,12 +96,13 @@
     text-decoration: none;
     font-weight: 900;
     letter-spacing: 0.05em;
+    cursor: pointer;
 
     &:hover {
       color: $half-grey;
     }
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       margin-left: auto;
       margin-right: auto;
       display: block;
@@ -128,7 +129,7 @@
     font-weight: 900;
     letter-spacing: 0.05em;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       display: none;
     }
 
@@ -155,7 +156,7 @@
     letter-spacing: 0.05em;
     line-height: $line-height;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       padding-right: $phone-margin;
       padding-left: $phone-margin;
     }
@@ -179,7 +180,7 @@
 
       a,
       span {
-        @include screen-size('small') {
+        @include screen-size("small") {
           display: inline-block;
           padding-top: 4px;
           padding-bottom: 4px;
@@ -209,7 +210,7 @@
   <!-- Logo -->
   <span
     class="logo"
-    on:click={(e) => {
+    on:click={e => {
       if (window.matchMedia('(max-width: 900px)').matches) {
         menuOpen = !menuOpen
         searchActive = false
@@ -226,7 +227,7 @@
 
   <div
     class="hamburger"
-    on:click={(e) => {
+    on:click={e => {
       menuOpen = !menuOpen
       searchActive = false
       searchInputValue = ''
@@ -237,39 +238,28 @@
   <div
     class="menu"
     use:links
-    on:click={(e) => {
+    on:click={e => {
       menuOpen = false
       searchActive = false
       searchInputValue = ''
     }}>
-
     <div class="column second">
-      <div class="menu-item">
-        <a href="/artiklar">Artiklar</a>
-      </div>
-      <div class="menu-item">
-        <a href="/tidskrift">Tidskrift</a>
-      </div>
-      <div class="menu-item">
-        <a href="/projekt">Projekt</a>
-      </div>
+      <div class="menu-item"><a href="/artiklar">Artiklar</a></div>
+      <div class="menu-item"><a href="/tidskrift">Tidskrift</a></div>
+      <div class="menu-item"><a href="/projekt">Projekt</a></div>
     </div>
     <div class="column first">
-      <div class="menu-item">
-        <a href="/om-paletten">Om Paletten</a>
-      </div>
+      <div class="menu-item"><a href="/om-paletten">Om Paletten</a></div>
       <div class="menu-item">
         <a href="/prenumerationer">Prenumerationer</a>
       </div>
-      <div class="menu-item">
-        <a href="/kontakt">Kontakt</a>
-      </div>
+      <div class="menu-item"><a href="/kontakt">Kontakt</a></div>
     </div>
     <div class="column third">
       {#if !searchActive}
         <div
           class="menu-item"
-          on:click={(e) => {
+          on:click={e => {
             searchActive = true
             e.stopPropagation()
           }}>
@@ -280,7 +270,7 @@
         <input
           bind:this={searchInputElement}
           bind:value={searchInputValue}
-          on:keyup={(e) => {
+          on:keyup={e => {
             if (e.keyCode === 13) {
               navigate('/search/' + searchInputValue)
               searchActive = false
@@ -291,15 +281,13 @@
           }} />
       </div>
     </div>
-
   </div>
-
 </div>
 
 {#if menuOpen}
   <div
     class="overlay"
-    on:click={(e) => {
+    on:click={e => {
       menuOpen = false
       searchActive = false
       searchInputValue = ''

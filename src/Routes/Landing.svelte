@@ -6,13 +6,13 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import 'simplebar'
-  import { loadData, renderBlockText } from '../sanity.js'
-  import { links } from 'svelte-routing'
+  import "simplebar"
+  import { loadData, renderBlockText } from "../sanity.js"
+  import { links } from "svelte-routing"
 
   // COMPONENTS
-  import LandingItem from '../Components/LandingItem.svelte'
-  import Footer from '../Components/Footer.svelte'
+  import LandingItem from "../Components/LandingItem.svelte"
+  import Footer from "../Components/Footer.svelte"
 
   // STORES
   // import { location, filterTerm } from "../stores.js";
@@ -45,7 +45,7 @@
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import "../variables.scss";
 
   .landing {
     margin: 0;
@@ -57,7 +57,7 @@
     margin-right: $margin;
     margin-left: $margin;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       margin-right: $phone-margin;
       margin-left: $phone-margin;
     }
@@ -76,7 +76,7 @@
       margin-left: $margin;
     }
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: 100%;
 
       &.second {
@@ -102,16 +102,8 @@
 </style>
 
 {#await landingPage then landingPage}
-
-  <div class="landing">
-
-    <!-- <div class="left-pane" use:links>
-      {#each landingPage.posts as post}
-        <LandingItem {post} />
-      {/each}
-    </div> -->
-
-    <div class="column first" use:links>
+  <div class="landing" use:links>
+    <div class="column first">
       {#each landingPage.first as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -122,7 +114,7 @@
       {/each}
     </div>
 
-    <div class="column second" use:links>
+    <div class="column second">
       {#each landingPage.second as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -133,7 +125,7 @@
       {/each}
     </div>
 
-    <div class="column third" use:links>
+    <div class="column third">
       {#each landingPage.third as post}
         {#if post._type == 'landingItem'}
           <LandingItem {post} />
@@ -143,9 +135,7 @@
         {/if}
       {/each}
     </div>
-
   </div>
 
   <Footer />
-
 {/await}
