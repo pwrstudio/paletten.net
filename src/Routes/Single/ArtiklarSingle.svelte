@@ -171,7 +171,20 @@
               {#if isArray(get(footnote, 'content.content', false))}
                 {@html renderBlockText(footnote.content.content)}
               {/if}
-              <a href={'#link-' + footnote._key} class="back-link">↳</a>
+              <span
+                on:click={e => {
+                  const targetEl = document.querySelector('#link-' + footnote._key)
+                  // console.log(targetEl)
+                  if (targetEl) {
+                    // console.log(targetEl.offsetTop)
+                    window.scrollTo({
+                      top: targetEl.offsetTop - 100,
+                      left: 0,
+                      behavior: 'smooth',
+                    })
+                  }
+                }}
+                class="back-link">(BACK)</span>
             </li>
           {/each}
         </ol>

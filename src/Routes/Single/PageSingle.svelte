@@ -195,7 +195,7 @@
             {#each footnotePosts as footnote}
               <li id={'note-' + footnote._key}>
                 {@html renderBlockText(footnote.content.content)}
-                <a href={'#link-' + footnote._key} class="back-link">↳</a>
+                <a href={'#link-' + footnote._key} class="back-link">(BACK)</a>
               </li>
             {/each}
           </ol>

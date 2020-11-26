@@ -69,9 +69,12 @@ const serializers = {
             ),
         footnote: props => {
             return h(
-                'a',
-                { id: 'link-' + props.mark._key, className: 'footnote-link', href: '#note-' + props.mark._key },
+                'span',
                 props.children,
+                h(
+                    'a',
+                    { id: 'link-' + props.mark._key, className: 'footnote-link', href: '#note-' + props.mark._key },
+                )
             )
         }
     },

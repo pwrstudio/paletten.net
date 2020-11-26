@@ -6,44 +6,44 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { Router, Route } from 'svelte-routing'
-  import { fade } from 'svelte/transition'
+  import { Router, Route } from "svelte-routing"
+  import { fade } from "svelte/transition"
 
   // STORES
-  import { menuActive } from './stores.js'
+  import { menuActive } from "./stores.js"
 
   // COMPONENTS
-  import Footer from './Components/Footer.svelte'
-  import MenuBar from './Components/MenuBar.svelte'
+  import Footer from "./Components/Footer.svelte"
+  import MenuBar from "./Components/MenuBar.svelte"
 
   // LANDING
-  import Landing from './Routes/Landing.svelte'
+  import Landing from "./Routes/Landing.svelte"
   // LIST
-  import List from './Routes/List/List.svelte'
+  import List from "./Routes/List/List.svelte"
   // ARTIKLAR
-  import ArtiklarSingle from './Routes/Single/ArtiklarSingle.svelte'
+  import ArtiklarSingle from "./Routes/Single/ArtiklarSingle.svelte"
   // TIDSKRIFT
-  import TidskriftSingle from './Routes/Single/TidskriftSingle.svelte'
+  import TidskriftSingle from "./Routes/Single/TidskriftSingle.svelte"
   // PROJEKT
-  import ProjektSingle from './Routes/Single/ProjektSingle.svelte'
+  import ProjektSingle from "./Routes/Single/ProjektSingle.svelte"
   // MEDVERKANDE
-  import MedverkandeSingle from './Routes/Single/MedverkandeSingle.svelte'
+  import MedverkandeSingle from "./Routes/Single/MedverkandeSingle.svelte"
   // PAGE
-  import PageSingle from './Routes/Single/PageSingle.svelte'
+  import PageSingle from "./Routes/Single/PageSingle.svelte"
   // 404
-  import Error404 from './Routes/Error404.svelte'
+  import Error404 from "./Routes/Error404.svelte"
 
   $: {
     if ($menuActive) {
-      document.body.classList.add('no-scroll')
+      document.body.classList.add("no-scroll")
     } else {
-      document.body.classList.remove('no-scroll')
+      document.body.classList.remove("no-scroll")
     }
   }
 </script>
 
 <style lang="scss" global>
-  @import './variables.scss';
+  @import "./variables.scss";
 
   html,
   body {
@@ -52,7 +52,7 @@
     padding: 0;
     margin: 0;
     background: white;
-    font-family: 'Janson Text LT Std';
+    font-family: "Janson Text LT Std";
     scroll-behavior: smooth;
 
     &.no-scroll {
@@ -155,29 +155,97 @@
     counter-reset: fnoteCounter;
   }
 
-  .footnote-link {
-    counter-increment: fnoteCounter;
-    color: inherit;
-    text-decoration: none;
+  .tags {
+    margin-top: $line-height;
+    margin-bottom: $line-height;
+    border-top: 1px solid $grey;
+    padding-top: $line-height;
+    margin: 0;
+    letter-spacing: 0.1em;
+    font-size: $font_size_small;
+    font-family: $sans-stack;
+    line-height: $line-height;
+    margin-left: auto;
+    margin-right: auto;
+    width: $text_width;
+    max-width: 100%;
 
-    &:after {
-      // vertical-align: super;
-      position: relative;
-      top: -6px;
+    a {
+      margin-bottom: $line-height;
+      float: left;
+      margin-right: 10px;
+      padding: 5px;
+      border: 1px solid $grey;
+      color: inherit;
+      text-decoration: none;
 
-      font-weight: bold;
-      font-size: 0.8em;
-      line-height: $line-height;
-      content: '(' counter(fnoteCounter) ')';
-      padding-left: 4px;
+      &:hover {
+        background: $grey;
+      }
+    }
+  }
+
+  .content {
+    a {
+      text-decoration: underline;
+      color: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
 
-    &:hover {
-      color: grey;
+    figcaption {
+      p {
+        margin-bottom: 0em;
+        padding-left: 0;
+        margin-left: 0;
+      }
+    }
+  }
+
+  .medverkande {
+    a {
+      text-decoration: none;
+      &:hover {
+        color: #555555;
+      }
+    }
+  }
+
+  .content {
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    ol,
+    ul {
+      margin-left: auto;
+      margin-right: auto;
+      width: $text_width;
+      max-width: calc(100% - 20px);
+      max-width: 100%;
+
+      @include screen-size("small") {
+        max-width: calc(100%);
+      }
     }
 
-    &:target {
-      background: lightgrey;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin-top: $line-height;
+      margin-bottom: $line-height;
+    }
+
+    blockquote {
+      width: $text_width * 1.4;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: calc(100% - 20px);
     }
   }
 
@@ -217,95 +285,43 @@
 
         .back-link {
           color: inherit;
-          background: $grey;
-          padding: 2px;
+          padding: 4px;
           text-decoration: none;
-
+          font-family: $sans-stack;
+          font-size: $font_size_small;
+          letter-spacing: 0.1em;
+          cursor: pointer;
           &:hover {
-            background: grey;
+            text-decoration: underline;
           }
         }
       }
     }
   }
 
-  .tags {
-    margin-top: $line-height;
-    margin-bottom: $line-height;
-    border-top: 1px solid $grey;
-    padding-top: $line-height;
-    margin: 0;
-    letter-spacing: 0.1em;
-    font-size: $font_size_small;
-    font-family: $sans-stack;
-    line-height: $line-height;
-    margin-left: auto;
-    margin-right: auto;
-    width: $text_width;
-    max-width: 100%;
+  .footnote-link {
+    counter-increment: fnoteCounter;
+    color: inherit;
+    text-decoration: none !important;
 
-    a {
-      margin-bottom: $line-height;
-      float: left;
-      margin-right: 10px;
-      padding: 5px;
-      border: 1px solid $grey;
-      color: inherit;
-      text-decoration: none;
-
-      &:hover {
-        background: $grey;
-      }
-    }
-  }
-
-  .content {
-    a {
-      color: inherit;
+    &:after {
+      // vertical-align: super;
+      position: relative;
+      top: -6px;
+      font-family: $sans-stack;
+      // font-size: $font_size_small;
+      font-size: 0.8em;
+      line-height: $line-height;
+      content: "(" counter(fnoteCounter) ")";
+      padding-left: 4px;
     }
 
-    figcaption {
-      p {
-        margin-bottom: 0em;
-        padding-left: 0;
-        margin-left: 0;
-      }
-    }
-  }
-
-  .content {
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    ol,
-    ul {
-      margin-left: auto;
-      margin-right: auto;
-      width: $text_width;
-      max-width: calc(100% - 20px);
-      max-width: 100%;
-
-      @include screen-size('small') {
-        max-width: calc(100%);
-      }
+    &:hover {
+      text-decoration: underline !important;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-      margin-top: $line-height;
-      margin-bottom: $line-height;
-    }
-
-    blockquote {
-      width: $text_width * 1.4;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: calc(100% - 20px);
+    &:target {
+      // background: lightgrey;
     }
   }
 
