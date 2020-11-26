@@ -6,18 +6,19 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { urlFor, loadData, renderBlockText } from '../../sanity.js'
+  import { urlFor, loadData, renderBlockText } from "../../sanity.js"
+  import { fade } from "svelte/transition"
 
   // *** PROPS
-  export let slug = ''
+  export let slug = ""
 
   // COMPONENTS
-  import ToCItem from '../../Components/ToCItem.svelte'
-  import Footer from '../../Components/Footer.svelte'
-  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
-  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
-  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
-  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
+  import ToCItem from "../../Components/ToCItem.svelte"
+  import Footer from "../../Components/Footer.svelte"
+  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
+  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
+  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
+  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
 
   // ** CONSTANTS
   const query = "*[_type == 'projekt' && slug.current == $slug][0]"
@@ -28,7 +29,7 @@
 </script>
 
 <style lang="scss">
-  @import '../../variables.scss';
+  @import "../../variables.scss";
 
   .tidskrift {
     font-size: $font_size_normal;
@@ -44,7 +45,7 @@
 
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -62,7 +63,7 @@
     font-weight: bold;
     max-width: 45ch;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       font-size: $font_size_large_phone;
     }
   }
@@ -89,7 +90,7 @@
     width: calc(50% - #{$margin});
     float: left;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: 100%;
     }
   }
@@ -116,9 +117,7 @@
 
 {#await post then post}
   <div class="tidskrift">
-
-    <div class="column">
-
+    <div class="column" in:fade>
       <div class="meta">
         {#if post.tidsPeriod}
           <div class="date">{post.tidsPeriod}</div>
@@ -136,11 +135,9 @@
           {/each}
         </div>
       {/if}
-
     </div>
 
-    <div class="column">
-
+    <div class="column" in:fade={{ delay: 300 }}>
       {#if post.mainImage}
         <img
           alt={post.title}
@@ -176,11 +173,8 @@
           </div>
         {/if}
       </div>
-
     </div>
-
   </div>
 
   <Footer />
-
 {/await}

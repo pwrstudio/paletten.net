@@ -10,6 +10,7 @@
   import get from "lodash/get"
   import flatMap from "lodash/flatMap"
   import { links } from "svelte-routing"
+  import { fade } from "svelte/transition"
 
   // *** PROPS
   export let slug = ""
@@ -131,11 +132,24 @@
       }
     }
   }
+
+  .subscribe-button {
+    line-height: $line_height;
+    height: $line_height;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: $line_height;
+
+    letter-spacing: 0.2em;
+    font-size: 0.7em;
+    border: 1px solid $grey;
+    padding: 20px;
+  }
 </style>
 
 {#await post then post}
   <div class="page" use:links>
-    <div class="column first">
+    <div class="column first" in:fade>
       <div class="meta">
         <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
         <!-- AUTHOR -->
@@ -166,6 +180,14 @@
               <EmbedBlock {block} />
             {/if}
           {/each}
+          <!-- {#if slug == 'prenumerationer'}
+            <a
+              href="https://www.natverkstan.net/wp-content/plugins/konturiDb/prenumerera.php?id=146"
+              target="_blank"
+              class="subscribe-button">
+              Teckna en prenumeration på Paletten
+            </a>
+          {/if} -->
         </div>
 
         <div class="footnotes">
@@ -182,7 +204,7 @@
     </div>
 
     {#if slug == 'om-paletten'}
-      <div class="column">
+      <div class="column" in:fade={{ delay: 300 }}>
         <div class="meta">
           <h1 class="title">Medverkande</h1>
         </div>

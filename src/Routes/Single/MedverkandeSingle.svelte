@@ -8,6 +8,7 @@
   // *** IMPORTS
   import { loadData, renderBlockText } from "../../sanity.js"
   import { links } from "svelte-routing"
+  import { fade } from "svelte/transition"
 
   // *** PROPS
   export let slug = ""
@@ -127,7 +128,7 @@
 </style>
 
 {#await post then post}
-  <div class="medverkande">
+  <div class="medverkande" in:fade>
     <div class="about">
       <div class="meta">
         <!-- TITLE -->

@@ -6,45 +6,43 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { loadData, renderBlockText } from '../../sanity.js'
-  import { formattedDate } from '../../global.js'
-  import get from 'lodash/get'
-  import isArray from 'lodash/isArray'
-  import flatMap from 'lodash/flatMap'
+  import { loadData, renderBlockText } from "../../sanity.js"
+  import { formattedDate } from "../../global.js"
+  import get from "lodash/get"
+  import isArray from "lodash/isArray"
+  import flatMap from "lodash/flatMap"
+  import { fade } from "svelte/transition"
 
   // *** PROPS
-  export let slug = ''
+  export let slug = ""
 
   // COMPONENTS
-  import Footer from '../../Components/Footer.svelte'
-  import Authors from '../../Components/Authors.svelte'
-  import ImageBlock from '../../Components/Blocks/ImageBlock.svelte'
-  import VideoBlock from '../../Components/Blocks/VideoBlock.svelte'
-  import AudioBlock from '../../Components/Blocks/AudioBlock.svelte'
-  import EmbedBlock from '../../Components/Blocks/EmbedBlock.svelte'
+  import Footer from "../../Components/Footer.svelte"
+  import Authors from "../../Components/Authors.svelte"
+  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
+  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
+  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
+  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
 
   // ** CONSTANTS
-  const query = '*[slug.current == $slug]{..., author[]->{title, slug}}[0]'
+  const query = "*[slug.current == $slug]{..., author[]->{title, slug}}[0]"
   const params = { slug: slug }
 
   let post = loadData(query, params)
   let footnotePosts = []
 
-  post.then((post) => {
-
-    console.log('post', post)
+  post.then(post => {
+    console.log("post", post)
     let a = flatMap(
-      post.content.content
-        .filter((c) => c._type == 'block')
-        .map((x) => x.markDefs)
+      post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
     )
 
-    footnotePosts = a.filter((x) => x._type === 'footnote')
+    footnotePosts = a.filter(x => x._type === "footnote")
   })
 </script>
 
 <style lang="scss">
-  @import '../../variables.scss';
+  @import "../../variables.scss";
 
   .single {
     font-size: $font_size_normal;
@@ -56,7 +54,7 @@
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
     min-height: calc(100vh - #{$menu_bar_height});
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
       margin-left: $phone-margin;
       margin-right: $phone-margin;
@@ -68,7 +66,7 @@
       margin: 0;
       padding: 0;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         font-size: $font_size_large_phone;
       }
     }
@@ -103,8 +101,7 @@
 
 {#await post then post}
   <div class="single">
-
-    <div class="meta">
+    <div class="meta" in:fade>
       {#if post.publicationDate}
         <div class="date">{formattedDate(post.publicationDate)}</div>
       {/if}
@@ -120,7 +117,7 @@
 
     <!-- MAIN CONTENT -->
     {#if post.content && post.content.content && isArray(post.content.content)}
-      <div class="content">
+      <div class="content" in:fade={{ delay: 300 }}>
         {#each post.content.content as block}
           {#if block._type === 'block'}
             {@html renderBlockText(block)}
@@ -170,9 +167,7 @@
         </div>
       {/if}
     {/if}
-
   </div>
 
   <Footer />
-
 {/await}
