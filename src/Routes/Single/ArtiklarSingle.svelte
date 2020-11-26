@@ -25,7 +25,8 @@
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
 
   // ** CONSTANTS
-  const query = "*[slug.current == $slug]{..., author[]->{title, slug}}[0]"
+  const query =
+    "*[slug.current == $slug]{..., 'pdfUrl': pdfFile.asset->url, author[]->{title, slug}}[0]"
   const params = { slug: slug }
 
   let post = loadData(query, params)
@@ -97,6 +98,24 @@
     padding-left: 2px;
     letter-spacing: 0.1em;
   }
+
+  .pdf-download {
+    border: 1px solid $grey;
+    line-height: $line-height;
+    overflow: hidden;
+    user-select: none;
+    padding: $line-height / 2;
+    font-weight: normal;
+    margin-top: $line-height;
+    display: inline-block;
+    font-size: $font_size_small;
+    font-family: $sans-stack;
+    letter-spacing: 0.1em;
+
+    &:hover {
+      background: $grey;
+    }
+  }
 </style>
 
 {#await post then post}
@@ -113,6 +132,14 @@
       {/if}
       <!-- TITLE -->
       <h1 class="title">{post.title}</h1>
+      <!-- PDF DOWNLOAD -->
+      {#if post.pdfUrl}
+        <a
+          href={post.pdfUrl}
+          class="pdf-download"
+          download
+          target="_blank">Ladda ner pdf</a>
+      {/if}
     </div>
 
     <!-- MAIN CONTENT -->

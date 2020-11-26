@@ -6,40 +6,40 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { fade } from 'svelte/transition'
-  import { urlFor, loadData, renderBlockText } from '../sanity.js'
-  import { formattedDate } from '../global.js'
-  import get from 'lodash/get'
+  import { fade } from "svelte/transition"
+  import { urlFor, loadData, renderBlockText } from "../sanity.js"
+  import { formattedDate } from "../global.js"
+  import get from "lodash/get"
 
   // COMPONENTS
-  import Authors from './Authors.svelte'
+  import Authors from "./Authors.svelte"
 
   // *** PROPS
   export let post = {}
-  export let category = ''
+  export let category = ""
 
-  let link = ''
+  let link = ""
   let query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]"
 
   //   VARIABLES
   let postContent = loadData(query)
 
-  postContent.then((l) => {
+  postContent.then(l => {
     // console.dir(postContent)
-    let dir = ''
-    if (l._type === 'post') {
-      dir = '/artiklar/'
-    } else if (l._type === 'tidskrift') {
-      dir = '/tidskrift/'
-    } else if (l._type === 'projekt') {
-      dir = '/projekt/'
+    let dir = ""
+    if (l._type === "post") {
+      dir = "/artiklar/"
+    } else if (l._type === "tidskrift") {
+      dir = "/tidskrift/"
+    } else if (l._type === "projekt") {
+      dir = "/projekt/"
     }
     link = dir + l.slug.current
   })
 </script>
 
 <style lang="scss">
-  @import '../variables.scss';
+  @import "../variables.scss";
 
   .list-item,
   .placeholder {
@@ -51,7 +51,7 @@
     flex-wrap: wrap;
     width: 100%;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       flex-wrap: wrap;
       margin-bottom: $line-height;
     }
@@ -65,7 +65,7 @@
       width: 50%;
       float: left;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: 100%;
       }
     }
@@ -83,14 +83,14 @@
         height: $line-height * 16;
         object-fit: cover;
 
-        @include screen-size('small') {
+        @include screen-size("small") {
           height: $line-height * 8;
         }
       }
 
       // background: green;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: 100%;
       }
     }
@@ -102,7 +102,7 @@
       color: black;
       max-width: 60ch;
 
-      @include screen-size('small') {
+      @include screen-size("small") {
         width: 100%;
       }
 
@@ -113,7 +113,7 @@
         font-weight: bold;
         max-width: 45ch;
 
-        @include screen-size('small') {
+        @include screen-size("small") {
           font-size: $font_size_large_phone;
         }
       }
@@ -170,6 +170,7 @@
 
   .ingress {
     width: 100%;
+    padding-right: 20px;
   }
 </style>
 
@@ -178,7 +179,6 @@
     <div
       class="inner"
       style={'background: ' + get(post, 'color.hex', 'transparent')}>
-
       <div class="column">
         <div class="text">
           <!-- DATE -->
@@ -208,7 +208,6 @@
       </div>
 
       <div class="column">
-
         <!-- IMAGE -->
         {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}
           <div
@@ -226,7 +225,6 @@
           </div>
         {/if}
       </div>
-
     </div>
   </a>
 {/await}
