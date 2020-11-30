@@ -6,30 +6,32 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { loadData } from '../../sanity.js'
-  import { links } from 'svelte-routing'
+  import { loadData } from "../../sanity.js"
+  import { links } from "svelte-routing"
+  // import startCase from "lodash/startCase"
 
   // COMPONENTS
-  import ListItem from '../../Components/ListItem.svelte'
-  import Footer from '../../Components/Footer.svelte'
+  // import MetaData from "../../Components/MetaData.svelte"
+  import ListItem from "../../Components/ListItem.svelte"
+  import Footer from "../../Components/Footer.svelte"
 
   // *** PROPS
-  export let category = ''
-  export let term = ''
+  export let category = ""
+  export let term = ""
 
   // VARIABLES
-  let cat = ''
-  let query = ''
+  let cat = ""
+  let query = ""
 
-  if (category === 'artikel')
+  if (category === "artikel")
     query = '*[_type == "post"] | order(publicationDate desc)'
-  else if (category === 'tidskrift')
+  else if (category === "tidskrift")
     query = '*[_type == "tidskrift"] | order(publicationDate desc)'
-  else if (category === 'projekt')
+  else if (category === "projekt")
     query = '*[_type == "projekt"] | order(publicationDate desc)'
-  else if (category === 'search')
+  else if (category === "search")
     query = '*[[title, content.content[].children[].text] match "' + term + '"]'
-  else if (category === 'taxonomy') query = '*["' + term + '" in tags]'
+  else if (category === "taxonomy") query = '*["' + term + '" in tags]'
 
   // VARIABLES
   let posts = loadData(query)
@@ -40,7 +42,7 @@
 </script>
 
 <style lang="scss">
-  @import '../../variables.scss';
+  @import "../../variables.scss";
 
   .list {
     padding-top: calc(#{$menu_bar_height} + #{$line_height});
@@ -52,7 +54,7 @@
     margin-left: $margin;
     margin-right: $margin;
 
-    @include screen-size('small') {
+    @include screen-size("small") {
       margin-left: $phone-margin;
       margin-right: $phone-margin;
     }
@@ -67,10 +69,11 @@
   }
 </style>
 
+<!-- METADATA -->
+<!-- <MetaData post={{ title: startCase(title) }} /> -->
+
 {#await posts then posts}
-
   <div class="list" use:links>
-
     {#if category === 'search' || category === 'taxonomy'}
       <div class="header">
         <strong>{posts.length}</strong>
@@ -83,5 +86,4 @@
   </div>
 
   <Footer />
-
 {/await}

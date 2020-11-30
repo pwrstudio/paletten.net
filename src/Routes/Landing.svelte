@@ -13,6 +13,7 @@
   // COMPONENTS
   import LandingItem from "../Components/LandingItem.svelte"
   import Footer from "../Components/Footer.svelte"
+  import MetaData from "../Components/MetaData.svelte"
 
   // STORES
   // import { location, filterTerm } from "../stores.js";

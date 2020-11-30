@@ -14,6 +14,7 @@
   export let slug = ""
 
   // *** COMPONENTS
+  import MetaData from "../../Components/MetaData.svelte"
   import Footer from "../../Components/Footer.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
   import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
@@ -128,6 +129,9 @@
 </style>
 
 {#await post then post}
+  <!-- METADATA -->
+  <MetaData {post} />
+
   <div class="medverkande" in:fade>
     <div class="about">
       <div class="meta">
