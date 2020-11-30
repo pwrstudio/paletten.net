@@ -35,7 +35,7 @@
     title =
       (has(post, "title") && !isEmpty(post.title)
         ? stripHtml(post.title) + " | "
-        : "") + "Open Window"
+        : "") + "Paletten"
   }
 
   $: {
