@@ -111,7 +111,7 @@
       <a href="/projekt" class="menu-item">Projekt</a>
       <a href="/tidskrift" class="menu-item">Tidskrift</a>
       <a href="/om-paletten" class="menu-item">Om Paletten</a>
-      <a href="/prenumeratio" class="menu-item">Prenumeration</a>
+      <a href="/prenumerationer" class="menu-item">Prenumeration</a>
       <a href="/kontakt" class="menu-item">Kontakt</a>
     </div>
   {/await}
