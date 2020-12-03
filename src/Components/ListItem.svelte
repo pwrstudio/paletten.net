@@ -198,7 +198,7 @@
         </div>
 
         <div class="ingress">
-          {#if postContent.ingress}
+          {#if postContent.ingress && postContent.ingress.content && postContent.ingress.content.length > 0}
             {@html renderBlockText(postContent.ingress.content)}
           {/if}
           <!-- {#if category == "tidskrift" && postContent.content.content}
