@@ -268,6 +268,12 @@
           max-width: calc(100%);
         }
       }
+
+      .caption {
+        p {
+          font-size: $font_size_small;
+        }
+      }
     }
 
     &.manifest {
@@ -290,6 +296,12 @@
 
         @include screen-size("small") {
           max-width: calc(100%);
+        }
+      }
+
+      .caption {
+        p {
+          font-size: $font_size_small;
         }
       }
     }
@@ -445,6 +457,14 @@
     font-family: $sans-stack;
     font-weight: bold;
     font-size: $font_size_large * 0.9;
+  }
+
+  .caption {
+    p {
+      font-size: $font_size_small !important;
+    }
+    text-align: left;
+    float: left;
   }
 </style>
 

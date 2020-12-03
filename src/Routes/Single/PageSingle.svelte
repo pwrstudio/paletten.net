@@ -97,25 +97,9 @@
       width: 600px;
       max-width: 100%;
 
-      .authors {
-        font-size: $font_size_large;
-        line-height: $line-height;
-        margin-bottom: $line-height / 2;
-        font-style: italic;
-      }
-
-      .date {
-        font-size: $font_size_small;
-        font-family: $sans-stack;
-        margin-bottom: $line-height / 2;
-        padding-left: 2px;
-        letter-spacing: 0.1em;
-      }
-
       .title {
-        font-size: $font_size_large;
+        font-size: $font_size_normal;
         line-height: $line-height;
-        font-weight: normal;
         margin: 0;
         padding: 0;
         font-weight: bold;
@@ -153,6 +137,10 @@
   .medverkande {
     column-count: 2;
 
+    @include screen-size("small") {
+      column-count: 1;
+    }
+
     a {
       text-decoration: none;
     }
@@ -162,6 +150,8 @@
     font-size: $font_size_small;
     font-family: $sans-stack;
     letter-spacing: 0.1em;
+    // position: relative;
+    // top: -1px;
   }
 </style>
 

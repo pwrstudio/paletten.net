@@ -21,10 +21,19 @@
     a {
       color: inherit;
       text-decoration: none;
+      // background: yellow;
+      margin-right: 0;
+      display: inline;
 
       &:hover {
         color: $darkgrey;
       }
+    }
+
+    .divider {
+      // background: red;
+      margin-left: -6px;
+      margin-right: 6px;
     }
   }
 </style>
@@ -37,6 +46,6 @@
     <!-- {index} {authors.length} -->
     {#if index == authors.length - 2}
       &amp;&nbsp;
-    {:else if index < authors.length - 1},&nbsp{/if}
+    {:else if index < authors.length - 1}<span class="divider">,</span>{/if}
   {/each}
 </span>

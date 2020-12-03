@@ -6,12 +6,12 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { urlFor, renderBlockText } from "../../sanity.js";
-  import get from "lodash/get";
-  import has from "lodash/has";
+  import { urlFor, renderBlockText } from "../../sanity.js"
+  import get from "lodash/get"
+  import has from "lodash/has"
 
   // PROPS
-  export let block = {};
+  export let block = {}
 </script>
 
 <style lang="scss">
@@ -63,6 +63,9 @@
   }
 
   .caption {
+    p {
+      font-size: $font_size_small;
+    }
     text-align: left;
     float: left;
   }
@@ -74,14 +77,8 @@
   class:padded={has(block, 'backgroundColor.hex')}
   class:fullwidth={block.fullWidth}
   class:fullheight={block.fullHeight}>
-
   <!-- IMAGE -->
-  <img
-    src={urlFor(block.asset)
-      .width(800)
-      .quality(90)
-      .auto('format')
-      .url()} />
+  <img src={urlFor(block.asset).width(800).quality(90).auto('format').url()} />
 
   <!-- CAPTION -->
   <div class="text">
@@ -93,7 +90,5 @@
         </span>
       </figcaption>
     {/if}
-
   </div>
-
 </figure>

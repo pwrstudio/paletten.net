@@ -78,12 +78,18 @@
 
   .meta {
     margin-bottom: $line-height * 2;
-
     margin-left: auto;
     margin-right: auto;
     width: $text_width;
     max-width: 100%;
-    border-bottom: 1px solid $grey;
+
+    .date {
+      font-size: $font_size_small;
+      font-family: $sans-stack;
+      margin-bottom: $line-height / 2;
+      padding-left: 2px;
+      letter-spacing: 0.1em;
+    }
 
     .authors {
       font-size: $font_size_normal;
@@ -95,52 +101,47 @@
       width: $text_width_wider;
       padding-bottom: $line-height_large;
       margin-bottom: $line-height_large * 2;
+      border-bottom: 1px solid $grey;
+      line-height: $line-height_large;
 
       .authors {
         font-size: $font_size_large;
+        margin-bottom: $line-height_large / 2;
       }
 
       .title {
         font-size: $font_size_large;
+        line-height: $line-height_large;
       }
     }
 
     &.manifest {
       width: $text_width_wider;
+      padding-bottom: $line-height_large;
+      margin-bottom: $line-height_large * 2;
+      border-bottom: 1px solid $grey;
+      line-height: $line-height_large;
 
       .authors {
         font-size: $font_size_larger;
+        margin-bottom: $line-height_large / 2;
       }
 
       .title {
         font-size: $font_size_larger;
         font-family: $sans-stack;
-        font-weight: bold;
+        font-weight: 900;
+        line-height: $line-height_large;
       }
     }
-  }
-
-  .authors {
-    font-size: $font_size_normal;
-    line-height: $line-height;
-    font-style: italic;
-    margin-bottom: $line-height / 2;
   }
 
   .ingress {
     font-style: italic;
   }
 
-  .date {
-    font-size: $font_size_small;
-    font-family: $sans-stack;
-    margin-bottom: $line-height / 2;
-    padding-left: 2px;
-    letter-spacing: 0.1em;
-  }
-
   .pdf-download {
-    border-bottom: 1px solid $darkgrey;
+    border-bottom: 1px solid $grey;
     line-height: $line-height;
     overflow: hidden;
     user-select: none;
@@ -152,10 +153,27 @@
     font-size: $font_size_small;
     font-family: $sans-stack;
     letter-spacing: 0.1em;
-    // max-width: 200px;
+    color: $darkgrey;
+    // margin-top: 11px;
+
+    svg {
+      transform-origin: center;
+      transform: scale(0.9) translateY(9px);
+      margin-right: 5px;
+      path {
+        // fill: red;
+        fill: $darkgrey;
+      }
+    }
 
     &:hover {
-      border-bottom: 1px solid $black;
+      color: $black;
+      border-bottom: 1px solid $darkgrey;
+      svg {
+        path {
+          fill: $black;
+        }
+      }
     }
   }
 
@@ -172,7 +190,7 @@
     letter-spacing: 0.1em;
 
     svg {
-      transform: scale(0.8) translateY(10px);
+      transform: scale(0.9) translateY(9px);
       margin-right: 5px;
       path {
         fill: $darkgrey;
@@ -245,7 +263,13 @@
             href={post.pdfUrl}
             class="pdf-download"
             download
-            target="_blank">{post.pdfLinkText ? post.pdfLinkText : 'PDF'}</a>
+            target="_blank"><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>{post.pdfLinkText ? post.pdfLinkText : 'PDF'}</a>
         </div>
       {/if}
     </div>
