@@ -13,7 +13,7 @@
   import { menuActive } from "../stores.js"
 
   $: {
-    if (searchActive == true && searchInputElement) {
+    if (searchActive && searchInputElement) {
       searchInputElement.focus()
     }
   }

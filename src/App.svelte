@@ -242,7 +242,9 @@
     }
 
     blockquote {
-      width: $text_width * 1.4;
+      font-size: $font_size_normal * 0.9;
+      width: $text_width;
+      padding-left: 40px;
       margin-left: auto;
       margin-right: auto;
       max-width: calc(100% - 20px);
