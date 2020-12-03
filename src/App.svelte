@@ -151,10 +151,6 @@
     line-height: $line-height;
   }
 
-  .content {
-    counter-reset: fnoteCounter;
-  }
-
   .tags {
     margin-top: $line-height;
     margin-bottom: $line-height;
@@ -185,7 +181,18 @@
     }
   }
 
+  .medverkande {
+    a {
+      text-decoration: none;
+      &:hover {
+        color: #555555;
+      }
+    }
+  }
+
   .content {
+    counter-reset: fnoteCounter;
+
     a {
       text-decoration: underline;
       color: inherit;
@@ -202,18 +209,7 @@
         margin-left: 0;
       }
     }
-  }
 
-  .medverkande {
-    a {
-      text-decoration: none;
-      &:hover {
-        color: #555555;
-      }
-    }
-  }
-
-  .content {
     p,
     h1,
     h2,
@@ -248,6 +244,54 @@
       margin-left: auto;
       margin-right: auto;
       max-width: calc(100% - 20px);
+    }
+
+    &.intervju {
+      font-size: $font_size_large;
+      line-height: $line-height_large;
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      ol,
+      ul {
+        font-size: $font_size_large;
+        margin-left: auto;
+        margin-right: auto;
+        width: $text_width_wider;
+        max-width: calc(100% - 20px);
+        max-width: 100%;
+
+        @include screen-size("small") {
+          max-width: calc(100%);
+        }
+      }
+    }
+
+    &.manifest {
+      font-size: $font_size_large;
+      line-height: $line-height_large;
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      ol,
+      ul {
+        font-size: $font_size_large;
+        margin-left: auto;
+        margin-right: auto;
+        width: $text_width_wider;
+        max-width: calc(100% - 20px);
+        max-width: 100%;
+
+        @include screen-size("small") {
+          max-width: calc(100%);
+        }
+      }
     }
   }
 
@@ -395,6 +439,12 @@
       pointer-events: none;
       filter: grayscale(1);
     }
+  }
+
+  .interview-name {
+    font-family: $sans-stack;
+    font-weight: bold;
+    font-size: $font_size_large * 0.9;
   }
 </style>
 

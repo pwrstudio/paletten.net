@@ -152,6 +152,10 @@
 
   .medverkande {
     column-count: 2;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .post-counter {

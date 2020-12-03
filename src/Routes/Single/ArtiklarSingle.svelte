@@ -55,7 +55,7 @@
     padding-bottom: $line-height * 2;
     width: 100vw;
     overflow-x: hidden;
-    padding-top: calc(#{$menu_bar_height} + #{$line-height});
+    padding-top: calc(#{$menu_bar_height} + #{$line-height / 2});
     min-height: calc(100vh - #{$menu_bar_height});
 
     @include screen-size("small") {
@@ -78,16 +78,53 @@
 
   .meta {
     margin-bottom: $line-height * 2;
+
     margin-left: auto;
     margin-right: auto;
     width: $text_width;
     max-width: 100%;
+    border-bottom: 1px solid $grey;
+
+    .authors {
+      font-size: $font_size_normal;
+      line-height: $line-height;
+      font-style: italic;
+    }
+
+    &.intervju {
+      width: $text_width_wider;
+      padding-bottom: $line-height_large;
+      margin-bottom: $line-height_large * 2;
+
+      .authors {
+        font-size: $font_size_large;
+      }
+
+      .title {
+        font-size: $font_size_large;
+      }
+    }
+
+    &.manifest {
+      width: $text_width_wider;
+
+      .authors {
+        font-size: $font_size_larger;
+      }
+
+      .title {
+        font-size: $font_size_larger;
+        font-family: $sans-stack;
+        font-weight: bold;
+      }
+    }
   }
 
   .authors {
     font-size: $font_size_normal;
     line-height: $line-height;
     font-style: italic;
+    margin-bottom: $line-height / 2;
   }
 
   .ingress {
@@ -103,7 +140,7 @@
   }
 
   .pdf-download {
-    border-bottom: 1px solid $grey;
+    border-bottom: 1px solid $darkgrey;
     line-height: $line-height;
     overflow: hidden;
     user-select: none;
@@ -111,39 +148,53 @@
     // padding: $line-height / 2;
     font-weight: normal;
     // margin-top: $line-height;
-    display: inline;
+    display: inline-block;
     font-size: $font_size_small;
     font-family: $sans-stack;
     letter-spacing: 0.1em;
+    // max-width: 200px;
 
     &:hover {
-      border-bottom: 1px solid $darkgrey;
+      border-bottom: 1px solid $black;
     }
   }
 
   .publication-context {
     border-bottom: 1px solid $grey;
     line-height: $line-height;
-    overflow: hidden;
     user-select: none;
-    // padding: $line-height / 2;
+    overflow: visible;
     font-weight: normal;
-    // display: block;
-    // margin-top: $line-height;
-    display: inline;
+    color: $darkgrey;
+    display: inline-block;
     font-size: $font_size_small;
     font-family: $sans-stack;
     letter-spacing: 0.1em;
 
+    svg {
+      transform: scale(0.8) translateY(10px);
+      margin-right: 5px;
+      path {
+        fill: $darkgrey;
+      }
+    }
+
     &:hover {
+      color: $black;
       border-bottom: 1px solid $darkgrey;
+      svg {
+        path {
+          fill: $black;
+        }
+      }
     }
   }
 
   .top-bar {
-    margin-bottom: $line-height;
+    margin-bottom: $line-height * 1.5;
     margin-left: $margin;
     margin-right: $margin;
+    overflow: visible;
     // background: red;
     display: flex;
     flex-direction: column;
@@ -160,7 +211,14 @@
         <div>
           <a
             href={'/tidskrift/' + post.tidskriftContext[0].slug.current}
-            class="publication-context">Publicerad i
+            class="publication-context"><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>Publicerad
+            i
             {post.tidskriftContext[0].title}</a>
         </div>
       {/if}
@@ -169,7 +227,14 @@
         <div>
           <a
             href={'/projekt/' + post.projektContext[0].slug.current}
-            class="publication-context">Publicerad i
+            class="publication-context"><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>Publicerad
+            i
             {post.projektContext[0].title}</a>
         </div>
       {/if}
@@ -185,7 +250,7 @@
       {/if}
     </div>
     <!-- META -->
-    <div class="meta" in:fade>
+    <div class="meta {post.textTyp}" in:fade>
       {#if post.publicationDate}
         <div class="date">{formattedDate(post.publicationDate)}</div>
       {/if}
@@ -202,7 +267,7 @@
 
     <!-- MAIN CONTENT -->
     {#if post.content && post.content.content && isArray(post.content.content)}
-      <div class="content" in:fade={{ delay: 300 }}>
+      <div class="content {post.textTyp}" in:fade={{ delay: 300 }}>
         {#each post.content.content as block}
           {#if block._type === 'block'}
             {@html renderBlockText(block)}

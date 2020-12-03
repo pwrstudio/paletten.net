@@ -67,6 +67,12 @@ const serializers = {
                 { className: 'highlight' },
                 props.children
             ),
+        interviewName: props =>
+            h(
+                'span',
+                { className: 'interview-name' },
+                props.children
+            ),
         footnote: props => {
             return h(
                 'span',
