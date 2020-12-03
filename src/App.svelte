@@ -10,11 +10,11 @@
   import { fade } from "svelte/transition"
 
   // STORES
-  import { menuActive } from "./stores.js"
+  import { menuActive, currentPost } from "./stores.js"
 
   // COMPONENTS
-  import Footer from "./Components/Footer.svelte"
   import MenuBar from "./Components/MenuBar.svelte"
+  import MetaData from "./Components/MetaData.svelte"
 
   // LANDING
   import Landing from "./Routes/Landing.svelte"
@@ -394,8 +394,13 @@
   }
 </style>
 
+<!-- METADATA -->
+<MetaData post={$currentPost} />
+
+<!-- MENU -->
 <MenuBar />
 
+<!-- MAIN -->
 <main class:disabled={$menuActive}>
   <Router>
     <Route path="/" component={Landing} title="landing" />
@@ -421,6 +426,7 @@
   </Router>
 </main>
 
+<!-- GRID -->
 <div class="grid">
   <div class="line" />
   <div class="line" />

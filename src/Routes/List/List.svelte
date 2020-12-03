@@ -11,7 +11,6 @@
   // import startCase from "lodash/startCase"
 
   // COMPONENTS
-  // import MetaData from "../../Components/MetaData.svelte"
   import ListItem from "../../Components/ListItem.svelte"
   import Footer from "../../Components/Footer.svelte"
 
@@ -19,26 +18,35 @@
   export let category = ""
   export let term = ""
 
+  // STORES
+  import { currentPost } from "../../stores.js"
+
   // VARIABLES
-  let cat = ""
   let query = ""
+  let title = ""
 
-  if (category === "artikel")
+  if (category === "artikel") {
     query = '*[_type == "post"] | order(publicationDate desc)'
-  else if (category === "tidskrift")
+    title = "Artiklar"
+  } else if (category === "tidskrift") {
     query = '*[_type == "tidskrift"] | order(publicationDate desc)'
-  else if (category === "projekt")
+    title = "Tidskrift"
+  } else if (category === "projekt") {
     query = '*[_type == "projekt"] | order(publicationDate desc)'
-  else if (category === "search")
+    title = "Projekt"
+  } else if (category === "search") {
     query = '*[[title, content.content[].children[].text] match "' + term + '"]'
-  else if (category === "taxonomy") query = '*["' + term + '" in tags]'
+    title = "Sök: " + term
+  } else if (category === "taxonomy") {
+    query = '*["' + term + '" in tags]'
+    title = "Tag: " + term
+  }
 
-  // VARIABLES
-  let posts = loadData(query)
+  // __ Fetch data
+  const posts = loadData(query)
 
-  // posts.then((l) => {
-  //   console.dir(l)
-  // })
+  // __ Set metadata
+  currentPost.set({ title: title })
 </script>
 
 <style lang="scss">
@@ -68,9 +76,6 @@
     margin-bottom: $line-height * 2;
   }
 </style>
-
-<!-- METADATA -->
-<!-- <MetaData post={{ title: startCase(title) }} /> -->
 
 {#await posts then posts}
   <div class="list" use:links>

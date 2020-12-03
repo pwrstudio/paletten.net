@@ -12,8 +12,10 @@
   // *** PROPS
   export let slug = ""
 
+  // STORES
+  import { currentPost } from "../../stores.js"
+
   // *** COMPONENTS
-  import MetaData from "../../Components/MetaData.svelte"
   import ToCItem from "../../Components/ToCItem.svelte"
   import Footer from "../../Components/Footer.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
@@ -27,6 +29,10 @@
 
   // *** VARIABLES
   let post = loadData(query, params)
+
+  post.then(post => {
+    currentPost.set(post)
+  })
 </script>
 
 <style lang="scss">
@@ -117,9 +123,6 @@
 </style>
 
 {#await post then post}
-  <!-- METADATA -->
-  <MetaData {post} />
-
   <div class="tidskrift">
     <div class="column" in:fade>
       <div class="meta">

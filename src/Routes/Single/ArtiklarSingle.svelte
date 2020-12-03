@@ -17,13 +17,15 @@
   export let slug = ""
 
   // COMPONENTS
-  import MetaData from "../../Components/MetaData.svelte"
   import Footer from "../../Components/Footer.svelte"
   import Authors from "../../Components/Authors.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
   import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
   import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
+
+  // STORES
+  import { currentPost } from "../../stores.js"
 
   // ** CONSTANTS
   const query =
@@ -35,10 +37,10 @@
 
   post.then(post => {
     console.log("post", post)
+    currentPost.set(post)
     let a = flatMap(
       post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
     )
-
     footnotePosts = a.filter(x => x._type === "footnote")
   })
 </script>
@@ -120,9 +122,6 @@
 </style>
 
 {#await post then post}
-  <!-- METADATA -->
-  <MetaData {post} />
-
   <div class="single">
     <div class="meta" in:fade>
       {#if post.publicationDate}

@@ -13,8 +13,10 @@
   // *** PROPS
   export let slug = ""
 
+  // STORES
+  import { currentPost } from "../../stores.js"
+
   // *** COMPONENTS
-  import MetaData from "../../Components/MetaData.svelte"
   import Footer from "../../Components/Footer.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
   import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
@@ -30,10 +32,10 @@
   let linkedPosts = []
 
   post.then(post => {
+    currentPost.set(post)
     let fetchLinked = loadData("*[_type == 'post' && author[]._ref == $id]", {
       id: post._id,
     })
-
     fetchLinked.then(f => {
       linkedPosts = f
     })
@@ -129,9 +131,6 @@
 </style>
 
 {#await post then post}
-  <!-- METADATA -->
-  <MetaData {post} />
-
   <div class="medverkande" in:fade>
     <div class="about">
       <div class="meta">

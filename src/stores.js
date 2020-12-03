@@ -4,4 +4,4 @@ import { writable } from 'svelte/store'
 export const menuActive = writable(false)
 export const location = writable('index')
 export const filterTerm = writable(false)
-
+export const currentPost = writable(false)

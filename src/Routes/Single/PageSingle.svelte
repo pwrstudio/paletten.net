@@ -15,8 +15,10 @@
   // *** PROPS
   export let slug = ""
 
+  // STORES
+  import { currentPost } from "../../stores.js"
+
   // *** COMPONENTS
-  import MetaData from "../../Components/MetaData.svelte"
   import Footer from "../../Components/Footer.svelte"
   import Authors from "../../Components/Authors.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
@@ -37,6 +39,7 @@
   let mArray = []
 
   post.then(post => {
+    currentPost.set(post)
     let a = flatMap(
       post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
     )
@@ -53,14 +56,13 @@
       oldSlug = slug
       params = { slug: slug }
       post = loadData(query, params)
-
       post.then(post => {
+        currentPost.set(post)
         let a = flatMap(
           post.content.content
             .filter(c => c._type == "block")
             .map(x => x.markDefs)
         )
-
         footnotePosts = a.filter(x => x._type === "footnote")
       })
     }
@@ -149,9 +151,6 @@
 </style>
 
 {#await post then post}
-  <!-- METADATA -->
-  <MetaData {post} />
-
   <div class="page" use:links>
     <div class="column first" in:fade>
       <div class="meta">
