@@ -278,7 +278,9 @@
         }
 
         &:target {
-          background: lightgrey;
+          p {
+            background: $yellow;
+          }
         }
 
         a {
@@ -323,7 +325,7 @@
     }
 
     &:target {
-      // background: lightgrey;
+      background: $yellow;
     }
   }
 

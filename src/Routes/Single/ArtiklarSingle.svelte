@@ -29,7 +29,7 @@
 
   // ** CONSTANTS
   const query =
-    "*[slug.current == $slug]{..., 'pdfUrl': pdfFile.asset->url, author[]->{title, slug}}[0]"
+    "*[slug.current == $slug]{..., 'projektContext': *[_type=='projekt' && references(^._id)]{ ... }, 'tidskriftContext': *[_type=='tidskrift' && references(^._id)]{ ... }, 'pdfUrl': pdfFile.asset->url, author[]->{title, slug}}[0]"
   const params = { slug: slug }
 
   let post = loadData(query, params)
@@ -103,26 +103,88 @@
   }
 
   .pdf-download {
-    border: 1px solid $grey;
+    border-bottom: 1px solid $grey;
     line-height: $line-height;
     overflow: hidden;
     user-select: none;
-    padding: $line-height / 2;
+    // display: block;
+    // padding: $line-height / 2;
     font-weight: normal;
-    margin-top: $line-height;
-    display: inline-block;
+    // margin-top: $line-height;
+    display: inline;
     font-size: $font_size_small;
     font-family: $sans-stack;
     letter-spacing: 0.1em;
 
     &:hover {
-      background: $grey;
+      border-bottom: 1px solid $darkgrey;
     }
+  }
+
+  .publication-context {
+    border-bottom: 1px solid $grey;
+    line-height: $line-height;
+    overflow: hidden;
+    user-select: none;
+    // padding: $line-height / 2;
+    font-weight: normal;
+    // display: block;
+    // margin-top: $line-height;
+    display: inline;
+    font-size: $font_size_small;
+    font-family: $sans-stack;
+    letter-spacing: 0.1em;
+
+    &:hover {
+      border-bottom: 1px solid $darkgrey;
+    }
+  }
+
+  .top-bar {
+    margin-bottom: $line-height;
+    margin-left: $margin;
+    margin-right: $margin;
+    // background: red;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
   }
 </style>
 
 {#await post then post}
   <div class="single">
+    <!-- TOPBAR -->
+    <div class="top-bar">
+      <!-- TIDSKRIFT -->
+      {#if post.tidskriftContext && post.tidskriftContext.length > 0}
+        <div>
+          <a
+            href={'/tidskrift/' + post.tidskriftContext[0].slug.current}
+            class="publication-context">Publicerad i
+            {post.tidskriftContext[0].title}</a>
+        </div>
+      {/if}
+      <!-- PROJEKT -->
+      {#if post.projektContext && post.projektContext.length > 0}
+        <div>
+          <a
+            href={'/projekt/' + post.projektContext[0].slug.current}
+            class="publication-context">Publicerad i
+            {post.projektContext[0].title}</a>
+        </div>
+      {/if}
+      <!-- PDF -->
+      {#if post.pdfUrl}
+        <div>
+          <a
+            href={post.pdfUrl}
+            class="pdf-download"
+            download
+            target="_blank">{post.pdfLinkText ? post.pdfLinkText : 'PDF'}</a>
+        </div>
+      {/if}
+    </div>
+    <!-- META -->
     <div class="meta" in:fade>
       {#if post.publicationDate}
         <div class="date">{formattedDate(post.publicationDate)}</div>
@@ -136,13 +198,6 @@
       <!-- TITLE -->
       <h1 class="title">{post.title}</h1>
       <!-- PDF DOWNLOAD -->
-      {#if post.pdfUrl}
-        <a
-          href={post.pdfUrl}
-          class="pdf-download"
-          download
-          target="_blank">Ladda ner pdf</a>
-      {/if}
     </div>
 
     <!-- MAIN CONTENT -->
