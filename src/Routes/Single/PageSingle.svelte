@@ -28,7 +28,8 @@
 
   // *** CONSTANTS
   const query = "*[_id == $slug][0]"
-  const medverkandeQuery = "*[_type == 'medverkande'] | order(title asc)"
+  const medverkandeQuery =
+    "*[_type == 'medverkande']{..., 'connectedPosts': *[_type=='post' && references(^._id)]{ title }} | order(title asc)"
 
   // *** VARIABLES
   let params = { slug: slug }
@@ -47,7 +48,7 @@
   })
 
   medverkande.then(medverkande => {
-    // console.dir(medverkande)
+    console.dir(medverkande)
     mArray = medverkande
   })
 
@@ -148,6 +149,16 @@
     border: 1px solid $grey;
     padding: 20px;
   }
+
+  .medverkande {
+    column-count: 2;
+  }
+
+  .post-counter {
+    font-size: $font_size_small;
+    font-family: $sans-stack;
+    letter-spacing: 0.1em;
+  }
 </style>
 
 {#await post then post}
@@ -214,12 +225,15 @@
 
         <div class="content medverkande">
           {#each mArray as m, i}
-            <span>
+            <div>
               <a href={'/medverkande/' + get(m, 'slug.current', '')}>
-                {m.title},&nbsp;
+                {m.title}
+                {#if m.connectedPosts.length > 0}
+                  <span class="post-counter">({m.connectedPosts.length})</span>
+                {/if}
               </a>
               <!-- {#if i < mArray.length - 1},&nbsp;{/if} -->
-            </span>
+            </div>
           {/each}
         </div>
       </div>

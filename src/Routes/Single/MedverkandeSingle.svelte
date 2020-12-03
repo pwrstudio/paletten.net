@@ -56,7 +56,10 @@
     padding-top: calc(#{$menu_bar_height} + #{$line-height});
     border-bottom: 1px solid $grey;
     margin-bottom: $line-height * 2;
-    // min-height: calc(100vh - #{$menu_bar_height});
+
+    &.empty {
+      min-height: calc(100vh - #{$menu_bar_height});
+    }
 
     @include screen-size("small") {
       width: calc(100% - #{$phone-margin * 2});
@@ -131,7 +134,7 @@
 </style>
 
 {#await post then post}
-  <div class="medverkande" in:fade>
+  <div class="medverkande" class:empty={linkedPosts.length == 0} in:fade>
     <div class="about">
       <div class="meta">
         <!-- TITLE -->

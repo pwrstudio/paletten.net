@@ -107,12 +107,12 @@
     </div>
 
     <div class="column third" use:links>
-      <a href="/artiklar" class="menu-item">Artiklar</a>
-      <a href="/projekt" class="menu-item">Projekt</a>
-      <a href="/tidskrift" class="menu-item">Tidskrift</a>
-      <a href="/om-paletten" class="menu-item">Om Paletten</a>
-      <a href="/prenumerationer" class="menu-item">Prenumeration</a>
-      <a href="/kontakt" class="menu-item">Kontakt</a>
+      <div class="menu-item"><a href="/artiklar">Artiklar</a></div>
+      <div class="menu-item"><a href="/projekt">Projekt</a></div>
+      <div class="menu-item"><a href="/tidskrift">Tidskrift</a></div>
+      <div class="menu-item"><a href="/om-paletten">Om Paletten</a></div>
+      <div class="menu-item"><a href="/prenumerationer">Prenumeration</a></div>
+      <div class="menu-item"><a href="/kontakt">Kontakt</a></div>
     </div>
   {/await}
 </footer>
