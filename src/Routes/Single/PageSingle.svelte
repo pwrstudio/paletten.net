@@ -21,6 +21,7 @@
   // *** COMPONENTS
   import Footer from "../../Components/Footer.svelte"
   import Authors from "../../Components/Authors.svelte"
+  import MailingListForm from "../../Components/MailingListForm.svelte"
   import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
   import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
   import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
@@ -117,6 +118,10 @@
 
       @include screen-size("small") {
         width: calc(100% - #{$phone-margin * 2});
+
+        &.second {
+          padding-top: $line-height;
+        }
       }
     }
   }
@@ -198,21 +203,25 @@
           {/if} -->
         </div>
 
-        <div class="footnotes">
-          <ol>
-            {#each footnotePosts as footnote}
-              <li id={'note-' + footnote._key}>
-                {@html renderBlockText(footnote.content.content)}
-                <a href={'#link-' + footnote._key} class="back-link">(BACK)</a>
-              </li>
-            {/each}
-          </ol>
-        </div>
+        {#if footnotePosts && footnotePosts.length > 0}
+          <div class="footnotes">
+            <ol>
+              {#each footnotePosts as footnote}
+                <li id={'note-' + footnote._key}>
+                  {@html renderBlockText(footnote.content.content)}
+                  <a
+                    href={'#link-' + footnote._key}
+                    class="back-link">(BACK)</a>
+                </li>
+              {/each}
+            </ol>
+          </div>
+        {/if}
       {/if}
     </div>
 
     {#if slug == 'om-paletten'}
-      <div class="column" in:fade={{ delay: 300 }}>
+      <div class="column second" in:fade={{ delay: 300 }}>
         <div class="meta">
           <h1 class="title">Medverkande</h1>
         </div>
@@ -229,6 +238,18 @@
               <!-- {#if i < mArray.length - 1},&nbsp;{/if} -->
             </div>
           {/each}
+        </div>
+      </div>
+    {/if}
+
+    {#if slug == 'kontakt'}
+      <div class="column second" in:fade={{ delay: 300 }}>
+        <div class="meta">
+          <h1 class="title">Mailing lista</h1>
+        </div>
+
+        <div class="content">
+          <MailingListForm />
         </div>
       </div>
     {/if}

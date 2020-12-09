@@ -2,7 +2,6 @@ import sanityClient from '@sanity/client'
 import blocksToHtml from '@sanity/block-content-to-html'
 import imageUrlBuilder from '@sanity/image-url'
 import getVideoId from "get-video-id";
-import { text } from 'svelte/internal';
 import has from 'lodash/has'
 
 const tracer = x => {
