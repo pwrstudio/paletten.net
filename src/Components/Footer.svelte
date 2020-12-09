@@ -112,6 +112,7 @@
       <div class="menu-item"><a href="/tidskrift">Tidskrift</a></div>
       <div class="menu-item"><a href="/om-paletten">Om Paletten</a></div>
       <div class="menu-item"><a href="/prenumerationer">Prenumeration</a></div>
+      <div class="menu-item"><a href="/nyhetsbrev">Nyhetsbrev</a></div>
       <div class="menu-item"><a href="/kontakt">Kontakt</a></div>
     </div>
   {/await}

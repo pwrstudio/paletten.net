@@ -163,37 +163,38 @@
 {#await post then post}
   <div class="page" use:links>
     <div class="column first" in:fade>
-      <div class="meta">
-        <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
-        <!-- AUTHOR -->
-        {#if post.author}
-          <Authors authors={post.author} />
-        {/if}
-        <!-- TITLE -->
-        <h1 class="title">{post.title}</h1>
-      </div>
+      {#if slug !== 'nyhetsbrev'}
+        <div class="meta">
+          <!-- <div class="date">{formattedDate(post.publicationDate)}</div> -->
+          <!-- AUTHOR -->
+          {#if post.author}
+            <Authors authors={post.author} />
+          {/if}
+          <!-- TITLE -->
+          <h1 class="title">{post.title}</h1>
+        </div>
 
-      <!-- MAIN CONTENT -->
-      {#if post.content}
-        <div class="content">
-          {#each post.content.content as block}
-            {#if block._type === 'block'}
-              {@html renderBlockText(block)}
-            {/if}
-            {#if block._type === 'image'}
-              <ImageBlock {block} />
-            {/if}
-            {#if block._type === 'videoBlock'}
-              <VideoBlock {block} />
-            {/if}
-            {#if block._type === 'audioBlock'}
-              <AudioBlock {block} />
-            {/if}
-            {#if block._type === 'embedBlock'}
-              <EmbedBlock {block} />
-            {/if}
-          {/each}
-          <!-- {#if slug == 'prenumerationer'}
+        <!-- MAIN CONTENT -->
+        {#if post.content}
+          <div class="content">
+            {#each post.content.content as block}
+              {#if block._type === 'block'}
+                {@html renderBlockText(block)}
+              {/if}
+              {#if block._type === 'image'}
+                <ImageBlock {block} />
+              {/if}
+              {#if block._type === 'videoBlock'}
+                <VideoBlock {block} />
+              {/if}
+              {#if block._type === 'audioBlock'}
+                <AudioBlock {block} />
+              {/if}
+              {#if block._type === 'embedBlock'}
+                <EmbedBlock {block} />
+              {/if}
+            {/each}
+            <!-- {#if slug == 'prenumerationer'}
             <a
               href="https://www.natverkstan.net/wp-content/plugins/konturiDb/prenumerera.php?id=146"
               target="_blank"
@@ -201,22 +202,32 @@
               Teckna en prenumeration på Paletten
             </a>
           {/if} -->
-        </div>
-
-        {#if footnotePosts && footnotePosts.length > 0}
-          <div class="footnotes">
-            <ol>
-              {#each footnotePosts as footnote}
-                <li id={'note-' + footnote._key}>
-                  {@html renderBlockText(footnote.content.content)}
-                  <a
-                    href={'#link-' + footnote._key}
-                    class="back-link">(BACK)</a>
-                </li>
-              {/each}
-            </ol>
           </div>
+
+          {#if footnotePosts && footnotePosts.length > 0}
+            <div class="footnotes">
+              <ol>
+                {#each footnotePosts as footnote}
+                  <li id={'note-' + footnote._key}>
+                    {@html renderBlockText(footnote.content.content)}
+                    <a
+                      href={'#link-' + footnote._key}
+                      class="back-link">(BACK)</a>
+                  </li>
+                {/each}
+              </ol>
+            </div>
+          {/if}
         {/if}
+      {/if}
+
+      {#if slug == 'nyhetsbrev'}
+        <div class="meta">
+          <h1 class="title">Nyhetsbrev/Newsletter</h1>
+        </div>
+        <div class="content">
+          <MailingListForm />
+        </div>
       {/if}
     </div>
 
@@ -238,17 +249,6 @@
               <!-- {#if i < mArray.length - 1},&nbsp;{/if} -->
             </div>
           {/each}
-        </div>
-      </div>
-    {/if}
-
-    {#if slug == 'kontakt'}
-      <div class="column second" in:fade={{ delay: 300 }}>
-        <div class="meta">
-          <h1 class="title">Nyhetsbrev/Newsletter</h1>
-        </div>
-        <div class="content">
-          <MailingListForm />
         </div>
       </div>
     {/if}

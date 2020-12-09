@@ -52,10 +52,10 @@
 
     &.open {
       transition: height 0.2s ease-out;
-      height: $line-height * 13;
+      height: $line-height * 14;
 
       @include screen-size("small") {
-        height: $line-height * 16;
+        height: $line-height * 17;
       }
     }
   }
@@ -253,6 +253,7 @@
       <div class="menu-item">
         <a href="/prenumerationer">Prenumerationer</a>
       </div>
+      <div class="menu-item"><a href="/nyhetsbrev">Nyhetsbrev</a></div>
       <div class="menu-item"><a href="/kontakt">Kontakt</a></div>
     </div>
     <div class="column third">
