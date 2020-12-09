@@ -245,9 +245,8 @@
     {#if slug == 'kontakt'}
       <div class="column second" in:fade={{ delay: 300 }}>
         <div class="meta">
-          <h1 class="title">Mailinglista</h1>
+          <h1 class="title">Nyhetsbrev/Newsletter</h1>
         </div>
-
         <div class="content">
           <MailingListForm />
         </div>
