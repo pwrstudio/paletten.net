@@ -6,57 +6,57 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { fade } from "svelte/transition"
-  import { urlFor, loadData, renderBlockText } from "../sanity.js"
-  import { formattedDate } from "../global.js"
-  import _ from "lodash"
+  import { fade } from "svelte/transition";
+  import { urlFor, loadData, renderBlockText } from "../sanity.js";
+  import { formattedDate } from "../global.js";
+  import _ from "lodash";
 
   // COMPONENTS
-  import Authors from "./Authors.svelte"
+  import Authors from "./Authors.svelte";
 
   // STORES
   //   import { location, filterTerm } from "../stores.js";
   //   location.set("index");
 
   // *** PROPS
-  export let post = {}
+  export let post = {};
 
-  console.log("first page post")
-  console.dir(post)
+  console.log("first page post");
+  console.dir(post);
 
-  let query = ""
-  let link = ""
+  let query = "";
+  let link = "";
 
   if (post.postLink) {
     query =
-      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]"
+      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]";
   } else {
-    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]"
+    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
   }
 
   if (!post.layout) {
-    post.layout = "full"
+    post.layout = "full";
   }
 
   if (!post.imageLayout) {
-    post.imageLayout = "proportional"
+    post.imageLayout = "proportional";
   }
 
   //   VARIABLES
-  let postContent = loadData(query)
+  let postContent = loadData(query);
   //   // let filteredPosts = [];
 
-  postContent.then(l => {
-    let dir = ""
+  postContent.then((l) => {
+    let dir = "";
     if (l._type === "post") {
-      dir = "/artiklar/"
+      dir = "/artiklar/";
     } else if (l._type === "tidskrift") {
-      dir = "/tidskrift/"
+      dir = "/tidskrift/";
     } else if (l._type === "projekt") {
-      dir = "/projekt/"
+      dir = "/projekt/";
     }
-    link = dir + l.slug.current
-  })
+    link = dir + l.slug.current;
+  });
 
   // $: {
   //   posts.then(posts => {
@@ -172,6 +172,11 @@
         padding-left: $line-height;
         padding-top: $line-height;
       }
+      .ingress {
+        padding-left: $line-height;
+        padding-right: $line-height;
+        padding-top: $line-height;
+      }
       .image {
         width: 100%;
         display: flex;
@@ -240,7 +245,7 @@
       {/if}
 
       <div class="ingress">
-        {#if postContent.ingress && !post.totalColor}
+        {#if postContent.ingress && postContent.ingress.content && Array.isArray(postContent.ingress.content)}
           {@html renderBlockText(postContent.ingress.content)}
         {/if}
       </div>
