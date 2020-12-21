@@ -6,28 +6,28 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import { navigate } from "svelte-routing"
-  import { links } from "svelte-routing"
+  import { navigate } from "svelte-routing";
+  import { links } from "svelte-routing";
 
   // STORES
-  import { menuActive } from "../stores.js"
+  import { menuActive } from "../stores.js";
 
   $: {
     if (searchActive && searchInputElement) {
-      searchInputElement.focus()
+      searchInputElement.focus();
     }
   }
 
   // DOM REFERENCES
-  let searchInputElement = {}
+  let searchInputElement = {};
 
   // VARIABLES
-  let menuOpen = false
-  let searchActive = false
-  let searchInputValue = ""
+  let menuOpen = false;
+  let searchActive = false;
+  let searchInputValue = "";
 
   $: {
-    menuActive.set(menuOpen)
+    menuActive.set(menuOpen);
   }
 </script>
 
@@ -52,10 +52,10 @@
 
     &.open {
       transition: height 0.2s ease-out;
-      height: $line-height * 14;
+      height: $line-height * 15;
 
       @include screen-size("small") {
-        height: $line-height * 17;
+        height: $line-height * 18;
       }
     }
   }
@@ -210,16 +210,16 @@
   <!-- Logo -->
   <span
     class="logo"
-    on:click={e => {
+    on:click={(e) => {
       if (window.matchMedia('(max-width: 900px)').matches) {
-        menuOpen = !menuOpen
-        searchActive = false
-        searchInputValue = ''
+        menuOpen = !menuOpen;
+        searchActive = false;
+        searchInputValue = '';
       } else {
-        menuOpen = false
-        searchActive = false
-        searchInputValue = ''
-        navigate('/')
+        menuOpen = false;
+        searchActive = false;
+        searchInputValue = '';
+        navigate('/');
       }
     }}>
     PALETTEN
@@ -227,10 +227,10 @@
 
   <div
     class="hamburger"
-    on:click={e => {
-      menuOpen = !menuOpen
-      searchActive = false
-      searchInputValue = ''
+    on:click={(e) => {
+      menuOpen = !menuOpen;
+      searchActive = false;
+      searchInputValue = '';
     }}>
     {#if menuOpen}STÄNG{:else}MENY{/if}
   </div>
@@ -238,10 +238,10 @@
   <div
     class="menu"
     use:links
-    on:click={e => {
-      menuOpen = false
-      searchActive = false
-      searchInputValue = ''
+    on:click={(e) => {
+      menuOpen = false;
+      searchActive = false;
+      searchInputValue = '';
     }}>
     <div class="column second">
       <div class="menu-item"><a href="/artiklar">Artiklar</a></div>
@@ -253,6 +253,7 @@
       <div class="menu-item">
         <a href="/prenumerationer">Prenumerationer</a>
       </div>
+      <div class="menu-item"><a href="/enkelnummer">Köp enkelnummer</a></div>
       <div class="menu-item"><a href="/nyhetsbrev">Nyhetsbrev</a></div>
       <div class="menu-item"><a href="/kontakt">Kontakt</a></div>
     </div>
@@ -260,9 +261,9 @@
       {#if !searchActive}
         <div
           class="menu-item"
-          on:click={e => {
-            searchActive = true
-            e.stopPropagation()
+          on:click={(e) => {
+            searchActive = true;
+            e.stopPropagation();
           }}>
           <span>Sök</span>
         </div>
@@ -271,13 +272,13 @@
         <input
           bind:this={searchInputElement}
           bind:value={searchInputValue}
-          on:keyup={e => {
+          on:keyup={(e) => {
             if (e.keyCode === 13) {
-              navigate('/search/' + searchInputValue)
-              searchActive = false
-              searchInputValue = ''
-              menuOpen = false
-              searchInputElement.blur()
+              navigate('/search/' + searchInputValue);
+              searchActive = false;
+              searchInputValue = '';
+              menuOpen = false;
+              searchInputElement.blur();
             }
           }} />
       </div>
@@ -288,9 +289,9 @@
 {#if menuOpen}
   <div
     class="overlay"
-    on:click={e => {
-      menuOpen = false
-      searchActive = false
-      searchInputValue = ''
+    on:click={(e) => {
+      menuOpen = false;
+      searchActive = false;
+      searchInputValue = '';
     }} />
 {/if}
