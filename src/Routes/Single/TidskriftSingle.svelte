@@ -6,33 +6,33 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { urlFor, loadData, renderBlockText } from "../../sanity.js"
-  import { fade } from "svelte/transition"
+  import { urlFor, loadData, renderBlockText } from "../../sanity.js";
+  import { fade } from "svelte/transition";
 
   // *** PROPS
-  export let slug = ""
+  export let slug = "";
 
   // STORES
-  import { currentPost } from "../../stores.js"
+  import { currentPost } from "../../stores.js";
 
   // *** COMPONENTS
-  import ToCItem from "../../Components/ToCItem.svelte"
-  import Footer from "../../Components/Footer.svelte"
-  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte"
-  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte"
-  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte"
-  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte"
+  import ToCItem from "../../Components/ToCItem.svelte";
+  import Footer from "../../Components/Footer.svelte";
+  import ImageBlock from "../../Components/Blocks/ImageBlock.svelte";
+  import VideoBlock from "../../Components/Blocks/VideoBlock.svelte";
+  import AudioBlock from "../../Components/Blocks/AudioBlock.svelte";
+  import EmbedBlock from "../../Components/Blocks/EmbedBlock.svelte";
 
   // *** CONSTANTS
-  const query = "*[_type == 'tidskrift' && slug.current == $slug][0]"
-  const params = { slug: slug }
+  const query = "*[_type == 'tidskrift' && slug.current == $slug][0]";
+  const params = { slug: slug };
 
   // *** VARIABLES
-  let post = loadData(query, params)
+  let post = loadData(query, params);
 
-  post.then(post => {
-    currentPost.set(post)
-  })
+  post.then((post) => {
+    currentPost.set(post);
+  });
 </script>
 
 <style lang="scss">
@@ -66,7 +66,7 @@
   .title {
     font-size: $font_size_normal;
     line-height: $line-height;
-    margin-bottom: $line-height;
+    // margin-bottom: $line-height;
     font-weight: bold;
     max-width: 45ch;
 
@@ -117,6 +117,28 @@
     }
   }
 
+  .buy {
+    margin-bottom: 1em;
+    line-height: $line-height;
+    overflow: hidden;
+    user-select: none;
+    display: inline-block;
+    // padding: $line-height / 2;
+    font-weight: normal;
+    font-size: $font_size_small;
+    font-family: $sans-stack;
+    letter-spacing: 0.1em;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      color: $darkgrey;
+      border: 1px solid $darkgrey;
+    }
+  }
+
   .text {
     max-width: 60ch;
   }
@@ -132,6 +154,9 @@
         <!-- TITLE -->
         <h1 class="title">{post.title}</h1>
       </div>
+
+      <!-- KÖP ENKELNUMMER -->
+      <div class="buy"><a href="/enkelnummer">Köp enkelnummer</a></div>
 
       <!--ToC-->
       {#if post.posts}
