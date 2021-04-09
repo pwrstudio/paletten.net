@@ -16,12 +16,11 @@
   @import "../variables.scss";
 
   .authors {
-    font-style: italic;
+    display: inline-block;
 
     a {
       color: inherit;
       text-decoration: none;
-      // background: yellow;
       margin-right: 0;
       display: inline;
 
@@ -31,7 +30,6 @@
     }
 
     .divider {
-      // background: red;
       margin-left: -6px;
       margin-right: 6px;
     }
@@ -41,11 +39,7 @@
 <span class="authors">
   {#each authors as author, index}
     <a href={'/medverkande/' + get(author, 'slug.current', '')}>
-      {author.title}
+      {author.title}{#if index == authors.length - 2}&nbsp;&amp;{:else if index < authors.length - 1}&#44;&nbsp;{/if}
     </a>
-    <!-- {index} {authors.length} -->
-    {#if index == authors.length - 2}
-      &amp;&nbsp;
-    {:else if index < authors.length - 1}<span class="divider">,</span>{/if}
   {/each}
 </span>

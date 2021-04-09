@@ -127,20 +127,24 @@
       .title {
         font-size: $font_size_normal;
         line-height: $line-height;
-        margin-bottom: $line-height;
         font-weight: bold;
         max-width: 45ch;
 
         @include screen-size("small") {
           font-size: $font_size_large_phone;
         }
+
+        &.spaced {
+          margin-bottom: $line-height;
+        }
       }
 
       .author {
         font-size: $font_size_normal;
         line-height: $line-height;
+        margin-bottom: $line-height;
         // margin-bottom: $margin / 6;
-        font-style: italic;
+        // font-style: italic;
         pointer-events: none;
       }
 
@@ -218,14 +222,15 @@
         {:else if postContent.publicationDate}
           <div class="date">{formattedDate(postContent.publicationDate)}</div>
         {/if}
+        <!-- TITLE -->
+        <div class="title" class:spaced={!postContent.author}>{postContent.title}</div>
         <!-- AUTHOR -->
         {#if postContent.author}
           <div class="author">
             <Authors authors={postContent.author} />
           </div>
         {/if}
-        <!-- TITLE -->
-        <div class="title">{postContent.title}</div>
+
       </div>
       <!-- IMAGE -->
       {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}

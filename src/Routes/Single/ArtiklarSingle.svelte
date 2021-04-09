@@ -94,7 +94,7 @@
     .authors {
       font-size: $font_size_normal;
       line-height: $line-height;
-      font-style: italic;
+      // font-style: italic;
     }
 
     &.intervju {
@@ -278,14 +278,14 @@
       {#if post.publicationDate}
         <div class="date">{formattedDate(post.publicationDate)}</div>
       {/if}
+      <!-- TITLE -->
+      <h1 class="title">{post.title}</h1>
       <!-- AUTHOR -->
       {#if post.author}
         <div class="authors">
           <Authors authors={post.author} />
         </div>
       {/if}
-      <!-- TITLE -->
-      <h1 class="title">{post.title}</h1>
       <!-- PDF DOWNLOAD -->
     </div>
 

@@ -51,6 +51,10 @@
       @include screen-size("small") {
         font-size: $font_size_large_phone;
       }
+
+      &.post-link {
+        text-decoration: underline;
+      }
     }
 
     .authors {
@@ -70,16 +74,16 @@
 {#await postContent then postContent}
   <div class="toc-item" use:links>
     {#if post._type === 'artikel'}
+      <div class="title">{post.title}</div>
       <div class="authors">
         <Authors authors={postContent} />
       </div>
-      <div class="title">{post.title}</div>
     {:else if post._type === 'postLink'}
       <a href={'/artiklar/' + postContent.slug.current}>
+        <div class="title post-link">{postContent.title}</div>
         <div class="authors">
           <Authors authors={postContent.author} />
         </div>
-        <div class="title">{postContent.title}</div>
       </a>
     {/if}
   </div>
