@@ -31,7 +31,7 @@
     "date-fns": "^2.16.1",
     "get-video-id": "^3.1.4",
     "import": "^0.0.6",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "slugify": "^1.4.6"
   },
   "scripts": {
