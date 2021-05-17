@@ -13,7 +13,7 @@ export const client = sanityClient({
     projectId: '1tpw92x3',
     dataset: 'production',
     token: '', // or leave blank to be anonymous user
-    useCdn: true // `false` if you want to ensure fresh data
+    useCdn: false // `false` if you want to ensure fresh data
 })
 
 const h = blocksToHtml.h
@@ -137,28 +137,34 @@ const serializers = {
             ])
         },
         embedBlock: props => {
-            // YOUTUBE
-            if (props.node.url.includes('youtube')) {
+            if(props.node.otherSource) {
                 return h('figure', { className: 'youtube' }, [
-                    h('div', { className: 'embed-container' },
-                        h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true })),
-                    ...prepareTextElements(props)
+                    h('div', { className: 'embed-container' }, props.node.arbitraryEmbedCode)
                 ])
-            }
-            // VIMEO
-            if (props.node.url.includes('vimeo')) {
-                return h('figure', { className: 'vimeo' }, [
-                    h('div', { className: 'embed-container' },
-                        h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true })),
-                    ...prepareTextElements(props)
-                ])
-            }
-            // SOUNDCLOUD
-            if (props.node.url.includes('soundcloud')) {
-                return h('figure', { className: 'soundcloud' }, [
-                    h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' })),
-                    ...prepareTextElements(props)
-                ])
+            } else if (props.node.url) {
+                // YOUTUBE
+                if (props.node.url.includes('youtube')) {
+                    return h('figure', { className: 'youtube' }, [
+                        h('div', { className: 'embed-container' },
+                            h('iframe', { width: '720', height: '480', src: 'https://www.youtube.com/embed/' + getVideoId(props.node.url).id, frameborder: 'no', allow: 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen: true })),
+                        ...prepareTextElements(props)
+                    ])
+                }
+                // VIMEO
+                if (props.node.url.includes('vimeo')) {
+                    return h('figure', { className: 'vimeo' }, [
+                        h('div', { className: 'embed-container' },
+                            h('iframe', { width: '720', height: '480', src: 'https://player.vimeo.com/video/' + getVideoId(props.node.url).id, frameborder: 'no', byline: false, color: '#ffffff', allow: 'autoplay; fullscreen', allowfullscreen: true })),
+                        ...prepareTextElements(props)
+                    ])
+                }
+                // SOUNDCLOUD
+                if (props.node.url.includes('soundcloud')) {
+                    return h('figure', { className: 'soundcloud' }, [
+                        h('div', { className: 'soundcloud-container' }, h('iframe', { width: '100%', height: '300', src: 'https://w.soundcloud.com/player/?url=' + props.node.url + '&color=%23fffff', frameborder: 'no', scrolling: "no", allow: 'autoplay' })),
+                        ...prepareTextElements(props)
+                    ])
+                }
             }
         },
         videoBlock: props => {

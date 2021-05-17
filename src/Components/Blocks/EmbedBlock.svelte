@@ -6,13 +6,77 @@
   // # # # # # # # # # # # # #
 
   // IMPORTS
-  import has from "lodash/has";
-  import getVideoId from "get-video-id";
-  import { renderBlockText } from "../../sanity.js";
+  import has from "lodash/has"
+  import getVideoId from "get-video-id"
+  import { renderBlockText } from "../../sanity.js"
 
   // PROPS
-  export let block = {};
+  export let block = {}
 </script>
+
+<figure class="embed">
+  {#if block.otherSource}
+    <div class="arb-container">
+      {@html block.arbitraryEmbedCode}
+    </div>
+  {:else}
+    <!-- // YOUTUBE -->
+    {#if block.url.includes("youtube")}
+      <div class="youtube-container">
+        <iframe
+          width="720"
+          height="480"
+          title="paletten"
+          src={"https://www.youtube.com/embed/" + getVideoId(block.url).id}
+          frameborder="no"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        />
+      </div>
+    {/if}
+
+    <!-- // VIMEO -->
+    {#if block.url.includes("vimeo")}
+      <div class="vimeo-container">
+        <iframe
+          width="720"
+          height="480"
+          title="paletten"
+          src={"https://player.vimeo.com/video/" + getVideoId(block.url).id}
+          frameborder="no"
+          scrolling="no"
+          byline="false"
+          color="#ffffff"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        />
+      </div>
+    {/if}
+
+    <!-- // SOUNDCLOUD -->
+    {#if block.url.includes("soundcloud")}
+      <div class="soundcloud-container">
+        <iframe
+          width="100%"
+          height="300"
+          title="paletten"
+          src={"https://w.soundcloud.com/player/?url=" +
+            block.url +
+            "&color=%23fffff"}
+          frameborder="no"
+          scrolling="no"
+          allow="autoplay"
+        />
+      </div>
+    {/if}
+  {/if}
+  <!-- CAPTION -->
+  {#if has(block, "caption.content")}
+    <figcaption class="caption">
+      {@html renderBlockText(block.caption.content)}
+    </figcaption>
+  {/if}
+</figure>
 
 <style lang="scss">
   @import "../../variables.scss";
@@ -63,59 +127,3 @@
     }
   }
 </style>
-
-<figure class="embed">
-
-  <!-- // YOUTUBE -->
-  {#if block.url.includes('youtube')}
-    <div class="youtube-container">
-      <iframe
-        width="720"
-        height="480"
-        title="paletten"
-        src={'https://www.youtube.com/embed/' + getVideoId(block.url).id}
-        frameborder="no"
-        allow="autoplay; fullscreen"
-        allowfullscreen />
-    </div>
-  {/if}
-
-  <!-- // VIMEO -->
-  {#if block.url.includes('vimeo')}
-    <div class="vimeo-container">
-      <iframe
-        width="720"
-        height="480"
-        title="paletten"
-        src={'https://player.vimeo.com/video/' + getVideoId(block.url).id}
-        frameborder="no"
-        scrolling="no"
-        byline="false"
-        color="#ffffff"
-        allow="autoplay; fullscreen"
-        allowfullscreen />
-    </div>
-  {/if}
-
-  <!-- // SOUNDCLOUD -->
-  {#if block.url.includes('soundcloud')}
-    <div class="soundcloud-container">
-      <iframe
-        width="100%"
-        height="300"
-        title="paletten"
-        src={'https://w.soundcloud.com/player/?url=' + block.url + '&color=%23fffff'}
-        frameborder="no"
-        scrolling="no"
-        allow="autoplay" />
-    </div>
-  {/if}
-
-  <!-- CAPTION -->
-  {#if has(block, 'caption.content')}
-    <figcaption class="caption">
-      {@html renderBlockText(block.caption.content)}
-    </figcaption>
-  {/if}
-
-</figure>
