@@ -19,7 +19,7 @@
     <div class="arb-container">
       {@html block.arbitraryEmbedCode}
     </div>
-  {:else}
+  {:else if block.url}
     <!-- // YOUTUBE -->
     {#if block.url.includes("youtube")}
       <div class="youtube-container">
