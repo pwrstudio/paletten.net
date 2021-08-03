@@ -1066,7 +1066,7 @@ chokidar@^3.3.0:
 
 chownr@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
+  resolved "https://registry.yarnpkg.com/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
 
 class-list@~0.1.0, class-list@~0.1.1:
   version "0.1.1"
@@ -1369,7 +1369,7 @@ from2@^2.1.1:
 
 fs-minipass@^2.0.0:
   version "2.1.0"
-  resolved "https://registry.npmjs.org/fs-minipass/-/fs-minipass-2.1.0.tgz#7f5036fdbf12c63c169190cbe4199c852271f9fb"
+  resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-2.1.0.tgz#7f5036fdbf12c63c169190cbe4199c852271f9fb"
   dependencies:
     minipass "^3.0.0"
 
@@ -1912,13 +1912,13 @@ minimist@^1.1.3, minimist@^1.2.5:
 
 minipass@^3.0.0:
   version "3.1.3"
-  resolved "https://registry.npmjs.org/minipass/-/minipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
   dependencies:
     yallist "^4.0.0"
 
 minizlib@^2.1.1:
   version "2.1.2"
-  resolved "https://registry.npmjs.org/minizlib/-/minizlib-2.1.2.tgz#e90d3466ba209b932451508a11ce3d3632145931"
+  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-2.1.2.tgz#e90d3466ba209b932451508a11ce3d3632145931"
   dependencies:
     minipass "^3.0.0"
     yallist "^4.0.0"
@@ -1931,7 +1931,7 @@ mkdirp@^0.5.1:
 
 mkdirp@^1.0.3:
   version "1.0.4"
-  resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
 
 mri@^1.1.0:
   version "1.1.6"
@@ -2785,8 +2785,8 @@ svelte@^3.29.4:
   resolved "https://registry.npmjs.org/svelte/-/svelte-3.30.0.tgz#cbde341e96bf34f4ac73c8f14f8a014e03bfb7d6"
 
 tar@^6.0.2:
-  version "6.0.5"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.0.5.tgz#bde815086e10b39f1dcd298e89d596e1535e200f"
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.4.tgz#9f0722b772a5e00dba7d52e1923b37a7ec3799b3"
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
@@ -2972,7 +2972,7 @@ y18n@^4.0.0:
 
 yallist@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
 
 yargs-parser@^13.1.2:
   version "13.1.2"
