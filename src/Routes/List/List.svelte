@@ -26,7 +26,7 @@
   let title = ""
 
   if (category === "artikel") {
-    query = '*[_type == "post"] | order(publicationDate desc)'
+    query = '*[_type == "post"] | order(_updatedAt desc)'
     title = "Artiklar"
   } else if (category === "tidskrift") {
     query = '*[_type == "tidskrift"] | order(publicationDate desc)'
@@ -48,6 +48,22 @@
   // __ Set metadata
   currentPost.set({ title: title })
 </script>
+
+{#await posts then posts}
+  <div class="list" use:links>
+    {#if category === "search" || category === "taxonomy"}
+      <div class="header">
+        <strong>{posts.length}</strong>
+        resultat för “{term}”
+      </div>
+    {/if}
+    {#each posts as post}
+      <ListItem {post} {category} />
+    {/each}
+  </div>
+
+  <Footer />
+{/await}
 
 <style lang="scss">
   @import "../../variables.scss";
@@ -76,19 +92,3 @@
     margin-bottom: $line-height * 2;
   }
 </style>
-
-{#await posts then posts}
-  <div class="list" use:links>
-    {#if category === 'search' || category === 'taxonomy'}
-      <div class="header">
-        <strong>{posts.length}</strong>
-        resultat för “{term}”
-      </div>
-    {/if}
-    {#each posts as post}
-      <ListItem {post} {category} />
-    {/each}
-  </div>
-
-  <Footer />
-{/await}
