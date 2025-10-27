@@ -36,7 +36,6 @@
   let footnotePosts = []
 
   post.then(post => {
-    console.log("post", post)
     currentPost.set(post)
     let a = flatMap(
       post.content.content.filter(c => c._type == "block").map(x => x.markDefs)
@@ -44,6 +43,155 @@
     footnotePosts = a.filter(x => x._type === "footnote")
   })
 </script>
+
+{#await post then post}
+  <div class="single">
+    <!-- TOPBAR -->
+    <div class="top-bar">
+      <!-- TIDSKRIFT -->
+      {#if post.tidskriftContext && post.tidskriftContext.length > 0}
+        <div>
+          <a
+            href={"/tidskrift/" + post.tidskriftContext[0].slug.current}
+            class="publication-context"
+            ><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              ><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"
+              /></svg
+            >Publicerad i
+            {post.tidskriftContext[0].title}</a
+          >
+        </div>
+      {/if}
+      <!-- PROJEKT -->
+      {#if post.projektContext && post.projektContext.length > 0}
+        <div>
+          <a
+            href={"/projekt/" + post.projektContext[0].slug.current}
+            class="publication-context"
+            ><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              ><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"
+              /></svg
+            >Publicerad i
+            {post.projektContext[0].title}</a
+          >
+        </div>
+      {/if}
+      <!-- PDF -->
+      {#if post.pdfUrl}
+        <div>
+          <a href={post.pdfUrl} class="pdf-download" download target="_blank"
+            ><svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              ><path
+                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"
+              /></svg
+            >{post.pdfLinkText ? post.pdfLinkText : "PDF"}</a
+          >
+        </div>
+      {/if}
+    </div>
+    <!-- META -->
+    <div class="meta {post.textTyp}" in:fade>
+      {#if post.publicationDate}
+        <div class="date">{formattedDate(post.publicationDate)}</div>
+      {/if}
+      <!-- TITLE -->
+      <h1 class="title">{post.title}</h1>
+      <!-- AUTHOR -->
+      {#if post.author}
+        <div class="authors">
+          <Authors authors={post.author} />
+        </div>
+      {/if}
+      <!-- PDF DOWNLOAD -->
+    </div>
+
+    <!-- MAIN CONTENT -->
+    {#if post.content && post.content.content && isArray(post.content.content)}
+      <div class="content {post.textTyp}" in:fade={{ delay: 300 }}>
+        {#each post.content.content as block}
+          {#if block._type === "block"}
+            {@html renderBlockText(block)}
+          {/if}
+          {#if block._type === "image"}
+            <ImageBlock {block} />
+          {/if}
+          {#if block._type === "videoBlock"}
+            <VideoBlock {block} />
+          {/if}
+          {#if block._type === "audioBlock"}
+            <AudioBlock {block} />
+          {/if}
+          {#if block._type === "embedBlock"}
+            <EmbedBlock {block} />
+          {/if}
+        {/each}
+      </div>
+      <!-- FOOTNOTES -->
+      <div class="footnotes">
+        <ol>
+          {#each footnotePosts as footnote}
+            <li id={"note-" + footnote._key}>
+              {#if isArray(get(footnote, "content.content", false))}
+                {@html renderBlockText(footnote.content.content)}
+              {/if}
+              <span
+                on:click={e => {
+                  const targetEl = document.querySelector(
+                    "#link-" + footnote._key
+                  )
+                  if (targetEl) {
+                    window.scrollTo({
+                      top: targetEl.offsetTop - 100,
+                      left: 0,
+                      behavior: "smooth",
+                    })
+                  }
+                }}
+                class="back-link">(BACK)</span
+              >
+            </li>
+          {/each}
+        </ol>
+      </div>
+
+      <!-- TAGS -->
+      {#if post.tags}
+        <div class="tags">
+          {#each post.tags as tag}
+            <a href={"/taxonomy/" + tag}>
+              <!-- <a
+              href={'/taxonomy/' + slugify(tag, {
+                  replacement: '-',
+                  lower: true,
+                  strict: true
+                })}> -->
+              {tag}
+            </a>
+          {/each}
+        </div>
+      {/if}
+    {/if}
+  </div>
+
+  <Footer />
+{/await}
 
 <style lang="scss">
   @import "../../variables.scss";
@@ -219,142 +367,3 @@
     // justify-content: space-between;
   }
 </style>
-
-{#await post then post}
-  <div class="single">
-    <!-- TOPBAR -->
-    <div class="top-bar">
-      <!-- TIDSKRIFT -->
-      {#if post.tidskriftContext && post.tidskriftContext.length > 0}
-        <div>
-          <a
-            href={'/tidskrift/' + post.tidskriftContext[0].slug.current}
-            class="publication-context"><svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill-rule="evenodd"
-              clip-rule="evenodd"><path
-                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>Publicerad
-            i
-            {post.tidskriftContext[0].title}</a>
-        </div>
-      {/if}
-      <!-- PROJEKT -->
-      {#if post.projektContext && post.projektContext.length > 0}
-        <div>
-          <a
-            href={'/projekt/' + post.projektContext[0].slug.current}
-            class="publication-context"><svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill-rule="evenodd"
-              clip-rule="evenodd"><path
-                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>Publicerad
-            i
-            {post.projektContext[0].title}</a>
-        </div>
-      {/if}
-      <!-- PDF -->
-      {#if post.pdfUrl}
-        <div>
-          <a
-            href={post.pdfUrl}
-            class="pdf-download"
-            download
-            target="_blank"><svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill-rule="evenodd"
-              clip-rule="evenodd"><path
-                d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>{post.pdfLinkText ? post.pdfLinkText : 'PDF'}</a>
-        </div>
-      {/if}
-    </div>
-    <!-- META -->
-    <div class="meta {post.textTyp}" in:fade>
-      {#if post.publicationDate}
-        <div class="date">{formattedDate(post.publicationDate)}</div>
-      {/if}
-      <!-- TITLE -->
-      <h1 class="title">{post.title}</h1>
-      <!-- AUTHOR -->
-      {#if post.author}
-        <div class="authors">
-          <Authors authors={post.author} />
-        </div>
-      {/if}
-      <!-- PDF DOWNLOAD -->
-    </div>
-
-    <!-- MAIN CONTENT -->
-    {#if post.content && post.content.content && isArray(post.content.content)}
-      <div class="content {post.textTyp}" in:fade={{ delay: 300 }}>
-        {#each post.content.content as block}
-          {#if block._type === 'block'}
-            {@html renderBlockText(block)}
-          {/if}
-          {#if block._type === 'image'}
-            <ImageBlock {block} />
-          {/if}
-          {#if block._type === 'videoBlock'}
-            <VideoBlock {block} />
-          {/if}
-          {#if block._type === 'audioBlock'}
-            <AudioBlock {block} />
-          {/if}
-          {#if block._type === 'embedBlock'}
-            <EmbedBlock {block} />
-          {/if}
-        {/each}
-      </div>
-      <!-- FOOTNOTES -->
-      <div class="footnotes">
-        <ol>
-          {#each footnotePosts as footnote}
-            <li id={'note-' + footnote._key}>
-              {#if isArray(get(footnote, 'content.content', false))}
-                {@html renderBlockText(footnote.content.content)}
-              {/if}
-              <span
-                on:click={e => {
-                  const targetEl = document.querySelector('#link-' + footnote._key)
-                  // console.log(targetEl)
-                  if (targetEl) {
-                    // console.log(targetEl.offsetTop)
-                    window.scrollTo({
-                      top: targetEl.offsetTop - 100,
-                      left: 0,
-                      behavior: 'smooth',
-                    })
-                  }
-                }}
-                class="back-link">(BACK)</span>
-            </li>
-          {/each}
-        </ol>
-      </div>
-
-      <!-- TAGS -->
-      {#if post.tags}
-        <div class="tags">
-          {#each post.tags as tag}
-            <a href={'/taxonomy/' + tag}>
-              <!-- <a
-              href={'/taxonomy/' + slugify(tag, {
-                  replacement: '-',
-                  lower: true,
-                  strict: true
-                })}> -->
-              {tag}
-            </a>
-          {/each}
-        </div>
-      {/if}
-    {/if}
-  </div>
-
-  <Footer />
-{/await}

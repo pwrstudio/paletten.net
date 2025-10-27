@@ -6,57 +6,54 @@
   // # # # # # # # # # # # # #
 
   // *** IMPORTS
-  import { fade } from "svelte/transition";
-  import { urlFor, loadData, renderBlockText } from "../sanity.js";
-  import { formattedDate } from "../global.js";
-  import _ from "lodash";
+  import { fade } from "svelte/transition"
+  import { urlFor, loadData, renderBlockText } from "../sanity.js"
+  import { formattedDate } from "../global.js"
+  import _ from "lodash"
 
   // COMPONENTS
-  import Authors from "./Authors.svelte";
+  import Authors from "./Authors.svelte"
 
   // STORES
   //   import { location, filterTerm } from "../stores.js";
   //   location.set("index");
 
   // *** PROPS
-  export let post = {};
+  export let post = {}
 
-  console.log("first page post");
-  console.dir(post);
-
-  let query = "";
-  let link = "";
+  let query = ""
+  let link = ""
 
   if (post.postLink) {
     query =
-      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]";
+      "*[_id == '" + post.postLink._ref + "']{..., author[]->{title, slug}}[0]"
   } else {
-    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]";
+    query = "*[_id == '" + post._id + "']{..., author[]->{title, slug}}[0]"
   }
 
   if (!post.layout) {
-    post.layout = "full";
+    post.layout = "full"
   }
 
   if (!post.imageLayout) {
-    post.imageLayout = "proportional";
+    post.imageLayout = "proportional"
   }
 
   //   VARIABLES
-  let postContent = loadData(query);
+  let postContent = loadData(query)
   //   // let filteredPosts = [];
 
-  postContent.then((l) => {
-    let dir = "";
+  postContent.then(l => {
+    let dir = ""
     if (l._type === "post") {
-      dir = "/artiklar/";
+      dir = "/artiklar/"
     } else if (l._type === "tidskrift") {
-      dir = "/tidskrift/";
+      dir = "/tidskrift/"
     } else if (l._type === "projekt") {
-      dir = "/projekt/";
+      dir = "/projekt/"
     }
-    link = dir + l.slug.current;
-  });
+    link = dir + l.slug.current
+  })
 
   // $: {
   //   posts.then(posts => {
@@ -69,6 +66,63 @@
   //   });
   // }
 </script>
+
+{#await postContent then postContent}
+  <a
+    href={link}
+    class="list-item full"
+    in:fade
+    class:padded={_.has(post, "color")}
+  >
+    <div
+      class="inner"
+      style={"background: " + _.get(post, "color.hex", "transparent")}
+    >
+      <div class="text">
+        <!-- DATE -->
+        {#if postContent.tidsPeriod}
+          <div class="date">{postContent.tidsPeriod}</div>
+        {:else if postContent.publicationDate}
+          <div class="date">{formattedDate(postContent.publicationDate)}</div>
+        {/if}
+        <!-- TITLE -->
+        <div class="title" class:spaced={!postContent.author}>
+          {postContent.title}
+        </div>
+        <!-- AUTHOR -->
+        {#if postContent.author}
+          <div class="author">
+            <Authors authors={postContent.author} />
+          </div>
+        {/if}
+      </div>
+      <!-- IMAGE -->
+      {#if post.imageLayout != "noImage" && postContent.mainImage && postContent.mainImage.asset}
+        <div
+          class="image"
+          style={"background: " + _.get(post, "color.hex", "transparent")}
+          class:fullbleed={post.imageLayout == "fullBleed"}
+          class:proportional={post.imageLayout == "proportional"}
+        >
+          <img
+            alt={postContent.title}
+            src={urlFor(postContent.mainImage.asset)
+              .width(800)
+              .quality(90)
+              .auto("format")
+              .url()}
+          />
+        </div>
+      {/if}
+
+      <div class="ingress">
+        {#if postContent.ingress && postContent.ingress.content && Array.isArray(postContent.ingress.content)}
+          {@html renderBlockText(postContent.ingress.content)}
+        {/if}
+      </div>
+    </div>
+  </a>
+{/await}
 
 <style lang="scss">
   @import "../variables.scss";
@@ -205,55 +259,3 @@
     width: 100%;
   }
 </style>
-
-{#await postContent then postContent}
-  <a
-    href={link}
-    class="list-item full"
-    in:fade
-    class:padded={_.has(post, 'color')}>
-    <div
-      class="inner"
-      style={'background: ' + _.get(post, 'color.hex', 'transparent')}>
-      <div class="text">
-        <!-- DATE -->
-        {#if postContent.tidsPeriod}
-          <div class="date">{postContent.tidsPeriod}</div>
-        {:else if postContent.publicationDate}
-          <div class="date">{formattedDate(postContent.publicationDate)}</div>
-        {/if}
-        <!-- TITLE -->
-        <div class="title" class:spaced={!postContent.author}>{postContent.title}</div>
-        <!-- AUTHOR -->
-        {#if postContent.author}
-          <div class="author">
-            <Authors authors={postContent.author} />
-          </div>
-        {/if}
-
-      </div>
-      <!-- IMAGE -->
-      {#if post.imageLayout != 'noImage' && postContent.mainImage && postContent.mainImage.asset}
-        <div
-          class="image"
-          style={'background: ' + _.get(post, 'color.hex', 'transparent')}
-          class:fullbleed={post.imageLayout == 'fullBleed'}
-          class:proportional={post.imageLayout == 'proportional'}>
-          <img
-            alt={postContent.title}
-            src={urlFor(postContent.mainImage.asset)
-              .width(800)
-              .quality(90)
-              .auto('format')
-              .url()} />
-        </div>
-      {/if}
-
-      <div class="ingress">
-        {#if postContent.ingress && postContent.ingress.content && Array.isArray(postContent.ingress.content)}
-          {@html renderBlockText(postContent.ingress.content)}
-        {/if}
-      </div>
-    </div>
-  </a>
-{/await}
